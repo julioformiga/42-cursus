@@ -1,10 +1,11 @@
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -c
+CFLAGS	= -Wall -Wextra -Werror -c -std=c99
 
-SRCDIR	= srcs
+# SRCDIR	= .
 INCDIR	= .
 
-SRCS	= $(wildcard $(SRCDIR)/*.c)
+# SRCS	= $(wildcard $(SRCDIR)/*.c)
+SRCS	= $(wildcard *.c)
 OBJS	= $(SRCS:.c=.o)
 
 NAME	= libft.a
