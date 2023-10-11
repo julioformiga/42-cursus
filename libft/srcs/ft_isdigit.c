@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: julio.formiga <julio.formiga@gmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/10 06:24:49 by julio.formiga     #+#    #+#             */
-/*   Updated: 2023/10/10 06:24:49 by julio.formiga    ###   ########.fr       */
+/*   Created: 2023/10/11 00:29:03 by julio.formiga     #+#    #+#             */
+/*   Updated: 2023/10/11 00:29:03 by julio.formiga    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_is_alpha(char *str)
+#include "../libft.h"
+
+int	ft_isdigit(int c)
 {
-	str--;
-	while (str++, *str != 0)
-		if (!(*(str) >= 'A' && *(str) <= 'Z')
-			&& !(*(str) >= 'a' && *(str) <= 'z'))
-			return (0);
+	if (!(c >= '0' && c <= '9'))
+		return (0);
 	return (1);
 }
