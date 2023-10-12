@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio.formiga <julio.formiga@gmail.com>    +#+  +:+       +#+        */
+/*   By: julsanti <julsanti@student.42firenze.it>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/11 00:44:27 by julio.formiga     #+#    #+#             */
-/*   Updated: 2023/10/11 00:44:27 by julio.formiga    ###   ########.fr       */
+/*   Created: 2023/10/12 04:04:42 by julsanti          #+#    #+#             */
+/*   Updated: 2023/10/12 04:04:42 by julsanti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

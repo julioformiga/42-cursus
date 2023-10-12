@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio.formiga <julio.formiga@gmail.com>    +#+  +:+       +#+        */
+/*   By: julsanti <julsanti@student.42firenze.it>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/11 00:36:03 by julio.formiga     #+#    #+#             */
-/*   Updated: 2023/10/11 00:36:07 by julio.formiga    ###   ########.fr       */
+/*   Created: 2023/10/12 01:56:45 by julsanti          #+#    #+#             */
+/*   Updated: 2023/10/12 01:56:45 by julsanti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
