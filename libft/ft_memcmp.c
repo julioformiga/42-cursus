@@ -1,20 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: julsanti <julsanti@student.42firenze.it>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/11 11:36:45 by julsanti          #+#    #+#             */
-/*   Updated: 2023/10/11 11:36:45 by julsanti         ###   ########.fr       */
+/*   Created: 2023/10/13 15:15:06 by julsanti          #+#    #+#             */
+/*   Updated: 2023/10/13 15:15:06 by julsanti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isdigit(int c)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	if (!(c >= '0' && c <= '9'))
+	size_t			i;
+	unsigned char	*ps1;
+	unsigned char	*ps2;
+
+	if (n == 0)
 		return (0);
-	return (1);
+	ps1 = (unsigned char *)s1;
+	ps2 = (unsigned char *)s2;
+	i = -1;
+	while (i++, i < n)
+		if (ps1[i] != ps2[i])
+			return ((int)(ps1[i] - ps2[i]));
+	return (0);
 }

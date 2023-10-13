@@ -5,19 +5,19 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: julsanti <julsanti@student.42firenze.it>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/12 04:21:35 by julsanti          #+#    #+#             */
-/*   Updated: 2023/10/12 04:21:35 by julsanti         ###   ########.fr       */
+/*   Created: 2023/10/11 12:04:28 by julsanti          #+#    #+#             */
+/*   Updated: 2023/10/11 12:04:28 by julsanti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strlen(const char *str)
+size_t	ft_strlen(const char *str)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (str[i] != 0)
+	while (str[i])
 		i++;
 	return (i);
 }
