@@ -1,35 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: julsanti <julsanti@student.42firenze.it>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 10:40:24 by julsanti          #+#    #+#             */
-/*   Updated: 2023/10/16 10:40:24 by julsanti         ###   ########.fr       */
+/*   Created: 2023/10/16 16:54:52 by julsanti          #+#    #+#             */
+/*   Updated: 2023/10/16 16:54:52 by julsanti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *nptr)
+char	*ft_strjoin(const char *s1, const char *s2)
 {
-	int	n;
-	int	minus;
+	char	*ps3;
+	char	*s3;
+	size_t	s3_len;
 
-	n = 0;
-	minus = 0;
-	while ((*nptr >= 9 && *nptr <= 13) || *nptr == 32)
-		nptr++;
-	if (*nptr == '-' || *nptr == '+')
-	{
-		if (*nptr == '-')
-			minus++;
-		nptr++;
-	}
-	while (ft_isdigit(*nptr))
-		n = (n * 10) + (*nptr++ - '0');
-	if (minus)
-		n = -n;
-	return (n);
+	if (!s1 || !s2)
+		return (NULL);
+	s3_len = ft_strlen(s1) + ft_strlen(s2) + 1;
+	s3 = (char *)malloc(s3_len);
+	if (s3 == NULL)
+		return (NULL);
+	ps3 = s3;
+	while (*s1)
+		*s3++ = *s1++;
+	while (*s2)
+		*s3++ = *s2++;
+	*s3 = '\0';
+	return (ps3);
 }
