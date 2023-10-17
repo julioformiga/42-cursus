@@ -5,60 +5,79 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: julsanti <julsanti@student.42firenze.it>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 10:14:32 by julsanti          #+#    #+#             */
-/*   Updated: 2023/10/17 10:14:32 by julsanti         ###   ########.fr       */
+/*   Created: 2023/10/17 19:10:26 by julsanti          #+#    #+#             */
+/*   Updated: 2023/10/17 19:10:26 by julsanti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
-#include <stdlib.h>
 
-char	**ft_split(const char *s, char c)
+size_t	tokens_count(char const *s, char c)
 {
-	char	**s_array;
-	size_t	word;
-	size_t	init;
-	size_t	i;
-	size_t	j;
+	size_t	index;
+	size_t	count;
+	size_t	length;
 
-	if (!s || !c)
-		return (NULL);
-	i = -1;
-	while (i++, s++)
-		if (*s == c)
-			i++;
-	s_array = malloc(sizeof(char **) * i);
-	i = -1;
-	word = 0;
-	init = 0;
-	j = 0;
-	while (i++, *s++)
+	count = 0;
+	length = 0;
+	index = -1;
+	while (index++, s[index])
 	{
-		printf("%c", *s);
-		if (*s == c || *s == 0)
+		if (s[index] == c)
 		{
-			s_array[word][j] = 0;
-			word++;
-			j = 0;
+			if (length != 0)
+				count++;
+			length = 0;
 		}
 		else
-		{
-			s_array[word][j] = *s;
-			j = 0;
-		}
+			length++;
 	}
-	return (s_array);
+	if (length != 0)
+		return (count + 1);
+	return (count);
 }
 
-int	main(void)
+void	tokens_array(char const *s, char c, char **array, size_t item_count)
 {
-	char	*s = "aacbbbcdddcee";
-	char	**sa;
+	char	*str;
+	size_t	array_index;
+	size_t	index;
+	size_t	length;
 
-	printf("test");
-	sa = ft_split(s, 'c');
-	while (**sa)
-		printf("%s\n", *sa++);
-	return (0);
+	array_index = 0;
+	length = 0;
+	index = -1;
+	while (index++, array_index < item_count)
+	{
+		if (s[index] == c || s[index] == '\0')
+		{
+			if (length != 0)
+			{
+				str = ft_calloc(length + 1, sizeof(char));
+				if (!str)
+					return ;
+				ft_memcpy(str, s + index - length, length);
+				array[array_index++] = str;
+			}
+			length = 0;
+		}
+		else
+			length++;
+	}
+}
+
+char	**ft_split(char const *s, char c)
+{
+	size_t	item_count;
+	char	**array;
+
+	if (!s)
+		return (NULL);
+	item_count = tokens_count(s, c);
+	array = malloc((item_count + 1) * sizeof(char *));
+	if (!array)
+		return (NULL);
+	tokens_array(s, c, array, item_count);
+	array[item_count] = NULL;
+	return (array);
 }
