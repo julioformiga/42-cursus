@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julsanti <julsanti@student.42firenze.it>   +#+  +:+       +#+        */
+/*   By: julio.formiga <julio.formiga@gmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 19:10:26 by julsanti          #+#    #+#             */
-/*   Updated: 2023/10/17 19:10:26 by julsanti         ###   ########.fr       */
+/*   Created: 2023/10/18 21:08:26 by julio.formiga     #+#    #+#             */
+/*   Updated: 2023/10/18 21:08:26 by julio.formiga    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

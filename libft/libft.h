@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julsanti <julsanti@student.42firenze.it>   +#+  +:+       +#+        */
+/*   By: julio.formiga <julio.formiga@gmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/12 14:33:00 by julsanti          #+#    #+#             */
-/*   Updated: 2023/10/12 14:33:00 by julsanti         ###   ########.fr       */
+/*   Created: 2023/10/18 20:01:57 by julio.formiga     #+#    #+#             */
+/*   Updated: 2023/10/18 20:01:57 by julio.formiga    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

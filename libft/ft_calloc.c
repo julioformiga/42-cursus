@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julsanti <julsanti@student.42firenze.it>   +#+  +:+       +#+        */
+/*   By: julio.formiga <julio.formiga@gmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/15 16:22:01 by julsanti          #+#    #+#             */
-/*   Updated: 2023/10/15 16:22:02 by julsanti         ###   ########.fr       */
+/*   Created: 2023/10/17 20:12:12 by julio.formiga     #+#    #+#             */
+/*   Updated: 2023/10/18 20:13:19 by julio.formiga    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

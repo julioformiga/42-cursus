@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julsanti <julsanti@student.42firenze.it>   +#+  +:+       +#+        */
+/*   By: julio.formiga <julio.formiga@gmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 20:21:14 by julsanti          #+#    #+#             */
-/*   Updated: 2023/10/17 20:21:15 by julsanti         ###   ########.fr       */
+/*   Created: 2023/10/17 20:35:13 by julio.formiga     #+#    #+#             */
+/*   Updated: 2023/10/18 20:35:23 by julio.formiga    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julsanti <julsanti@student.42firenze.it>   +#+  +:+       +#+        */
+/*   By: julio.formiga <julio.formiga@gmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/15 21:37:58 by julsanti          #+#    #+#             */
-/*   Updated: 2023/10/15 21:37:59 by julsanti         ###   ########.fr       */
+/*   Created: 2023/10/15 21:46:13 by julio.formiga     #+#    #+#             */
+/*   Updated: 2023/10/18 19:50:19 by julio.formiga    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
