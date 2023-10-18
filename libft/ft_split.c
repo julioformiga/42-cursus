@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-size_t	tokens_count(char const *s, char c)
+size_t	token_count(char const *s, char c)
 {
 	size_t	index;
 	size_t	count;
@@ -37,7 +37,7 @@ size_t	tokens_count(char const *s, char c)
 	return (count);
 }
 
-void	tokens_array(char const *s, char c, char **array, size_t item_count)
+void	token_array(char const *s, char c, char **array, size_t item_count)
 {
 	char	*str;
 	size_t	array_index;
@@ -53,7 +53,7 @@ void	tokens_array(char const *s, char c, char **array, size_t item_count)
 		{
 			if (length != 0)
 			{
-				str = ft_calloc(length + 1, sizeof(char));
+				str = ft_calloc(length + 1, sizeof(char *));
 				if (!str)
 					return ;
 				ft_memcpy(str, s + index - length, length);
@@ -71,13 +71,13 @@ char	**ft_split(char const *s, char c)
 	size_t	item_count;
 	char	**array;
 
-	if (!s)
+	if (s == NULL)
 		return (NULL);
-	item_count = tokens_count(s, c);
-	array = malloc((item_count + 1) * sizeof(char *));
-	if (!array)
+	item_count = token_count(s, c);
+	array = (char **)malloc((item_count + 1) * sizeof(char *));
+	if (array == NULL)
 		return (NULL);
-	tokens_array(s, c, array, item_count);
+	token_array(s, c, array, item_count);
 	array[item_count] = NULL;
 	return (array);
 }
