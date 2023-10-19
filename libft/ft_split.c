@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: julio.formiga <julio.formiga@gmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/18 21:08:26 by julio.formiga     #+#    #+#             */
-/*   Updated: 2023/10/18 21:08:26 by julio.formiga    ###   ########.fr       */
+/*   Created: 2023/10/19 21:24:35 by julio.formiga     #+#    #+#             */
+/*   Updated: 2023/10/19 21:24:35 by julio.formiga    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	token_count(char const *s, char c)
+size_t	token_count(char const *str, char c)
 {
 	size_t	index;
 	size_t	count;
@@ -21,9 +21,9 @@ size_t	token_count(char const *s, char c)
 	count = 0;
 	length = 0;
 	index = -1;
-	while (index++, s[index])
+	while (index++, str[index])
 	{
-		if (s[index] == c)
+		if (str[index] == c)
 		{
 			if (length != 0)
 				count++;
@@ -37,47 +37,58 @@ size_t	token_count(char const *s, char c)
 	return (count);
 }
 
-void	token_array(char const *s, char c, char **array, size_t item_count)
+char	**token_fill(char **str, char const *s, char c)
 {
-	char	*str;
-	size_t	array_index;
-	size_t	index;
-	size_t	length;
+	int	i;
+	int	str_i;
+	int	minus;
 
-	array_index = 0;
-	length = 0;
-	index = -1;
-	while (index++, array_index < item_count)
+	i = 0;
+	str_i = 0;
+	while (s[i])
 	{
-		if (s[index] == c || s[index] == '\0')
+		if (s[i] == c)
 		{
-			if (length != 0)
-			{
-				str = ft_calloc(length + 1, sizeof(char *));
-				if (!str)
-					return ;
-				ft_memcpy(str, s + index - length, length);
-				array[array_index++] = str;
-			}
-			length = 0;
+			i++;
+			continue ;
 		}
-		else
-			length++;
+		minus = i;
+		while (s[i] && s[i] != c)
+			i++;
+		str[str_i] = (char *)malloc(i - minus + 1);
+		if (!str[str_i])
+			return (NULL);
+		ft_strlcpy(str[str_i++], s + minus, i - minus + 1);
 	}
+	str[str_i] = NULL;
+	return (str);
+}
+
+void	free_str(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		free(str[i++]);
+	free(str);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	size_t	item_count;
+	int		tokens;
 	char	**array;
 
 	if (s == NULL)
 		return (NULL);
-	item_count = token_count(s, c);
-	array = (char **)malloc((item_count + 1) * sizeof(char *));
+	tokens = token_count(s, c);
+	array = (char **)malloc((tokens + 1) * sizeof(char *));
 	if (array == NULL)
 		return (NULL);
-	token_array(s, c, array, item_count);
-	array[item_count] = NULL;
+	if (!token_fill(array, s, c))
+	{
+		free_str(array);
+		return (NULL);
+	}
 	return (array);
 }
