@@ -22,9 +22,6 @@ $(NAME):	$(OBJS)
 bonus:		$(OBJS_BONUS)
 			ar rcs $(NAME) $(OBJS_BONUS)
 
-$(OBJS_BONUS):	$(SRCS_BONUS)
-				$(CC) $(CFLAGS) $< -o $@
-
 clean:
 			$(RM) $(OBJS) $(OBJS_BONUS)
 
