@@ -1,5 +1,5 @@
-CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -std=c99 -c
+CC			= cc
+CFLAGS		= -Wall -Wextra -Werror -std=c99 -c
 
 SRCS_BONUS	= $(wildcard ft_lst*.c)
 OBJS_BONUS	= $(SRCS_BONUS:.c=.o)
@@ -13,7 +13,7 @@ RM			= rm -f
 
 all:		$(NAME)
 
-%.o: %.c
+%.o:		%.c
 			$(CC) $(CFLAGS) $< -o $@
 
 $(NAME):	$(OBJS)
