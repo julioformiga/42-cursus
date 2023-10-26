@@ -14,13 +14,15 @@
 
 void	*ft_calloc(size_t nmemb, size_t size)
 {
-	size_t	*pos;
-	size_t	total_size;
+	void	*pos;
+	size_t	total;
 
-	total_size = nmemb * size;
-	pos = malloc(total_size);
-	if (!pos || total_size > INT_MAX)
+	total = nmemb * size;
+	if (nmemb > INT_MAX || total > INT_MAX)
 		return (NULL);
-	ft_memset(pos, 0, total_size);
-	return ((void *)pos);
+	pos = malloc(total);
+	if (!pos)
+		return (NULL);
+	ft_bzero(pos, total);
+	return (pos);
 }
