@@ -1,1 +1,7 @@
 subjects
+main
+a.out
+libft2
+libftTester
+*.o
+*.a
