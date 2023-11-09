@@ -10,11 +10,45 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTPRINTF_H
-# define LIBFTPRINTF_H
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
+# define PRINTF_TYPES "cspdiuxX%"
+# define HEX_STR "0123456789abcdef"
+# define CHECK_AFTER_PERCENT "-0123456789"
+
 # include "libft/libft.h"
 # include <stdarg.h>
 
-int	ft_printf(const char *format, ...);
+typedef struct s_data
+{
+	char			type;
+	int				argc;
+	int				len;
+	char			ch;
+	int				nbr;
+	char			*str;
+	void			*hex_ptr;
+	int				offset;
+	unsigned int	unsig;
+	int				unsigflag;
+	int				spaceflag;
+	int				plusflag;
+	int				hashflag;
+}	t_data;
+
+//printers
+int		print_char(char c);
+int		print_string(char *str);
+int		print_ptr_addrs(void *ptr);
+int		print_nbr(int nbr, t_data *data);
+int		print_unsigned(unsigned int nbr);
+int		print_unsigned_hex(unsigned int nbr, t_data *data);
+
+//controller
+int		ft_printf(const char *s, ...);
+char	*ft_uitoa_base(unsigned long nbr, char *b_to, unsigned long b_size);
+char	*ft_uitoa(unsigned int nbr);
+void	init_flags(t_data *data);
+char	printf_parser(const char *s, t_data *data);
 
 #endif

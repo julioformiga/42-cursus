@@ -12,73 +12,107 @@
 
 #include "ft_printf.h"
 
-int	ft_puthex_fd(long n, int fd)
+static void	init_arg(t_data *data, va_list args)
 {
-	int		base;
-	char	*symbols;
-
-	symbols = "0123456789abcdef";
-	base = ft_strlen(symbols);
-	if (n < 0)
-	{
-		write(fd, "-", 1);
-		ft_puthex_fd(-n, fd);
-	}
-	if (n < base)
-		ft_putchar_fd(symbols[n], fd);
+	if (data->type == 's')
+		data->str = va_arg(args, char *);
+	else if (data->type == 'p')
+		data->hex_ptr = va_arg(args, void *);
+	else if (data->type == 'd' || data->type == 'i')
+		data->nbr = va_arg(args, int);
+	else if (data->type == 'u' || data->type == 'x' || data->type == 'X')
+		data->unsig = va_arg(args, unsigned int);
 	else
-	{
-		ft_puthex_fd(n / base, fd);
-		ft_puthex_fd(n % base, fd);
-	}
-	return (4);
+		data->ch = va_arg(args, int);
 }
 
-int	ft_printf(const char *format, ...)
+static void	call_conversion(t_data *data)
 {
-	int		count;
-	char	*p;
-	char	pnext;
-	va_list	ap;
+	if (data->type == 'c')
+		data->len += print_char(data->ch);
+	if (data->type == 's')
+		data->len += print_string(data->str);
+	if (data->type == 'p')
+		data->len += print_ptr_addrs(data->hex_ptr);
+	if (data->type == 'd' || data->type == 'i')
+		data->len += print_nbr(data->nbr, data);
+	if (data->type == 'u')
+		data->len += print_unsigned(data->unsig);
+	if (data->type == 'x' || data->type == 'X')
+		data->len += print_unsigned_hex(data->unsig, data);
+	if (data->type == '%')
+		data->len += print_char('%');
+}
 
-	va_start(ap, format);
-	count = 0;
-	p = (char *)format;
-	p--;
-	while (p++, *p)
+static int	count_args(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (*s)
 	{
-		if (*p != '%')
+		if (*s == '%')
 		{
-			count += ft_putchar_fd(*p, 1);
-			continue ;
+			i++;
+			s++;
 		}
-		pnext = *++p;
-		if (pnext == '%')
-			count += ft_putchar_fd(pnext, 1);
-		else if (pnext == 'd' || pnext == 'i')
-			count += ft_putnbr_fd(va_arg(ap, int), 1);
-		else if (pnext == 'c')
-			count += ft_putchar_fd(va_arg(ap, int), 1);
-		else if (pnext == 's')
-			count += ft_putstr_fd(va_arg(ap, char *), 1);
-		else if (pnext == 'x' || pnext == 'X' || pnext == 'p')
-			count += ft_puthex_fd(va_arg(ap, int), 1);
+		s++;
 	}
-	va_end(ap);
-	return (count);
+	return (i);
 }
 
-int	main(void)
+static int	write_filler(const char *s, t_data *data)
 {
-	char	*format;
-	int		hex;
-	int		count;
+	int	i;
 
-	format = "%%int: %d\t| char: %c\t| texto: %s\t| hex: %x\t| pointer: %x\n";
-	hex = 21321;
-	count = printf(format, hex, 'a', "string", hex, hex);
-	printf("count: %d\n", count);
-	count = ft_printf(format, hex, 'a', "string", hex, hex);
-	printf("count: %d\n", count);
-	return (0);
+	i = 0;
+	while (s[i] != '%' && s[i])
+		++i;
+	write(1, s, i);
+	data->len += i;
+	return (i);
 }
+
+int	ft_printf(const char *s, ...)
+{
+	va_list	args;
+	t_data	data;
+
+	data.len = 0;
+	va_start(args, s);
+	data.argc = count_args(s);
+	while (data.argc--)
+	{
+		init_flags(&data);
+		s += write_filler(s, &data);
+		data.type = printf_parser(s, &data);
+		s += data.offset;
+		if (data.type != '%')
+			init_arg(&data, args);
+		call_conversion(&data);
+	}
+	s += write_filler(s, &data);
+	va_end(args);
+	return (data.len);
+}
+
+/* int	main(void) */
+/* { */
+/* 	char	*format; */
+/* 	int		val_int; */
+/* 	char	*val_str; */
+/* 	int		count; */
+/*  */
+/* 	format = "| %-25i |\n"; */
+/* 	val_int = 0; */
+/* 	val_str = "little string all1 as dsadsa"; */
+/* 	(void)val_int; */
+/* 	(void)val_str; */
+/* 	printf("----- PRINTF ------\n"); */
+/* 	count = printf(format, '0'); */
+/* 	printf("count: %d\n", count); */
+/* 	printf("\n---- FT_PRINTF ----\n"); */
+/* 	count = ft_printf(format, '0'); */
+/* 	ft_printf("count: %d\n", count); */
+/* 	return (0); */
+/* } */
