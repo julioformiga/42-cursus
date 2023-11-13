@@ -3,7 +3,8 @@ CFLAGS		= -Wall -Werror -Wextra -std=c99 -g
 RM			= rm -f
 AR			= ar -src
 
-SRC			= ft_printf.c ft_printf_cspudi.c ft_printf_uitoa.c ft_printf_itoa_base.c
+SRC			= ft_printf.c ft_printf_cspui.c ft_printf_uhex.c ft_printf_parser.c \
+			  ft_printf_uitoa.c ft_printf_itoa_base.c
 OBJ			= $(SRC:.c=.o)
 
 LIBFT_DIR	= libft/

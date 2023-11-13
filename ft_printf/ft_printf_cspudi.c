@@ -33,7 +33,7 @@ int	print_string(char *str)
 	return (i);
 }
 
-int	print_ptr_addrs(void *ptr)
+char	*print_ptr_addrs(void *ptr)
 {
 	char			*str;
 	unsigned long	i;
@@ -42,19 +42,14 @@ int	print_ptr_addrs(void *ptr)
 	str = ft_uitoa_base(i, HEX_STR, 16);
 	if (!*str || i == 0)
 	{
-		write(1, "(nil)", 5);
 		free(str);
-		return (5);
+		return ("(nil)");
 	}
 	else
 	{
-		write (1, "0x", 2);
-		write(1, str, ft_strlen(str));
+		return (ft_strjoin("0x", str));
 	}
-	i = 0;
-	i += ft_strlen(str) + 2;
-	free(str);
-	return (i);
+	return (str);
 }
 
 int	print_unsigned(unsigned int nbr)
@@ -69,24 +64,15 @@ int	print_unsigned(unsigned int nbr)
 	return (i);
 }
 
-int	print_nbr(int nbr, t_data *data)
+char	*get_nbr(int nbr)
 {
 	char	*str;
-	int		i;
 
 	str = ft_itoa(nbr);
-	i = ft_strlen(str);
-	if (data->plusflag && nbr >= 0)
+	if (!str)
 	{
-		write(1, "+", 1);
-		i++;
+		free(str);
+		return (NULL);
 	}
-	else if (data->spaceflag && nbr >= 0)
-	{
-		write(1, " ", 1);
-		i++;
-	}
-	write(1, str, ft_strlen(str));
-	free (str);
-	return (i);
+	return (str);
 }

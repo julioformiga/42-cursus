@@ -11,66 +11,105 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "libft/libft.h"
+#include <stddef.h>
+#include <stdio.h>
 
-static void	init_arg(t_data *data, va_list args)
+void	show_data(t_data *data)
 {
-	if (data->type == 's')
-		data->str = va_arg(args, char *);
-	else if (data->type == 'p')
-		data->hex_ptr = va_arg(args, void *);
-	else if (data->type == 'd' || data->type == 'i')
-		data->nbr = va_arg(args, int);
-	else if (data->type == 'u' || data->type == 'x' || data->type == 'X')
-		data->unsig = va_arg(args, unsigned int);
-	else
-		data->ch = va_arg(args, int);
+	write(1, "\n=== show_data ===\n", 20);
+	printf("type: %c\n", data->type);
+	printf("format_type: %c\n", data->format_type);
+	printf("format: %s\n", data->format);
+	printf("print: %s\n", data->print);
+	write(1, "=================\n", 19);
 }
 
-static void	call_conversion(t_data *data)
+static void	reset_data(t_data *data)
 {
-	if (data->type == 'c')
-		data->len += print_char(data->ch);
-	if (data->type == 's')
-		data->len += print_string(data->str);
-	if (data->type == 'p')
-		data->len += print_ptr_addrs(data->hex_ptr);
-	if (data->type == 'd' || data->type == 'i')
-		data->len += print_nbr(data->nbr, data);
-	if (data->type == 'u')
-		data->len += print_unsigned(data->unsig);
-	if (data->type == 'x' || data->type == 'X')
-		data->len += print_unsigned_hex(data->unsig, data);
-	if (data->type == '%')
-		data->len += print_char('%');
+	data->type = 0;
+	data->format_type = 0;
+	data->format = NULL;
+	data->print = 0;
 }
 
-static int	count_args(const char *s)
+static char	*ft_add_char_to_str(char *dest, char src)
 {
-	int	i;
+	char	*str;
 
-	i = 0;
-	while (*s)
+	if (!dest)
 	{
-		if (*s == '%')
-		{
-			i++;
-			s++;
-		}
-		s++;
+		str = ft_strdup("");
+		str[0] = (char)src;
+		return (str);
 	}
-	return (i);
+	str = ft_strdup(dest);
+	str[ft_strlen(str)] = (char)src;
+	return (str);
 }
 
-static int	write_filler(const char *s, t_data *data)
+static void	get_data_print(t_data *data, va_list args)
 {
-	int	i;
+	if (data->type == 's')
+		data->print = va_arg(args, char *);
+	else if (data->type == 'p')
+		data->print = print_ptr_addrs(va_arg(args, void *));
+	else if (data->type == 'u' || data->type == 'x' || data->type == 'X')
+		data->print = ft_uitoa(va_arg(args, int));
+	else
+		data->print = get_nbr(va_arg(args, int));
+}
 
-	i = 0;
-	while (s[i] != '%' && s[i])
-		++i;
-	write(1, s, i);
-	data->len += i;
-	return (i);
+static void	print_data(t_data *data)
+{
+	size_t	i;
+	size_t	i_format;
+	size_t	i_printlen;
+
+	if (data->type == 'd' || data->type == 'i')
+	{
+		if (!data->format_type && !data->format)
+			data->len += print_string(data->print);
+		else if (data->format_type == '-' || data->format_type == '0')
+		{
+			i_format = ft_atoi(data->format);
+			i_printlen = ft_strlen(data->print);
+			if (data->format_type == '0' && (int)i_format > 0)
+			{
+				i = -1;
+				while (i++, i < (i_format - i_printlen) && i_format > i_printlen && i < 30)
+					data->len += print_char('0');
+				data->len += print_string(data->print);
+			}
+			else
+			{
+				if ((int)i_format < 0)
+					i_format *= -1;
+				data->len += print_string(data->print);
+				i = -1;
+				while (i++, i < (i_format - i_printlen))
+					data->len += print_char(' ');
+			}
+		}
+		else if (!data->format_type && data->format)
+		{
+			i_format = ft_atoi(data->format);
+			i_printlen = ft_strlen(data->print);
+			i = -1;
+			while (i++, i < (i_format - i_printlen) && i_format > i_printlen)
+				data->len += print_char(' ');
+			data->len += print_string(data->print);
+		}
+	}
+}
+
+static void	init_data(t_data *data)
+{
+	data->type = 0;
+	data->format_type = 0;
+	data->format = NULL;
+	data->print = 0;
+	data->len = 0;
 }
 
 int	ft_printf(const char *s, ...)
@@ -78,41 +117,55 @@ int	ft_printf(const char *s, ...)
 	va_list	args;
 	t_data	data;
 
-	data.len = 0;
+	init_data(&data);
 	va_start(args, s);
-	data.argc = count_args(s);
-	while (data.argc--)
+	while (*s)
 	{
-		init_flags(&data);
-		s += write_filler(s, &data);
-		data.type = printf_parser(s, &data);
-		s += data.offset;
-		if (data.type != '%')
-			init_arg(&data, args);
-		call_conversion(&data);
+		if (*s == '%')
+		{
+			reset_data(&data);
+			while (s++, !ft_strchr(PRINTF_TYPES, *s))
+			{
+				if (ft_strchr(PRINTF_FORMAT, *s)
+					&& data.format_type == 0 && !data.format)
+					data.format_type = *s;
+				else
+					data.format = ft_add_char_to_str(data.format, (char)*s);
+			}
+			if (ft_strchr(PRINTF_TYPES, *s))
+				data.type = *s;
+			get_data_print(&data, args);
+			print_data(&data);
+			/* show_data(&data); */
+		}
+		else
+			data.len += print_char(*s);
+		s++;
 	}
-	s += write_filler(s, &data);
 	va_end(args);
 	return (data.len);
 }
 
-/* int	main(void) */
-/* { */
-/* 	char	*format; */
-/* 	int		val_int; */
-/* 	char	*val_str; */
-/* 	int		count; */
-/*  */
-/* 	format = "| %-25i |\n"; */
-/* 	val_int = 0; */
-/* 	val_str = "little string all1 as dsadsa"; */
-/* 	(void)val_int; */
-/* 	(void)val_str; */
-/* 	printf("----- PRINTF ------\n"); */
-/* 	count = printf(format, '0'); */
-/* 	printf("count: %d\n", count); */
-/* 	printf("\n---- FT_PRINTF ----\n"); */
-/* 	count = ft_printf(format, '0'); */
-/* 	ft_printf("count: %d\n", count); */
-/* 	return (0); */
-/* } */
+int	main(void)
+{
+	char	*format;
+	int		val_int;
+	char	val_char;
+	char	*val_str;
+	int		count;
+
+	format = "| %010d | %-15d |\n";
+	val_int = 30;
+	val_char = 'C';
+	val_str = "42 Firenze";
+	(void)val_int;
+	(void)val_char;
+	(void)val_str;
+	printf("----- PRINTF ------\n");
+	count = printf(format, val_int, 42);
+	printf("count: %d\n", count);
+	ft_printf("\n---- FT_PRINTF ----\n");
+	count = ft_printf(format, val_int, 42);
+	ft_printf("count: %d\n", count);
+	return (0);
+}
