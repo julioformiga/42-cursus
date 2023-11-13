@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "libft/libft.h"
 
 int	print_char(char c)
 {
@@ -64,15 +65,18 @@ int	print_unsigned(unsigned int nbr)
 	return (i);
 }
 
+char	*get_char(char c)
+{
+	char	*str;
+
+	str = &c;
+	return (str);
+}
+
 char	*get_nbr(int nbr)
 {
 	char	*str;
 
 	str = ft_itoa(nbr);
-	if (!str)
-	{
-		free(str);
-		return (NULL);
-	}
 	return (str);
 }

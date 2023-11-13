@@ -22,17 +22,21 @@
 
 typedef struct s_data
 {
-	char	type;
-	char	format_type;
-	char	*format;
-	char	*print;
-	int		len;
+	char			type;
+	char			format_type;
+	char			*format;
+	int				len;
+	char			*print;
+	/* char			print_char; */
+	/* int				print_int; */
+	/* unsigned int	print_uint; */
 }	t_data;
 
 //printers
 int		print_char(char c);
 int		print_string(char *str);
 char	*print_ptr_addrs(void *ptr);
+char	*get_char(char c);
 char	*get_nbr(int nbr);
 int		print_unsigned(unsigned int nbr);
 int		print_unsigned_hex(unsigned int nbr, t_data *data);
@@ -41,7 +45,5 @@ int		print_unsigned_hex(unsigned int nbr, t_data *data);
 int		ft_printf(const char *s, ...);
 char	*ft_uitoa_base(unsigned long nbr, char *b_to, unsigned long b_size);
 char	*ft_uitoa(unsigned int nbr);
-void	init_flags(t_data *data);
-char	printf_parser(const char *s, t_data *data);
 
 #endif
