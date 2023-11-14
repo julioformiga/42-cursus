@@ -1,69 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_spui.c                                   :+:      :+:    :+:   */
+/*   ft_printf_get_strings.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: julio.formiga <julio.formiga@gmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/08 16:48:26 by julio.formiga     #+#    #+#             */
-/*   Updated: 2023/11/08 16:48:26 by julio.formiga    ###   ########.fr       */
+/*   Created: 2023/11/14 03:51:02 by julio.formiga     #+#    #+#             */
+/*   Updated: 2023/11/14 03:51:02 by julio.formiga    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "libft/libft.h"
-
-int	print_char(char c)
-{
-	write(1, &c, 1);
-	return (1);
-}
-
-int	print_string(char *str)
-{
-	size_t	i;
-
-	if (!str)
-	{
-		write(1, "(null)", 6);
-		return (6);
-	}
-	i = 0;
-	i = ft_strlen(str);
-	write(1, str, i);
-	return (i);
-}
-
-char	*print_ptr_addrs(void *ptr)
-{
-	char			*str;
-	unsigned long	i;
-
-	i = (unsigned long)ptr;
-	str = ft_uitoa_base(i, HEX_STR, 16);
-	if (!*str || i == 0)
-	{
-		free(str);
-		return ("(nil)");
-	}
-	else
-	{
-		return (ft_strjoin("0x", str));
-	}
-	return (str);
-}
-
-int	print_unsigned(unsigned int nbr)
-{
-	char	*str;
-	int		i;
-
-	str = ft_uitoa(nbr);
-	i = ft_strlen(str);
-	write(1, str, i);
-	free(str);
-	return (i);
-}
 
 char	*get_char(char c)
 {
@@ -73,10 +20,51 @@ char	*get_char(char c)
 	return (str);
 }
 
+char	*get_string(char *str)
+{
+	if (!str)
+	{
+		free(str);
+		return (ft_strdup("(null)"));
+	}
+	return (ft_strdup(str));
+}
+
+char	*get_ptr_addrs(void *ptr)
+{
+	char			*str;
+	char			*dest;
+	unsigned long	i;
+
+	i = (unsigned long)ptr;
+	str = ft_uitoa_base(i, HEX_STR, 16);
+	if (!str || i == 0)
+	{
+		free(str);
+		return (ft_strdup("(nil)"));
+	}
+	dest = ft_strjoin("0x", str);
+	free(str);
+	return (dest);
+}
+
 char	*get_nbr(int nbr)
 {
 	char	*str;
 
 	str = ft_itoa(nbr);
+	return (str);
+}
+
+char	*get_unsigned_hex(unsigned int nbr, t_data *data)
+{
+	char			*str;
+	unsigned long	i;
+
+	i = -1;
+	str = ft_uitoa_base((unsigned long)nbr, HEX_STR, 16);
+	if (data->type == 'X')
+		while (str[++i])
+			str[i] = ft_toupper(str[i]);
 	return (str);
 }

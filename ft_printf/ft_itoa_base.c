@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: julio.formiga <julio.formiga@gmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/08 16:55:37 by julio.formiga     #+#    #+#             */
-/*   Updated: 2023/11/08 16:55:37 by julio.formiga    ###   ########.fr       */
+/*   Created: 2023/11/14 03:54:13 by julio.formiga     #+#    #+#             */
+/*   Updated: 2023/11/14 03:54:13 by julio.formiga    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,8 @@ char	*ft_uitoa_base(
 {
 	int		i;
 	char	*res;
-	int		size_str;
 
-	size_str = count_numbers(nbr, base_size);
-	res = (char *)malloc((size_str + 1) * sizeof(char));
+	res = ft_calloc(count_numbers(nbr, base_size) + 1, sizeof(char *));
 	i = 0;
 	if (nbr == 0)
 		res[i++] = base_to[0];

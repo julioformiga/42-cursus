@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "libft/libft.h"
 
 void	show_data(t_data *data)
 {
@@ -32,19 +31,20 @@ static void	reset_data(t_data *data)
 	data->print = NULL;
 }
 
-static void	get_data_print(t_data *data, va_list args)
+void	get_data_print(t_data *data, va_list args)
 {
 	if (data->type == 'c')
-		data->print = get_char(va_arg(args, int));
+		data->print_char = va_arg(args, int);
 	else if (data->type == 's')
-		data->print = va_arg(args, char *);
+		data->print = get_string(va_arg(args, char *));
 	else if (data->type == 'p')
-		data->print = print_ptr_addrs(va_arg(args, void *));
-	else if (data->type == 'u' || data->type == 'x' || data->type == 'X')
+		data->print = (char *)get_ptr_addrs(va_arg(args, void *));
+	else if (ft_strchr("u", data->type))
 		data->print = ft_uitoa(va_arg(args, int));
-	else
+	else if (ft_strchr("xX", data->type))
+		data->print = get_unsigned_hex(va_arg(args, int), data);
+	else if (ft_strchr("id", data->type))
 		data->print = ft_itoa(va_arg(args, int));
-	printf("data->print: %s\n", data->print);
 }
 
 static void	print_data(t_data *data)
@@ -53,11 +53,13 @@ static void	print_data(t_data *data)
 	int		i_format;
 	int		i_printlen;
 
-	if (data->type == 'c')
-	{
+	if (data->type == '%')
+		data->len += print_char('%');
+	else if (data->type == 'c')
+		data->len += print_char(data->print_char);
+	else if (ft_strchr("spxX", data->type))
 		data->len += print_string(data->print);
-	}
-	else if (data->type == 'd' || data->type == 'i')
+	else if (ft_strchr("diu", data->type))
 	{
 		if (!data->format_type && !data->format)
 			data->len += print_string(data->print);
@@ -92,7 +94,6 @@ static void	print_data(t_data *data)
 				data->len += print_char(' ');
 			data->len += print_string(data->print);
 		}
-		free(data->print);
 	}
 }
 
@@ -120,12 +121,12 @@ int	ft_printf(const char *s, ...)
 						data.format = ft_calloc(1, sizeof(char *));
 					data.format[ft_strlen(data.format)] = *s;
 				}
-}
+			}
 			if (ft_strchr(PRINTF_TYPES, *s))
 				data.type = *s;
 			get_data_print(&data, args);
 			print_data(&data);
-			free(data.format);
+			free(data.print);
 			/* show_data(&data); */
 		}
 		else
@@ -133,27 +134,28 @@ int	ft_printf(const char *s, ...)
 		s++;
 	}
 	va_end(args);
+	free(data.format);
 	return (data.len);
 }
 
-int	main(void)
-{
-	char	*format;
-	int		val_int;
-	char	val_char;
-	char	*val_str;
-	int		count;
-
-	format = "| %c | %10d | %-10d |\n";
-	val_int = 0;
-	val_char = '-';
-	val_str = "42 Firenze";
-	(void)val_str;
-	printf("----- PRINTF ------\n");
-	count = printf(format, val_char, val_int, 42);
-	printf("count: %d\n", count);
-	ft_printf("\n---- FT_PRINTF ----\n");
-	count = ft_printf(format, val_char, val_int, 42);
-	ft_printf("count: %d\n", count);
-	return (0);
-}
+/* int	main(void) */
+/* { */
+/* 	char	*format; */
+/* 	int		val_int; */
+/* 	char	val_char; */
+/* 	char	*val_str; */
+/* 	int		count; */
+/*  */
+/* 	format = "| %% | %x | %X | %-10d |\n"; */
+/* 	val_int = 1232329; */
+/* 	val_char = '-'; */
+/* 	val_str = "42 Firenze"; */
+/* 	(void)val_str; */
+/* 	printf("----- PRINTF ------\n"); */
+/* 	count = printf(format, val_char, val_int, 42); */
+/* 	printf("count: %d\n", count); */
+/* 	ft_printf("\n---- FT_PRINTF ----\n"); */
+/* 	count = ft_printf(format, val_char, val_int, 42); */
+/* 	ft_printf("count: %d\n", count); */
+/* 	return (0); */
+/* } */
