@@ -12,14 +12,6 @@
 
 #include "ft_printf.h"
 
-char	*get_char(char c)
-{
-	char	*str;
-
-	str = &c;
-	return (str);
-}
-
 char	*get_string(char *str)
 {
 	if (!str)
@@ -28,6 +20,14 @@ char	*get_string(char *str)
 		return (ft_strdup("(null)"));
 	}
 	return (ft_strdup(str));
+}
+
+char	*get_nbr(int nbr)
+{
+	char	*str;
+
+	str = ft_itoa(nbr);
+	return (str);
 }
 
 char	*get_ptr_addrs(void *ptr)
@@ -48,21 +48,19 @@ char	*get_ptr_addrs(void *ptr)
 	return (dest);
 }
 
-char	*get_nbr(int nbr)
-{
-	char	*str;
-
-	str = ft_itoa(nbr);
-	return (str);
-}
-
 char	*get_unsigned_hex(unsigned int nbr, t_data *data)
 {
 	char			*str;
+	char			*nb;
 	unsigned long	i;
 
 	i = -1;
-	str = ft_uitoa_base((unsigned long)nbr, HEX_STR, 16);
+	nb = ft_uitoa_base((unsigned long)nbr, HEX_STR, 16);
+	if (data->format_type == '#' && nbr != 0)
+		str = ft_strjoin("0x", nb);
+	else
+		str = ft_strdup(nb);
+	free(nb);
 	if (data->type == 'X')
 		while (str[++i])
 			str[i] = ft_toupper(str[i]);

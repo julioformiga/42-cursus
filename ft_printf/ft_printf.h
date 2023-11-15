@@ -13,7 +13,7 @@
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 # define PRINTF_TYPES "cspdiuxX%"
-# define PRINTF_FORMAT " 0-+#."
+# define PRINTF_FORMAT "-0.# +"
 # define PRINTF_NUMBERS "0123456789"
 # define HEX_STR "0123456789abcdef"
 
@@ -32,12 +32,17 @@ typedef struct s_data
 
 int		print_char(char c);
 int		print_string(char *str);
+void	print_args(const char *str, t_data *data, va_list args);
+void	print_data(t_data *data);
+void	print_pre_format(t_data *data);
+void	print_pos_format(t_data *data);
+void	reset_data(t_data *data);
 
-char	*get_ptr_addrs(void *ptr);
-char	*get_char(char c);
 char	*get_string(char *str);
 char	*get_nbr(int nbr);
+char	*get_ptr_addrs(void *ptr);
 char	*get_unsigned_hex(unsigned int nbr, t_data *data);
+void	get_data_strings(t_data *data, va_list args);
 
 int		ft_printf(const char *s, ...);
 char	*ft_uitoa_base(unsigned long nbr, char *b_to, unsigned long b_size);
