@@ -12,15 +12,10 @@
 
 #include "libft.h"
 
-int	ft_putstr_fd(char *s, int fd)
+void	ft_putstr_fd(char *s, int fd)
 {
-	int	count;
-
-	count = 0;
-	if (!s)
-		s = "(null)";
-	while (count++, *s)
+	if (!s || !fd)
+		return ;
+	while (*s)
 		write(fd, s++, 1);
-	count--;
-	return (count);
 }

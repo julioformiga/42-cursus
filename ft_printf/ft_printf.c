@@ -71,11 +71,9 @@ int	ft_printf(const char *s, ...)
 /* 	(void)val_char; */
 /* 	(void)val_str; */
 /* 	printf("----- PRINTF ------\n"); */
-/* 	//count = printf(format, val_char, val_str, val_int, val_int, val_int, 42); */
 /* 	count = printf(format, 1, 1); */
 /* 	printf("count: %d\n", count); */
 /* 	ft_printf("\n---- FT_PRINTF ----\n"); */
-/* 	//count = ft_printf(format, val_char, val_str, val_int, val_int, val_int, 42); */
 /* 	count = ft_printf(format, 1, 1); */
 /* 	ft_printf("count: %d\n", count); */
 /* 	return (0); */

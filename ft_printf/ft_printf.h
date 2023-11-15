@@ -34,6 +34,7 @@ int		print_char(char c);
 int		print_string(char *str);
 void	print_args(const char *str, t_data *data, va_list args);
 void	print_data(t_data *data);
+void	print_pre_format_space_plus(t_data *data);
 void	print_pre_format(t_data *data);
 void	print_pos_format(t_data *data);
 void	reset_data(t_data *data);
