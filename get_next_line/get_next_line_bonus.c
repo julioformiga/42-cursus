@@ -22,10 +22,7 @@ static char	*fill_line_buffer(int fd, char *left_c, char *buffer)
 	{
 		b_read = read(fd, buffer, BUFFER_SIZE);
 		if (b_read == -1)
-		{
-			free(left_c);
 			return (0);
-		}
 		else if (b_read == 0)
 			break ;
 		buffer[b_read] = 0;
@@ -34,7 +31,6 @@ static char	*fill_line_buffer(int fd, char *left_c, char *buffer)
 		tmp = left_c;
 		left_c = ft_strjoin(tmp, buffer);
 		free(tmp);
-		tmp = NULL;
 		if (ft_strchr(buffer, '\n'))
 			break ;
 	}

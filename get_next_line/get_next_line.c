@@ -12,58 +12,54 @@
 
 #include "get_next_line.h"
 
-static char	*fill_line_buffer(int fd, char *left_c, char *buffer)
+static char	*fill_line_buffer(int fd, char *left_char, char *buffer)
 {
-	ssize_t	b_read;
+	ssize_t	byte_read;
 	char	*tmp;
 
-	b_read = 1;
-	while (b_read > 0)
+	byte_read = 1;
+	while (byte_read > 0)
 	{
-		b_read = read(fd, buffer, BUFFER_SIZE);
-		if (b_read == -1)
-		{
-			free(left_c);
+		byte_read = read(fd, buffer, BUFFER_SIZE);
+		if (byte_read == -1)
 			return (0);
-		}
-		else if (b_read == 0)
+		if (byte_read == 0)
 			break ;
-		buffer[b_read] = 0;
-		if (!left_c)
-			left_c = ft_strdup("");
-		tmp = left_c;
-		left_c = ft_strjoin(tmp, buffer);
+		buffer[byte_read] = 0;
+		if (!left_char)
+			left_char = ft_strdup("");
+		tmp = left_char;
+		left_char = ft_strjoin(tmp, buffer);
 		free(tmp);
-		tmp = NULL;
 		if (ft_strchr(buffer, '\n'))
 			break ;
 	}
-	return (left_c);
+	return (left_char);
 }
 
 static char	*set_line(char *line_buffer)
 {
-	char	*left_c;
-	ssize_t	i;
+	char	*left_char;
+	size_t	i;
 
 	i = 0;
 	while (line_buffer[i] != '\n' && line_buffer[i] != '\0')
 		i++;
 	if (line_buffer[i] == 0)
 		return (0);
-	left_c = ft_substr(line_buffer, i + 1, ft_strlen(line_buffer) - 1);
-	if (*left_c == 0)
+	left_char = ft_substr(line_buffer, i + 1, ft_strlen(line_buffer) - 1);
+	if (*left_char == 0)
 	{
-		free(left_c);
-		left_c = NULL;
+		free(left_char);
+		left_char = NULL;
 	}
 	line_buffer[i + 1] = 0;
-	return (left_c);
+	return (left_char);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*left_c;
+	static char	*left_char;
 	char		*line;
 	char		*buffer;
 
@@ -75,11 +71,11 @@ char	*get_next_line(int fd)
 		free(buffer);
 		return (NULL);
 	}
-	line = fill_line_buffer(fd, left_c, buffer);
+	line = fill_line_buffer(fd, left_char, buffer);
 	free(buffer);
 	if (!line)
 		return (NULL);
-	left_c = set_line(line);
+	left_char = set_line(line);
 	return (line);
 }
 
@@ -89,11 +85,11 @@ char	*get_next_line(int fd)
 /* 	int		lines; */
 /* 	char	*line; */
 /*  */
-/* 	lines = 0; */
-/* 	fd = open("./example.txt", O_RDONLY); */
+/* 	lines = 1; */
+/* 	fd = open("./get_next_line.c", O_RDONLY); */
 /* 	while ((line = get_next_line(fd))) */
 /* 	{ */
-/* 		printf("%d -> %s\n", lines++, line); */
+/* 		printf("%2d: %s", lines++, line); */
 /* 		free(line); */
 /* 	} */
 /* 	free(line); */

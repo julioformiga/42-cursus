@@ -21,7 +21,6 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <stddef.h>
 # include <fcntl.h>
 
 char	*ft_strchr(const char *str, char c);
