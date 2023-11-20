@@ -66,3 +66,16 @@ char	*get_unsigned_hex(unsigned int nbr, t_data *data)
 			str[i] = ft_toupper(str[i]);
 	return (str);
 }
+
+void	get_arg_format(char c, t_data *data)
+{
+	if (ft_strchr(PRINTF_FORMAT, c)
+		&& data->format_type == 0 && !data->format)
+		data->format_type = c;
+	else
+	{
+		if (!data->format)
+			data->format = ft_calloc(1, sizeof(char *));
+		data->format[ft_strlen(data->format)] = c;
+	}
+}

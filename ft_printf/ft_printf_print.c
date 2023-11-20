@@ -29,36 +29,15 @@ int	print_string(char *str)
 	return (i);
 }
 
-void	reset_data(t_data *data)
+void	show_data(t_data *data)
 {
-	data->type = 0;
-	data->format_type = 0;
-	data->format = NULL;
-	data->print = NULL;
-}
-/*  */
-/* void	show_data(t_data *data) */
-/* { */
-/* 	printf("\n=== show_data ===\n"); */
-/* 	printf("type: %c\n", data->type); */
-/* 	printf("format_type: |%c|\n", data->format_type); */
-/* 	printf("format: |%s|\n", data->format); */
-/* 	printf("print: |%s|\n", data->print); */
-/* 	printf("len: |%d|\n", data->len); */
-/* 	printf("==================\n"); */
-/* } */
-
-void	get_arg_format(char c, t_data *data)
-{
-	if (ft_strchr(PRINTF_FORMAT, c)
-		&& data->format_type == 0 && !data->format)
-		data->format_type = c;
-	else
-	{
-		if (!data->format)
-			data->format = ft_calloc(1, sizeof(char *));
-		data->format[ft_strlen(data->format)] = c;
-	}
+	printf("\n=== show_data ===\n");
+	printf("type: %c\n", data->type);
+	printf("format_type: |%c|\n", data->format_type);
+	printf("format: |%s|\n", data->format);
+	printf("print: |%s|\n", data->print);
+	printf("len: |%d|\n", data->len);
+	printf("==================\n");
 }
 
 void	print_args(const char *s, t_data *data, va_list args)
@@ -73,6 +52,7 @@ void	print_args(const char *s, t_data *data, va_list args)
 			if (ft_strchr(PRINTF_TYPES, *s))
 				data->type = *s;
 			get_data_strings(data, args);
+			/* show_data(data); */
 			print_data(data);
 			free(data->print);
 			free(data->format);

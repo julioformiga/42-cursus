@@ -12,12 +12,23 @@
 
 #include "ft_printf.h"
 
+void	reset_data(t_data *data)
+{
+	data->type = 0;
+	data->format_type = 0;
+	data->format = NULL;
+	data->print = NULL;
+}
+
 void	get_data_strings(t_data *data, va_list args)
 {
-	if (data->type == '%')
-		data->print_char = '%';
-	else if (data->type == 'c')
-		data->print_char = va_arg(args, int);
+	char	data_char;
+
+	data_char = '%';
+	if (data->type == 'c')
+		data_char = va_arg(args, int);
+	if (data->type == '%' || data->type == 'c')
+		data->print = ft_strdup(&data_char);
 	else if (data->type == 's')
 		data->print = get_string(va_arg(args, char *));
 	else if (data->type == 'p')
@@ -33,10 +44,7 @@ void	get_data_strings(t_data *data, va_list args)
 void	print_data(t_data *data)
 {
 	print_pre_format(data);
-	if (ft_strchr("%c", data->type))
-		data->len += print_char(data->print_char);
-	else if (ft_strchr("spiduxX", data->type))
-		data->len += print_string(data->print);
+	data->len += print_string(data->print);
 	print_pos_format(data);
 }
 
@@ -53,28 +61,29 @@ int	ft_printf(const char *s, ...)
 	return (data.len);
 }
 
-/* int	main(void) */
-/* { */
-/* 	char	*format; */
-/* 	int		val_int; */
-/* 	char	val_char; */
-/* 	char	*val_str; */
-/* 	int		count; */
-/*  */
-/* 	//format = "| %c | %s | %p | %d | %x | %X | \n"; */
-/* 	//format = "| %-5c | %.s | %.1d | %04d | %-0d | %d \n"; */
-/* 	format = "| % 1d | % 1i |\n"; */
-/* 	val_int = -4; */
-/* 	val_char = '7'; */
-/* 	val_str = "Firenze"; */
-/* 	(void)val_int; */
-/* 	(void)val_char; */
-/* 	(void)val_str; */
-/* 	printf("----- PRINTF ------\n"); */
-/* 	count = printf(format, 1, 1); */
-/* 	printf("count: %d\n", count); */
-/* 	ft_printf("\n---- FT_PRINTF ----\n"); */
-/* 	count = ft_printf(format, 1, 1); */
-/* 	ft_printf("count: %d\n", count); */
-/* 	return (0); */
-/* } */
+int	main(void)
+{
+	char	*format;
+	int		v_int;
+	char	*v_str;
+	char	v_char;
+	int		count;
+
+	format = "| %c | %c | %c |\n";
+	format = "| %-2c | %#12s | %.1d | %04d | %-0d | %d |\n";
+	v_int = -4;
+	v_char = '*';
+	v_str = " Firenze";
+	(void)v_int;
+	(void)v_str;
+	(void)v_char;
+	printf("----- PRINTF ------\n");
+	count = printf(format, v_char, v_str, v_int, v_int, v_int, v_int);
+	// count = printf(format, '0', 0, '2');
+	printf("count: %d\n", count);
+	ft_printf("\n---- FT_PRINTF ----\n");
+	count = ft_printf(format, v_char, v_str, v_int, v_int, v_int, v_int);
+	// count = ft_printf(format, '0', 0, '2');
+	ft_printf("count: %d\n", count);
+	return (0);
+}

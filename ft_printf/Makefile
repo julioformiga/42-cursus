@@ -73,6 +73,8 @@ bonus:		all
 re:			fclean all
 
 run:
-			$(CC) $(SRC) $(NAME) $(CFLAGS) && ./a.out
+			$(CC) $(SRC) $(NAME) $(CFLAGS)
+			./a.out
+#			valgrind --leak-check=full --show-leak-kinds=all -s ./a.out
 
 .PHONY:		all clean fclean re run

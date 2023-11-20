@@ -27,7 +27,6 @@ typedef struct s_data
 	char			*format;
 	int				len;
 	char			*print;
-	char			print_char;
 }	t_data;
 
 int		print_char(char c);
@@ -37,16 +36,17 @@ void	print_data(t_data *data);
 void	print_pre_format_space_plus(t_data *data);
 void	print_pre_format(t_data *data);
 void	print_pos_format(t_data *data);
-void	reset_data(t_data *data);
 
 char	*get_string(char *str);
 char	*get_nbr(int nbr);
 char	*get_ptr_addrs(void *ptr);
 char	*get_unsigned_hex(unsigned int nbr, t_data *data);
 void	get_data_strings(t_data *data, va_list args);
+void	get_arg_format(char c, t_data *data);
 
-int		ft_printf(const char *s, ...);
+void	reset_data(t_data *data);
 char	*ft_uitoa_base(unsigned long nbr, char *b_to, unsigned long b_size);
 char	*ft_uitoa(unsigned int nbr);
+int		ft_printf(const char *s, ...);
 
 #endif
