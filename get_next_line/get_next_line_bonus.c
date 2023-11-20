@@ -14,18 +14,21 @@
 
 static char	*fill_line_buffer(int fd, char *left_c, char *buffer)
 {
-	ssize_t	b_read;
+	ssize_t	byte_read;
 	char	*tmp;
 
-	b_read = 1;
-	while (b_read > 0)
+	byte_read = 1;
+	while (byte_read > 0)
 	{
-		b_read = read(fd, buffer, BUFFER_SIZE);
-		if (b_read == -1)
-			return (0);
-		else if (b_read == 0)
+		byte_read = read(fd, buffer, BUFFER_SIZE);
+		if (byte_read == -1)
+		{
+			free(left_c);
+			return (NULL);
+		}
+		else if (byte_read == 0)
 			break ;
-		buffer[b_read] = 0;
+		buffer[byte_read] = 0;
 		if (!left_c)
 			left_c = ft_strdup("");
 		tmp = left_c;
@@ -39,7 +42,7 @@ static char	*fill_line_buffer(int fd, char *left_c, char *buffer)
 
 static char	*set_line(char *line_buffer)
 {
-	char	*left_c;
+	char	*left_char;
 	ssize_t	i;
 
 	i = 0;
@@ -47,35 +50,38 @@ static char	*set_line(char *line_buffer)
 		i++;
 	if (line_buffer[i] == 0)
 		return (0);
-	left_c = ft_substr(line_buffer, i + 1, ft_strlen(line_buffer) - 1);
-	if (*left_c == 0)
+	left_char = ft_substr(line_buffer, i + 1, ft_strlen(line_buffer) - 1);
+	if (*left_char == 0)
 	{
-		free(left_c);
-		left_c = NULL;
+		free(left_char);
+		left_char = NULL;
 	}
 	line_buffer[i + 1] = 0;
-	return (left_c);
+	return (left_char);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*left_c[MAX_FD];
+	static char	*left_char[MAX_FD];
 	char		*line;
 	char		*buffer;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-		return (0);
 	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (!buffer)
+	if (fd < 0 || fd > MAX_FD || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
 		free(buffer);
+		free(left_char[fd]);
+		left_char[fd] = NULL;
+		buffer = NULL;
 		return (NULL);
 	}
-	line = fill_line_buffer(fd, left_c[fd], buffer);
+	if (!buffer)
+		return (NULL);
+	line = fill_line_buffer(fd, left_char[fd], buffer);
 	free(buffer);
 	if (!line)
 		return (NULL);
-	left_c[fd] = set_line(line);
+	left_char[fd] = set_line(line);
 	return (line);
 }
 

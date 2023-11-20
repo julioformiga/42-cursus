@@ -22,7 +22,10 @@ static char	*fill_line_buffer(int fd, char *left_char, char *buffer)
 	{
 		byte_read = read(fd, buffer, BUFFER_SIZE);
 		if (byte_read == -1)
-			return (0);
+		{
+			free(left_char);
+			return (NULL);
+		}
 		if (byte_read == 0)
 			break ;
 		buffer[byte_read] = 0;
@@ -31,6 +34,7 @@ static char	*fill_line_buffer(int fd, char *left_char, char *buffer)
 		tmp = left_char;
 		left_char = ft_strjoin(tmp, buffer);
 		free(tmp);
+		tmp = NULL;
 		if (ft_strchr(buffer, '\n'))
 			break ;
 	}
@@ -40,13 +44,13 @@ static char	*fill_line_buffer(int fd, char *left_char, char *buffer)
 static char	*set_line(char *line_buffer)
 {
 	char	*left_char;
-	size_t	i;
+	ssize_t	i;
 
 	i = 0;
 	while (line_buffer[i] != '\n' && line_buffer[i] != '\0')
 		i++;
 	if (line_buffer[i] == 0)
-		return (0);
+		return (NULL);
 	left_char = ft_substr(line_buffer, i + 1, ft_strlen(line_buffer) - 1);
 	if (*left_char == 0)
 	{
@@ -60,19 +64,23 @@ static char	*set_line(char *line_buffer)
 char	*get_next_line(int fd)
 {
 	static char	*left_char;
-	char		*line;
 	char		*buffer;
+	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-		return (0);
 	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (!buffer)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
 		free(buffer);
+		free(left_char);
+		buffer = NULL;
+		left_char = NULL;
 		return (NULL);
 	}
+	if (!buffer)
+		return (NULL);
 	line = fill_line_buffer(fd, left_char, buffer);
 	free(buffer);
+	buffer = NULL;
 	if (!line)
 		return (NULL);
 	left_char = set_line(line);
@@ -86,7 +94,7 @@ char	*get_next_line(int fd)
 /* 	char	*line; */
 /*  */
 /* 	lines = 1; */
-/* 	fd = open("./get_next_line.c", O_RDONLY); */
+/* 	fd = open("./example.txt", O_RDONLY); */
 /* 	while ((line = get_next_line(fd))) */
 /* 	{ */
 /* 		printf("%2d: %s", lines++, line); */
