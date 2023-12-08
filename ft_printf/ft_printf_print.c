@@ -14,6 +14,8 @@
 
 int	print_char(char c)
 {
+	if (c == '\0')
+		return (0);
 	write(1, &c, 1);
 	return (1);
 }
@@ -52,13 +54,18 @@ void	print_args(const char *s, t_data *data, va_list args)
 			if (ft_strchr(PRINTF_TYPES, *s))
 				data->type = *s;
 			get_data_strings(data, args);
-			/* show_data(data); */
+			// show_data(data);
 			print_data(data);
 			free(data->print);
 			free(data->format);
 		}
 		else
-			data->len += print_char(*s);
+		{
+			if (data->printing)
+				data->len += print_char(*s);
+			else
+				data->len++;
+		}
 		s++;
 	}
 }

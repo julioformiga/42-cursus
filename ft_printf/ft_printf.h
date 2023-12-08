@@ -26,6 +26,7 @@ typedef struct s_data
 	char			format_type;
 	char			*format;
 	int				len;
+	int				printing;
 	char			*print;
 }	t_data;
 
