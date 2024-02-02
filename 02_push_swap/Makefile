@@ -37,11 +37,11 @@ re:			fclean all
 
 run:		all
 			$(CC) $(CFLAGS) $(NAME) -o push_swap
-			./push_swap 1 "  -2 	+11   "  5a 	one -3  --5" - 90a   -19r4   	" - 7
+			./push_swap 1 "  -2 	+11   "  5 	one -3  --5" - 90a   -19r4   	" - 7
 			./push_swap 1 "  -2 	+11   "  5 	 -3  -5"  90   -194   	"  7
-#			./push_swap "1 5 2" 8 "4 3"
-#			./push_swap 99 -2147483648 2147483647 0
-#			./push_swap 2 1 3 6 5 8
+# ./push_swap "1 5 2" 8 "4 3"
+# ./push_swap 99 -21474836481 2147483647 0
+# ./push_swap 2 1 3 6 5 8
 
 .SILENT: all clean fclean re
 .PHONY: all clean fclean re

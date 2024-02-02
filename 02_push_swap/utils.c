@@ -1,33 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: julio.formiga <julio.formiga@gmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/13 14:53:41 by julio.formiga     #+#    #+#             */
-/*   Updated: 2023/12/13 14:53:41 by julio.formiga    ###   ########.fr       */
+/*   Created: 2024/02/02 14:53:40 by julio.formiga     #+#    #+#             */
+/*   Updated: 2024/02/02 14:53:40 by julio.formiga    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
-
-int	main(int argc, char **argv)
+char	*ft_replace(char *str, char s, char r)
 {
-	int		i;
+	int	i;
 
-	if (argc > 1)
-	{
-		if (valid_args(argv))
-			ft_printf("Error\n");
-		else
-		{
-			i = 0;
-			while (i++, i < argc)
-			{
-				ft_printf("%d: %s\n", i, argv[i]);
-			}
-		}
-	}
+	i = -1;
+	while (i++, str[i])
+		if (str[i] == s)
+			str[i] = r;
+	return (str);
+}
+
+int	ft_isblank(char c)
+{
+	if (c == ' ' || c == '\t')
+		return (0);
+	return (1);
+}
+
+int	has_blank(const char *str)
+{
+	int	i;
+
+	i = -1;
+	while (i++, str[i])
+		if (ft_isblank(str[i]))
+			return (1);
 	return (0);
 }
