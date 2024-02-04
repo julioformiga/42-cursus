@@ -25,6 +25,8 @@ char	*get_data_char(char c)
 	char	*str;
 
 	str = (char *)malloc(sizeof(char) * 2);
+	if (!str)
+		return (NULL);
 	str[0] = c;
 	str[1] = '\0';
 	return (str);
@@ -36,11 +38,7 @@ void	get_data_strings(t_data *data, va_list args)
 
 	data_char = '%';
 	if (data->type == 'c')
-	{
 		data_char = va_arg(args, int);
-		if (data_char == '\0')
-			data->printing = 0;
-	}
 	if (data->type == '%' || data->type == 'c')
 		data->print = get_data_char(data_char);
 	else if (data->type == 's')
@@ -60,10 +58,7 @@ void	print_data(t_data *data)
 	print_pre_format(data);
 	if (data->type == 'c' && data->print[0] == '\0')
 		data->len += print_char('\0');
-	if (data->printing == 1)
-		data->len += print_string(data->print);
-	else
-		data->len += ft_strlen(data->print);
+	data->len += print_string(data->print);
 	print_pos_format(data);
 }
 
@@ -74,33 +69,43 @@ int	ft_printf(const char *s, ...)
 
 	reset_data(&data);
 	data.len = 0;
-	data.printing = 1;
 	va_start(args, s);
 	print_args(s, &data, args);
 	va_end(args);
 	return (data.len);
 }
 
-// int	main(void)
-// {
-// 	char	*format;
-// 	int		v_int;
-// 	char	*v_str;
-// 	char	v_char;
-// 	int		count;
-//
-// 	v_int = -4;
-// 	v_char = 0;
-// 	v_str = "Firenze";
-// 	format = "%c %c %c";
-// 	format = "%% | %3c | %#12s | %.1d | %04d | %-0d | %d |\n";
-// 	printf(":PRINTF   : %s", format);
-// 	count = printf(format, v_char, v_str, v_int, v_int, v_int, v_int);
-// 	// count = printf(format, '0', 0, '2');
-// 	printf("count: %d\n", count);
-// 	ft_printf("\n:FT_PRINTF: %s", format);
-// 	count = ft_printf(format, v_char, v_str, v_int, v_int, v_int, v_int);
-// 	// count = ft_printf(format, '0', 0, '2');
-// 	ft_printf("count: %d\n", count);
-// 	return (0);
-// }
+int	main(void)
+{
+	char	*format[8];
+	int		v_int;
+	char	*v_str;
+	char	v_char;
+	int		count;
+
+	v_int = -42427212;
+	v_char = 'C';
+	v_str = "42 Firenze";
+	format[0] = "%%|%c|%s|%d|%i|%u|%p|%x|%X|";
+	format[1] = "%5%|%+3c|%+14s|%+12d|%+12i|%+12u|%+13p|%+11x|%+10X|";
+	format[2] = "%5%|%+-3c|%+-14s|%+-12d|%+-10i|%+-12u|%+-11p|%+-10x|%+-10X|";
+	format[3] = "%5%|%#3c|%#14s|%#12d|%#10i|%#12u|%#12p|%#12x|%#12X|";
+	format[4] = "%5%|%#-3c|%#-14s|%#-12d|%#-10i|%#-12u|%#-12p|%#-12x|%#-12X|";
+	format[5] = "%5%|% 3c|% 14s|% 12d|% 10i|% 12u|% 12p|% 10x|% 10X|";
+	format[6] = "%5%|% -3c|% -14s|% -12d|% -10i|% -12u|% -10p|% -10x|% -10X|";
+	format[7] = "%5%|%.3c|%.14s|%.12d|%.10i|%.12u|%17.10p|%.12x|%.10X|";
+	for (int i = 0; i < 8; i++)
+	{
+		ft_printf("----------------- TEST [%d] ----------- \n", i);
+		printf(":__ FORMAT __: %s", format[i]);
+		printf("\n:     PRINTF : ");
+		count = printf(format[i], v_char, v_str,
+				v_int, v_int, v_int, v_int, v_int, v_int);
+		printf(" count = %d|\n", count);
+		ft_printf(":  FT_PRINTF : ");
+		count = ft_printf(format[i], v_char, v_str,
+				v_int, v_int, v_int, v_int, v_int, v_int);
+		ft_printf(" count = %d|\n", count, i);
+	}
+	return (0);
+}

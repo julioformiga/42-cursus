@@ -3,8 +3,10 @@ CFLAGS		= -Wall -Werror -Wextra -std=c99 -g
 RM			= rm -f
 AR			= ar -src
 
-SRC			= ft_printf.c ft_printf_print.c ft_printf_get_strings.c ft_printf_format.c \
-			  ft_printf_pre_format_space_plus.c ft_uitoa.c ft_itoa_base.c
+SRC			= ft_printf.c ft_printf_print.c ft_printf_get_strings.c \
+			  ft_printf_format.c ft_printf_format_precision.c \
+			  ft_printf_format_hashtag.c \
+			  ft_printf_format_space_plus.c ft_uitoa.c ft_itoa_base.c
 OBJ			= $(SRC:.c=.o)
 
 LIBFT_DIR	= libft/
@@ -74,7 +76,7 @@ re:			fclean all
 
 run:
 			$(CC) $(SRC) $(NAME) $(CFLAGS)
+# valgrind --leak-check=full --show-leak-kinds=all -s ./a.out
 			./a.out
-#			valgrind --leak-check=full --show-leak-kinds=all -s ./a.out
 
 .PHONY:		all clean fclean re run

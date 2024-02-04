@@ -12,13 +12,29 @@
 
 #include "ft_printf.h"
 
+static void	plus_dip(t_data *data)
+{
+	int	i;
+	int	i_max;
+
+	if (ft_strchr("dip", data->type)
+		&& data->format_type == '+')
+	{
+		i = -1;
+		i_max = ft_atoi(data->format) - ft_strlen(data->print) - 1;
+		if (ft_atoi(data->print) < 0)
+			i_max++;
+		while (i++, i < i_max)
+			data->len += print_char(' ');
+	}
+}
+
 static void	space_dis(t_data *data)
 {
 	if (data->format_type == ' ' && data->format == NULL)
 	{
 		if (ft_strchr("s", data->type)
 			&& ft_strlen(data->print) > 1
-			&& !ft_strchr(data->print, ' ')
 			&& ft_strncmp(data->print, "(null)", 6) != 0)
 			data->len += print_char(' ');
 		if (ft_strchr("di", data->type) && ft_atoi(data->print) >= 0)
@@ -26,7 +42,7 @@ static void	space_dis(t_data *data)
 	}
 	if (data->format_type == '+')
 	{
-		if (ft_strchr("di", data->type)
+		if (ft_strchr("dip", data->type)
 			&& ft_atoi(data->print) >= 0)
 			data->len += print_char(data->format_type);
 	}
@@ -55,5 +71,6 @@ void	print_pre_format_space_plus(t_data *data)
 			}
 		}
 	}
+	plus_dip(data);
 	space_dis(data);
 }
