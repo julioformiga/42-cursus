@@ -17,6 +17,7 @@ void	reset_data(t_data *data)
 	data->type = 0;
 	data->format_type = 0;
 	data->format = NULL;
+	data->number_neg = 0;
 	data->print = NULL;
 }
 
@@ -47,19 +48,40 @@ void	get_data_strings(t_data *data, va_list args)
 		data->print = (char *)get_ptr_addrs(va_arg(args, void *));
 	else if (data->type == 'u')
 		data->print = ft_uitoa(va_arg(args, int));
-	else if (ft_strchr("di", data->type))
-		data->print = ft_itoa(va_arg(args, int));
 	else if (ft_strchr("xX", data->type))
 		data->print = get_unsigned_hex(va_arg(args, int), data);
+	else if (ft_strchr("di", data->type))
+	{
+		data->print = ft_itoa(va_arg(args, int));
+		if (ft_atoi(data->print) < 0)
+			data->number_neg = 1;
+	}
 }
 
 void	print_data(t_data *data)
 {
-	print_pre_format(data);
-	if (data->type == 'c' && data->print[0] == '\0')
-		data->len += print_char('\0');
-	data->len += print_string(data->print);
-	print_pos_format(data);
+	int	iformat;
+
+	iformat = print_format_null(data);
+	if (iformat == -1)
+		return ;
+	if (data->format_type == '.' && iformat < 0)
+	{
+		data->len += print_string("%.0");
+		data->len += print_string(data->format);
+		data->len += print_char(data->type);
+	}
+	else
+	{
+		print_pre_format(data);
+		if (data->type == 'c' && data->print[0] == '\0')
+		{
+			data->len++;
+			data->print_rest = 1;
+		}
+		data->len += print_string(data->print);
+		print_pos_format(data);
+	}
 }
 
 int	ft_printf(const char *s, ...)
@@ -74,27 +96,44 @@ int	ft_printf(const char *s, ...)
 	va_end(args);
 	return (data.len);
 }
-
+/*
 int	main(void)
 {
-	char	*format[8];
+	char	*format[19];
 	int		v_int;
 	char	*v_str;
 	char	v_char;
 	int		count;
+	void	*v_ptr;
 
-	v_int = -42427212;
+	v_int = INT_MIN + 1;
+	v_int = INT_MAX;
+	v_int = 0;
+	v_int = INT_MIN;
+	v_int = -1;
+	v_ptr = &v_int;
 	v_char = 'C';
 	v_str = "42 Firenze";
 	format[0] = "%%|%c|%s|%d|%i|%u|%p|%x|%X|";
-	format[1] = "%5%|%+3c|%+14s|%+12d|%+12i|%+12u|%+13p|%+11x|%+10X|";
-	format[2] = "%5%|%+-3c|%+-14s|%+-12d|%+-10i|%+-12u|%+-11p|%+-10x|%+-10X|";
-	format[3] = "%5%|%#3c|%#14s|%#12d|%#10i|%#12u|%#12p|%#12x|%#12X|";
-	format[4] = "%5%|%#-3c|%#-14s|%#-12d|%#-10i|%#-12u|%#-12p|%#-12x|%#-12X|";
-	format[5] = "%5%|% 3c|% 14s|% 12d|% 10i|% 12u|% 12p|% 10x|% 10X|";
-	format[6] = "%5%|% -3c|% -14s|% -12d|% -10i|% -12u|% -10p|% -10x|% -10X|";
-	format[7] = "%5%|%.3c|%.14s|%.12d|%.10i|%.12u|%17.10p|%.12x|%.10X|";
-	for (int i = 0; i < 8; i++)
+	format[1] = "%5%|%5c|%14s|%12d|%12i|%14u|%14p|%14x|%14X|";
+	format[2] = "%5%|%+5c|%+14s|%+12d|%+12i|%+14u|%+14p|%+14x|%+14X|";
+	format[3] = "%5%|%#5c|%#14s|%#12d|%#12i|%#12u|%#14p|%#14x|%#12X|";
+	format[4] = "%5%|% 5c|% 14s|% 14d|% 14i|% 14u|% 14p|% 14x|% 14X|";
+	format[5] = "%5%|%05c|%014s|%014d|%014i|%014u|%014p|%012x|%012X|";
+	format[6] = "%5%|%#-5c|%#-14s|%#-12d|%#-14i|%#-14u|%#-14p|%#-12x|%#-12X|";
+	format[7] = "%5%|%-5c|%-14s|%-14d|%-12i|%-14u|%-12p|%-14x|%-14X|";
+	format[8] = "%5%|%+-5c|%+-14s|%+-12d|%+-14i|%+-14u|%+-14p|%+-14x|%+-14X|";
+	format[9] = "%5%|% -5c|% -14s|% -14d|% -14i|% -14u|% -14p|% -12x|% -12X|";
+	format[10] = "%5%|%0-5c|%0-14s|%0-14d|%0-14i|%0-14u|%0-12p|%0-12x|%0-12X|";
+	format[11] = "%5%|%.5c|%.14s|%.14d|%.14i|%.14u|%.14p|%.14x|%.12X|";
+	format[12] = "%5%|%.-5c|%.-14s|%.-14d|%.-14i|%.-14u|%.-14p|%.-14x|%.-12X|";
+	format[13] = "%%|%#c|%#s|%#d|%#i|%#u|%#p|%#x|%#X|";
+	format[14] = "%%|%.c|%.s|%.d|%.i|%.u|%.p|%.x|%.X|";
+	format[15] = "%%|%0c|%0s|%0d|%0i|%0u|%0p|%0x|%0X|";
+	format[16] = "%%|% c|% s|% d|% i|% u|% p|% x|% X|";
+	format[17] = "%%|%-c|%-s|%-d|%-i|%-u|%-p|%-x|%-X|";
+	format[18] = "%%|%+c|%+s|%+d|%+i|%+u|%+p|%+x|%+X|";
+	for (int i = 0; i < 19; i++)
 	{
 		ft_printf("----------------- TEST [%d] ----------- \n", i);
 		printf(":__ FORMAT __: %s", format[i]);
@@ -107,5 +146,12 @@ int	main(void)
 				v_int, v_int, v_int, v_int, v_int, v_int);
 		ft_printf(" count = %d|\n", count, i);
 	}
+	printf("\n:     PRINTF : ");
+	count = printf(" %c %c %c %14p", '0', 0, '1', v_ptr);
+	printf("\ncount = %d\n", count);
+	ft_printf(":  FT_PRINTF : ");
+	count = ft_printf(" %c %c %c %14p", '0', 0, '1', v_ptr);
+	printf("\ncount = %d\n", count);
 	return (0);
 }
+*/

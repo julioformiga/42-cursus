@@ -12,46 +12,16 @@
 
 #include "ft_printf.h"
 
-void	show_data(t_data *data)
-{
-	printf("\n=== show_data ===\n");
-	printf("type: %c\n", data->type);
-	printf("format_type: |%c|\n", data->format_type);
-	printf("format: |%s|\n", data->format);
-	printf("print: |%s|\n", data->print);
-	printf("len: |%d|\n", data->len);
-	printf("==================\n");
-}
-
-int	print_char(char c)
-{
-	if (c == '\0')
-		return (0);
-	write(1, &c, 1);
-	return (1);
-}
-
-int	print_string(char *str)
-{
-	size_t	i;
-
-	if (!str)
-		str = "(null)";
-	i = ft_strlen(str);
-	write(1, str, i);
-	return (i);
-}
-
 void	print_pre_format_number(t_data *data)
 {
 	int		i;
 	int		i_max;
 
 	i = -1;
-	if (ft_strchr("dip", data->type) && data->format)
+	if (ft_strchr("diu", data->type) && data->format)
 	{
-		print_pre_format_number_precision(data);
-		if (ft_strchr("#", data->format_type))
+		if (ft_strchr("#", data->format_type)
+			|| (data->type == 'u' && ft_strchr("+", data->format_type)))
 		{
 			i_max = ft_atoi(data->format);
 			while (i++, i < (int)(i_max - ft_strlen(data->print)))
@@ -65,22 +35,27 @@ void	print_pre_format_string(t_data *data)
 	int		i;
 	int		i_max;
 
-	i = -1;
+	i = 0;
+	i_max = 0;
+	if (ft_strchr("sxX", data->type)
+		&& data->format_type == '.'
+		&& !ft_strchr(data->format, '.'))
+		return ;
 	if (data->type == 'c' && !data->format_type && data->format)
 	{
 		i_max = ft_atoi(data->format);
 		while (i++, i < (int)(i_max - 1))
 			data->len += print_char(' ');
 	}
-	if (ft_strchr("suxX", data->type) && data->format)
+	if (data->format
+		&& ((ft_strchr("xX", data->type)
+				&& (!ft_strchr(" 0-", data->format_type) || !data->format_type))
+			|| (data->type == 's' && ft_strchr("# 0+.", data->format_type))))
 	{
-		print_pre_format_string_precision(data);
-		if (ft_strchr("# +", data->format_type))
-		{
-			i_max = ft_atoi(data->format);
-			while (i++, i < (int)(i_max - ft_strlen(data->print)))
-				data->len += print_char(' ');
-		}
+		i = -1;
+		i_max = ft_atoi(data->format);
+		while (i++, i < (int)(i_max - ft_strlen(data->print)))
+			data->len += print_char(' ');
 	}
 }
 
