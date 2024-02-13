@@ -16,9 +16,9 @@ static void	print_pre_pointers_specifics_space(t_data *data, int i_max)
 {
 	int	i;
 
-	i = -1;
 	if (data->format_type == ' ')
 	{
+		i = -1;
 		if (!is_print_null(data) && data->format_type)
 			i_max++;
 		if ((is_print_null(data) && i_max > 0)
@@ -81,8 +81,8 @@ void	print_pre_pointers(t_data *data)
 	char	*tmp;
 	char	*data_print;
 
-	len = 0;
-	if (data->type != 'p' || data->format == NULL || is_print_null(data))
+	if (data->type != 'p' || !data->format || !data->format_type
+		|| is_print_null(data))
 		return ;
 	if (data->format_type == '.'
 		|| (data->format_type == '0' && ft_atoi(data->format) >= 0))

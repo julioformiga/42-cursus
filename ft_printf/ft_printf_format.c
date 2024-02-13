@@ -33,7 +33,7 @@ static void	print_pre_format_char(t_data *data)
 		}
 	}
 	if (data->type == 'c' && ft_strlen(data->print) == 0)
-		data->len++;
+		data->len--;
 }
 
 static void	print_pre_format_di_negative(t_data *data)

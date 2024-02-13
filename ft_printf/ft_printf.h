@@ -26,7 +26,6 @@ typedef struct s_data
 	char			format_type;
 	char			*format;
 	char			*print;
-	int				print_rest;
 	int				number_neg;
 	int				len;
 }	t_data;

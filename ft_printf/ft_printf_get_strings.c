@@ -38,7 +38,7 @@ char	*get_ptr_addrs(void *ptr)
 
 	i = (unsigned long)ptr;
 	str = ft_uitoa_base(i, HEX_STR, 16);
-	if (!str || i == 0)
+	if (!str || !i)
 	{
 		free(str);
 		return (ft_strdup("(nil)"));

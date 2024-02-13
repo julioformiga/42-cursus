@@ -88,7 +88,8 @@ int	print_format_null(t_data *data)
 	iformat = 0;
 	if (data->format)
 		iformat = ft_atoi(data->format);
-	else if (ft_strchr("dip", data->type) && ftype_has(data, "+ ")
+	else if (ft_strchr("dip", data->type)
+		&& (data->format_type == '+' || data->format_type == ' ')
 		&& !is_print_null(data) && data->number_neg == 0)
 	{
 		data->len += print_char(data->format_type);

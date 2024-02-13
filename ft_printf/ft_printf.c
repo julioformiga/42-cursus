@@ -28,10 +28,7 @@ char	*get_data_char(char c)
 	str = (char *)malloc(sizeof(char) * 2);
 	if (!str)
 		return (NULL);
-	if (c)
-		str[0] = c;
-	else
-		str[0] = '\0';
+	str[0] = c;
 	str[1] = '\0';
 	return (str);
 }
@@ -39,7 +36,7 @@ char	*get_data_char(char c)
 void	get_data_strings(t_data *data, va_list args)
 {
 	if (data->type == '%')
-		data->print = "%";
+		data->print = get_data_char('%');
 	if (data->type == 'c')
 		data->print = get_data_char(va_arg(args, int));
 	else if (data->type == 's')
@@ -106,9 +103,9 @@ int	main(void)
 
 	v_int = INT_MIN + 1;
 	v_int = INT_MAX;
+	v_int = -1;
 	v_int = 0;
 	v_int = INT_MIN;
-	v_int = -1;
 	v_ptr = &v_int;
 	v_char = 'C';
 	v_str = "42 Firenze";
@@ -131,7 +128,7 @@ int	main(void)
 	format[16] = "%%|% c|% s|% d|% i|% u|% p|% x|% X|";
 	format[17] = "%%|%-c|%-s|%-d|%-i|%-u|%-p|%-x|%-X|";
 	format[18] = "%%|%+c|%+s|%+d|%+i|%+u|%+p|%+x|%+X|";
-	for (int i = 0; i < 19; i++)
+	for (int i = 0; i <= 18; i++)
 	{
 		ft_printf("----------------- TEST [%d] ----------- \n", i);
 		printf(":__ FORMAT __: %s", format[i]);
