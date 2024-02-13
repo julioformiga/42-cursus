@@ -25,18 +25,26 @@ typedef struct s_data
 	char			type;
 	char			format_type;
 	char			*format;
-	int				len;
-	int				printing;
 	char			*print;
+	int				print_rest;
+	int				number_neg;
+	int				len;
 }	t_data;
 
 int		print_char(char c);
 int		print_string(char *str);
 void	print_args(const char *str, t_data *data, va_list args);
 void	print_data(t_data *data);
-void	print_pre_format_space_plus(t_data *data);
 void	print_pre_format(t_data *data);
 void	print_pos_format(t_data *data);
+int		print_pos_format_conditions(t_data *data);
+void	print_pre_format_specifics(t_data *data);
+void	print_pre_format_number(t_data *data);
+void	print_pre_format_string(t_data *data);
+void	print_pre_pointers(t_data *data);
+void	print_pre_pointers_specifics(t_data *data);
+void	print_pos_pointers(t_data *data);
+int		print_format_null(t_data *data);
 
 char	*get_string(char *str);
 char	*get_nbr(int nbr);
@@ -45,9 +53,12 @@ char	*get_unsigned_hex(unsigned int nbr, t_data *data);
 void	get_data_strings(t_data *data, va_list args);
 void	get_arg_format(char c, t_data *data);
 
+void	show_data(t_data *data);
 void	reset_data(t_data *data);
 char	*ft_uitoa_base(unsigned long nbr, char *b_to, unsigned long b_size);
 char	*ft_uitoa(unsigned int nbr);
 int		ft_printf(const char *s, ...);
+int		is_print_null(t_data *data);
+int		ftype_has(t_data *data, char *has);
 
 #endif
