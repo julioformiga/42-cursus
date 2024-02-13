@@ -28,20 +28,20 @@ char	*get_data_char(char c)
 	str = (char *)malloc(sizeof(char) * 2);
 	if (!str)
 		return (NULL);
-	str[0] = c;
+	if (c)
+		str[0] = c;
+	else
+		str[0] = '\0';
 	str[1] = '\0';
 	return (str);
 }
 
 void	get_data_strings(t_data *data, va_list args)
 {
-	char	data_char;
-
-	data_char = '%';
+	if (data->type == '%')
+		data->print = "%";
 	if (data->type == 'c')
-		data_char = va_arg(args, int);
-	if (data->type == '%' || data->type == 'c')
-		data->print = get_data_char(data_char);
+		data->print = get_data_char(va_arg(args, int));
 	else if (data->type == 's')
 		data->print = get_string(va_arg(args, char *));
 	else if (data->type == 'p')
@@ -74,12 +74,10 @@ void	print_data(t_data *data)
 	else
 	{
 		print_pre_format(data);
-		if (data->type == 'c' && data->print[0] == '\0')
-		{
-			data->len++;
-			data->print_rest = 1;
-		}
-		data->len += print_string(data->print);
+		if (data->type == 'c' || data->type == '%')
+			data->len += print_char(data->print[0]);
+		else
+			data->len += print_string(data->print);
 		print_pos_format(data);
 	}
 }
