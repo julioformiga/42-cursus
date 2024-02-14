@@ -38,7 +38,7 @@ char	*get_ptr_addrs(void *ptr)
 
 	i = (unsigned long)ptr;
 	str = ft_uitoa_base(i, HEX_STR, 16);
-	if (!str || i == 0)
+	if (!str || !i)
 	{
 		free(str);
 		return (ft_strdup("(nil)"));
@@ -78,4 +78,6 @@ void	get_arg_format(char c, t_data *data)
 			data->format = ft_calloc(1, sizeof(char *));
 		data->format[ft_strlen(data->format)] = c;
 	}
+	if (data->format_type == 0 && ft_strchr(data->format, '.'))
+		data->format_type = '.';
 }

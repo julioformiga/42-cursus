@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "push_swap.h"
+
 char	*ft_replace(char *str, char s, char r)
 {
 	int	i;

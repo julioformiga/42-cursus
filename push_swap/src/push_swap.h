@@ -15,21 +15,14 @@
 # define VALID_CHARS "0123456789+-"
 # include <stdlib.h>
 # include <limits.h>
+# include "ft_printf/ft_printf.h"
+# include "ft_printf/libft/libft.h"
 
 typedef struct s_stack
 {
 	int				*val;
 	struct s_stack	*next;
 }	t_stack;
-
-size_t	ft_strlen(const char *str);
-char	**ft_split(char const *s, char c);
-int		ft_atoi(const char *str);
-int		ft_printf(const char *s, ...);
-int		ft_isdigit(int c);
-char	*ft_strchr(const char *s, int c);
-t_stack	*ft_lstnew(void *content);
-void	ft_lstadd_front(t_stack **lst, t_stack *newlst);
 
 char	*ft_replace(char *str, char s, char r);
 int		ft_isblank(char c);

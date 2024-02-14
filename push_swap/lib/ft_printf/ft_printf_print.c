@@ -12,34 +12,51 @@
 
 #include "ft_printf.h"
 
-int	print_char(char c)
+void	print_pre_format_number(t_data *data)
 {
-	if (c == '\0')
-		return (0);
-	write(1, &c, 1);
-	return (1);
+	int		i;
+	int		i_max;
+
+	i = -1;
+	if (ft_strchr("diu", data->type) && data->format)
+	{
+		if (ft_strchr("#", data->format_type)
+			|| (data->type == 'u' && ft_strchr("+", data->format_type)))
+		{
+			i_max = ft_atoi(data->format);
+			while (i++, i < (int)(i_max - ft_strlen(data->print)))
+				data->len += print_char(' ');
+		}
+	}
 }
 
-int	print_string(char *str)
+void	print_pre_format_string(t_data *data)
 {
-	size_t	i;
+	int		i;
+	int		i_max;
 
-	if (!str)
-		str = "(null)";
-	i = ft_strlen(str);
-	write(1, str, i);
-	return (i);
-}
-
-void	show_data(t_data *data)
-{
-	printf("\n=== show_data ===\n");
-	printf("type: %c\n", data->type);
-	printf("format_type: |%c|\n", data->format_type);
-	printf("format: |%s|\n", data->format);
-	printf("print: |%s|\n", data->print);
-	printf("len: |%d|\n", data->len);
-	printf("==================\n");
+	i = 0;
+	i_max = 0;
+	if (ft_strchr("sxX", data->type)
+		&& data->format_type == '.'
+		&& !ft_strchr(data->format, '.'))
+		return ;
+	if (data->type == 'c' && !data->format_type && data->format)
+	{
+		i_max = ft_atoi(data->format);
+		while (i++, i < (int)(i_max - 1))
+			data->len += print_char(' ');
+	}
+	if (data->format
+		&& ((ft_strchr("xX", data->type)
+				&& (!ft_strchr(" 0-", data->format_type) || !data->format_type))
+			|| (data->type == 's' && ft_strchr("# 0+.", data->format_type))))
+	{
+		i = -1;
+		i_max = ft_atoi(data->format);
+		while (i++, i < (int)(i_max - ft_strlen(data->print)))
+			data->len += print_char(' ');
+	}
 }
 
 void	print_args(const char *s, t_data *data, va_list args)
@@ -54,18 +71,12 @@ void	print_args(const char *s, t_data *data, va_list args)
 			if (ft_strchr(PRINTF_TYPES, *s))
 				data->type = *s;
 			get_data_strings(data, args);
-			// show_data(data);
 			print_data(data);
 			free(data->print);
 			free(data->format);
 		}
 		else
-		{
-			if (data->printing)
-				data->len += print_char(*s);
-			else
-				data->len++;
-		}
+			data->len += print_char(*s);
 		s++;
 	}
 }
