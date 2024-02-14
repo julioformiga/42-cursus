@@ -14,21 +14,21 @@
 
 static char	*fill_line_buffer(int fd, char *left_char, char *buffer)
 {
-	ssize_t	byte_read;
+	ssize_t	buffer_read;
 	char	*tmp;
 
-	byte_read = 1;
-	while (byte_read > 0)
+	buffer_read = 1;
+	while (buffer_read > 0)
 	{
-		byte_read = read(fd, buffer, BUFFER_SIZE);
-		if (byte_read == -1)
+		buffer_read = read(fd, buffer, BUFFER_SIZE);
+		if (buffer_read == -1)
 		{
 			free(left_char);
 			return (NULL);
 		}
-		if (byte_read == 0)
+		if (buffer_read == 0)
 			break ;
-		buffer[byte_read] = 0;
+		buffer[buffer_read] = 0;
 		if (!left_char)
 			left_char = ft_strdup("");
 		tmp = left_char;
@@ -43,47 +43,47 @@ static char	*fill_line_buffer(int fd, char *left_char, char *buffer)
 
 static char	*set_line(char *line_buffer)
 {
-	char	*left_char;
+	char	*left_chars;
 	ssize_t	i;
 
 	i = 0;
-	while (line_buffer[i] != '\n' && line_buffer[i] != '\0')
+	while (line_buffer[i] != '\n' && line_buffer[i] != 0)
 		i++;
-	if (line_buffer[i] == 0)
+	if (line_buffer[i] == 0 || line_buffer[1] == 0)
 		return (NULL);
-	left_char = ft_substr(line_buffer, i + 1, ft_strlen(line_buffer) - 1);
-	if (*left_char == 0)
+	left_chars = ft_substr(line_buffer, i + 1, ft_strlen(line_buffer) - 1);
+	if (*left_chars == 0)
 	{
-		free(left_char);
-		left_char = NULL;
+		free(left_chars);
+		left_chars = NULL;
 	}
 	line_buffer[i + 1] = 0;
-	return (left_char);
+	return (left_chars);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*left_char;
-	char		*buffer;
+	static char	*left_chars;
 	char		*line;
+	char		*buffer;
 
-	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	buffer = malloc(BUFFER_SIZE + 1 * sizeof(char));
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
 		free(buffer);
-		free(left_char);
+		free(left_chars);
 		buffer = NULL;
-		left_char = NULL;
+		left_chars = NULL;
 		return (NULL);
 	}
 	if (!buffer)
 		return (NULL);
-	line = fill_line_buffer(fd, left_char, buffer);
+	line = fill_line_buffer(fd, left_chars, buffer);
 	free(buffer);
 	buffer = NULL;
 	if (!line)
 		return (NULL);
-	left_char = set_line(line);
+	left_chars = set_line(line);
 	return (line);
 }
 
@@ -95,12 +95,13 @@ char	*get_next_line(int fd)
 /*  */
 /* 	lines = 1; */
 /* 	fd = open("./example.txt", O_RDONLY); */
-/* 	while ((line = get_next_line(fd))) */
+/* 	line = get_next_line(fd); */
+/* 	while (line) */
 /* 	{ */
 /* 		printf("%2d: %s", lines++, line); */
 /* 		free(line); */
+/* 		line = get_next_line(fd); */
 /* 	} */
-/* 	free(line); */
 /* 	close(fd); */
 /* 	return (0); */
 /* } */
