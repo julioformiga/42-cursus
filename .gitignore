@@ -3,5 +3,7 @@ main
 a.out
 libft2
 libftTester
+printfTester
 *.o
 *.a
+vgcore.*
