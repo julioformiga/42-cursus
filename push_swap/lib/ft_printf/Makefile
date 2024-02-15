@@ -9,6 +9,7 @@ SRC			= ft_printf.c ft_printf_print.c ft_printf_get_strings.c \
 OBJ			= $(SRC:.c=.o)
 
 LIBFT_DIR	= libft/
+LIBFT_A		= $(LIBFT_DIR)libft.a
 
 SRCS_LIBFT	= $(wildcard $(LIBFT_DIR)ft_*.c)
 OBJS_LIBFT	= $(SRCS_LIBFT:.c=.o)
@@ -21,10 +22,9 @@ all:		$(NAME)
 			$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME):	$(OBJ)
-			$(AR) $@ $(OBJ)
 			make all -C $(LIBFT_DIR)
 			make bonus -C $(LIBFT_DIR)
-			$(AR) $@ $(OBJS_LIBFT)
+			$(AR) $@ $(OBJ) $(OBJS_LIBFT)
 
 clean:
 			$(RM) $(OBJ)
@@ -36,8 +36,6 @@ fclean:		clean
 			$(RM) $(LIBFT_DIR)*.o $(LIBFT_DIR)*.a
 			$(RM) vgcore.*
 
-bonus:		all
-
 re:			fclean all
 
 run:
@@ -45,4 +43,5 @@ run:
 #			./a.out
 			valgrind --leak-check=full --show-leak-kinds=all -s ./a.out
 
+.SILENT: all clean fclean re
 .PHONY:		all clean fclean re run
