@@ -38,7 +38,7 @@ int	valid_args(char **args)
 	i = 0;
 	while (i++, args[i])
 	{
-		if (has_blank(args[i]))
+		if (ft_has_blank(args[i]))
 		{
 			args[i] = ft_replace(args[i], '\t', ' ');
 			args_space = ft_split(args[i], ' ');

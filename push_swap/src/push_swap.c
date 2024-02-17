@@ -14,19 +14,20 @@
 
 int	main(int argc, char **argv)
 {
-	int		i;
+	t_stack	*stack_a;
 
 	if (argc > 1)
 	{
 		if (valid_args(argv))
+			return (1);
+		stack_a = NULL;
+		stack_a = ft_lst_add_argc(stack_a, argc, argv);
+		if (!stack_a)
 			ft_printf("Error\n");
 		else
 		{
-			i = 0;
-			while (i++, i < argc)
-			{
-				ft_printf("%d: %s\n", i, argv[i]);
-			}
+			ft_printf(" --------- Stacks ---------\n");
+			lst_print(stack_a);
 		}
 	}
 	return (0);

@@ -1,6 +1,6 @@
 CC			= cc
 INCLUDES	= -Ilib
-CFLAGS		= -Wall -Wextra -Werror -std=c99 $(INCLUDES)
+CFLAGS		= -Wall -Wextra -Werror -g -std=c99 $(INCLUDES)
 RM			= rm -f
 AR			= ar -src
 
@@ -14,15 +14,14 @@ SRCS_FT_PRINTF	= $(wildcard $(FT_PRINTF_DIR)*.c)
 OBJS_FT_PRINTF	= $(SRCS_FT_PRINTF:.c=.o)
 SRCS_LIBFT		= $(wildcard $(FT_PRINTF_DIR)libft/ft_*.c)
 OBJS_LIBFT		= $(SRCS_LIBFT:.c=.o)
-
-OBJS = $(SRCS:.c=.o)
+OBJS			= $(SRCS:.c=.o)
+FT_PRINTF_A		= $(FT_PRINTF_DIR)libftprintf.a
 
 all:		$(NAME)
 
 $(NAME):	$(OBJS)
 			make all -C $(FT_PRINTF_DIR)
-			make bonus -C $(FT_PRINTF_DIR)
-			$(AR) $@ $(OBJS) $(OBJS_FT_PRINTF) $(OBJS_LIBFT)
+			@$(AR) $@ $(OBJS) $(OBJS_LIBFT) $(OBJS_FT_PRINTF)
 
 clean:
 			$(RM) $(OBJS)
@@ -30,14 +29,16 @@ clean:
 
 fclean:		clean
 			$(RM) $(NAME) push_swap
+			$(RM) src/*.o *.o
 			make fclean -C $(FT_PRINTF_DIR)
 
 re:			fclean all
 
 run:		all
-			$(CC) $(CFLAGS) $(NAME) -o push_swap
+			$(CC) $(CFLAGS) $(NAME) -o a.out
 #			./push_swap 1 "  -2 	+11   "  5 	one -3  --5" - 90a   -19r4   	" - 7
-			./push_swap 1 "  -2 	+11   "  5 	 -3  -5"  90   -194   	"  7
+			./a.out 1 3 2
+			./a.out 1 "  -2 5 -1	+11  2147483645 " 2147483644 0 3 -2147483648	 -3  -5 "  90   -194   " 4
 # ./push_swap "1 5 2" 8 "4 3"
 # ./push_swap 99 -21474836481 2147483647 0
 # ./push_swap 2 1 3 6 5 8
