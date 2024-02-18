@@ -49,15 +49,23 @@ t_stack	*lst_add(t_stack *lst, int value)
 	return (current);
 }
 
-void	lst_print(t_stack *lst)
+void	lst_print(t_stack *stack_a, t_stack *stack_b)
 {
-	while (lst)
+	while (stack_a)
 	{
-		ft_printf("% 13d\n", lst->val);
-		lst = lst->next;
+		if (stack_b)
+		{
+			ft_printf("% 13d %d\n", stack_a->val, stack_b->val);
+			stack_b = stack_b->next;
+		}
+		else
+		{
+			ft_printf("% 13d\n", stack_a->val);
+		}
+		stack_a = stack_a->next;
 	}
-	ft_printf("           __\n");
-	ft_printf("            a\n");
+	ft_printf("           __ __\n");
+	ft_printf("            a b\n");
 }
 
 static t_stack	*ft_lst_add_check(t_stack *stack, char **numbers)
@@ -92,6 +100,7 @@ t_stack	*ft_lst_add_argc(t_stack *stack, int argc, char **argv)
 			argv[i] = ft_replace(argv[i], '\t', ' ');
 			args_space = ft_split(argv[i], ' ');
 			stack = ft_lst_add_check(stack, args_space);
+			ft_free(args_space);
 			if (!stack)
 				return (NULL);
 		}

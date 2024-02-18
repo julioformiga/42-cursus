@@ -27,6 +27,9 @@ int		ft_isblank(char c);
 int		ft_has_blank(const char *str);
 int		ft_check_int_out_of_range(const char *str);
 
+void	ft_free(char **str);
+void	ft_free_stack(t_stack *stack);
+
 int		check_arg(char *str);
 int		valid_args(char **args);
 void	print_vals(t_stack *lst);
@@ -34,7 +37,7 @@ void	print_vals(t_stack *lst);
 t_stack	*lst_add(t_stack *lst, int value);
 void	lst_add_front(t_stack **lst, int value);
 void	lst_add_back(t_stack **lst, int value);
-void	lst_print(t_stack *lst);
+void	lst_print(t_stack *stack_a, t_stack *stack_b);
 t_stack	*ft_lst_add_argc(t_stack *lst, int argc, char **argv);
 
 #endif

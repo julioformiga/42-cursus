@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-int	check_string_arg(char *str)
+static int	check_string_arg(const char *str)
 {
 	int	i;
 
@@ -30,30 +30,39 @@ int	check_string_arg(char *str)
 	return (0);
 }
 
+static int	check_string_with_space(char *str)
+{
+	char	**args_space;
+	char	*tmp;
+	int		i;
+
+	tmp = ft_replace(str, '\t', ' ');
+	args_space = ft_split(tmp, ' ');
+	if (args_space)
+	{
+		i = 0;
+		while (i++, args_space[i])
+			if (check_string_arg(args_space[i]))
+				return (1);
+		ft_free(args_space);
+	}
+	return (0);
+}
+
 int	valid_args(char **args)
 {
 	int		i;
-	char	**args_space;
 
 	i = 0;
 	while (i++, args[i])
 	{
 		if (ft_has_blank(args[i]))
 		{
-			args[i] = ft_replace(args[i], '\t', ' ');
-			args_space = ft_split(args[i], ' ');
-			if (args_space)
-			{
-				while (*args_space)
-				{
-					if (check_string_arg(*args_space))
-						return (1);
-					args_space++;
-				}
-			}
+			if (check_string_with_space(args[i]))
+				return (1);
 		}
 		else
-			if (check_string_arg(*args_space))
+			if (check_string_arg(args[i]))
 				return (1);
 	}
 	return (0);

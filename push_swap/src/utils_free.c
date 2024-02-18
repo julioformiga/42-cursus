@@ -1,36 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   utils_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: julio.formiga <julio.formiga@gmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/13 14:53:41 by julio.formiga     #+#    #+#             */
-/*   Updated: 2023/12/13 14:53:41 by julio.formiga    ###   ########.fr       */
+/*   Created: 2024/02/17 14:05:07 by julio.formiga     #+#    #+#             */
+/*   Updated: 2024/02/17 14:05:07 by julio.formiga    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	main(int argc, char **argv)
+void	ft_free(char **str)
 {
-	t_stack	*stack_a;
-	t_stack	*stack_b;
+	int	i;
 
-	if (argc > 1)
+	if (!str)
+		return ;
+	i = -1;
+	while (i++, str[i])
+		free(str[i]);
+	free(str);
+}
+
+void	ft_free_stack(t_stack *stack)
+{
+	t_stack	*tmp;
+
+	while (stack)
 	{
-		if (valid_args(argv))
-			return (1);
-		stack_a = NULL;
-		stack_b = NULL;
-		ft_printf(" --------- Stacks ---------\n");
-		stack_a = ft_lst_add_argc(stack_a, argc, argv);
-		if (!stack_a)
-			ft_printf("Error\n");
-		else
-			lst_print(stack_a, stack_b);
-		ft_free_stack(stack_a);
-		ft_free_stack(stack_b);
+		tmp = stack;
+		stack = stack->next;
+		free(tmp);
 	}
-	return (0);
 }
