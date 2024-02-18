@@ -29,7 +29,7 @@ clean:
 
 fclean:		clean
 			$(RM) $(NAME) push_swap
-			$(RM) src/*.o *.o
+			$(RM) src/*.o *.o vgcore.*
 			make fclean -C $(FT_PRINTF_DIR)
 
 re:			fclean all
@@ -37,8 +37,8 @@ re:			fclean all
 run:		all
 			$(CC) $(CFLAGS) $(NAME) -o a.out
 #			./push_swap 1 "  -2 	+11   "  5 	one -3  --5" - 90a   -19r4   	" - 7
-			./a.out 1 3 2
-			./a.out 1 "  -2 5 -1	+11  2147483645 " 2147483644 0 3 -2147483648	 -3  -5 "  90   -194   " 4
+			valgrind --leak-check=full -s ./a.out 1 3 2 -3 0 -5
+#			./a.out 1 "  -2 5 -1	+11  2147483645 " 2147483644 0 3 -2147483648	 -3  -5 "  90   -194   " 4
 # ./push_swap "1 5 2" 8 "4 3"
 # ./push_swap 99 -21474836481 2147483647 0
 # ./push_swap 2 1 3 6 5 8
