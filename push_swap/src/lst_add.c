@@ -17,7 +17,7 @@ static t_stack	*lst_new(int i)
 	t_stack	*list;
 
 	list = (t_stack *)malloc(sizeof(t_stack));
-	if (list == NULL)
+	if (!list)
 		return (NULL);
 	list->val = i;
 	list->next = NULL;
@@ -35,12 +35,12 @@ t_stack	*lst_add(t_stack *lst, int value)
 	}
 	current = lst;
 	if (current->val == value)
-		return (NULL);
+		return (ft_free_stack(lst));
 	while (current->next)
 	{
 		current = current->next;
 		if (current->val == value)
-			return (NULL);
+			return (ft_free_stack(lst));
 	}
 	current->next = (t_stack *)malloc(sizeof(t_stack));
 	current->next->val = value;
@@ -78,7 +78,11 @@ static t_stack	*ft_lst_add_check(t_stack *stack, char **numbers)
 		while (i++, numbers[i])
 		{
 			if (ft_check_int_out_of_range(numbers[i]))
+			{
+				ft_free(numbers);
+				ft_free_stack(stack);
 				return (NULL);
+			}
 			stack = lst_add(stack, ft_atoi(numbers[i]));
 			if (!stack)
 				return (NULL);

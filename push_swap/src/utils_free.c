@@ -24,7 +24,7 @@ void	ft_free(char **str)
 	free(str);
 }
 
-void	ft_free_stack(t_stack *stack)
+t_stack	*ft_free_stack(t_stack *stack)
 {
 	t_stack	*tmp;
 
@@ -34,4 +34,5 @@ void	ft_free_stack(t_stack *stack)
 		stack = stack->next;
 		free(tmp);
 	}
+	return (NULL);
 }

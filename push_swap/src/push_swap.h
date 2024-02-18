@@ -28,7 +28,7 @@ int		ft_has_blank(const char *str);
 int		ft_check_int_out_of_range(const char *str);
 
 void	ft_free(char **str);
-void	ft_free_stack(t_stack *stack);
+t_stack	*ft_free_stack(t_stack *stack);
 
 int		check_arg(char *str);
 int		valid_args(char **args);
