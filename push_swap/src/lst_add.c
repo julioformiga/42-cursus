@@ -79,7 +79,6 @@ static t_stack	*ft_lst_add_check(t_stack *stack, char **numbers)
 		{
 			if (ft_check_int_out_of_range(numbers[i]))
 			{
-				ft_free(numbers);
 				ft_free_stack(stack);
 				return (NULL);
 			}
