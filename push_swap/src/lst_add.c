@@ -51,6 +51,8 @@ t_stack	*lst_add(t_stack *lst, int value)
 
 void	lst_print(t_stack *stack_a, t_stack *stack_b)
 {
+	// ft_printf("Size: % 7d %d\n", ft_lstsize((t_list *)stack_a), ft_lstsize((t_list  *)stack_b));
+	// ft_printf("           __ __\n");
 	while (stack_a)
 	{
 		if (stack_b)
