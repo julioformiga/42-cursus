@@ -94,7 +94,7 @@ int	ft_printf(const char *s, ...)
 /*
 int	main(void)
 {
-	char	*format[19];
+	char	*format[20];
 	int		v_int;
 	char	*v_str;
 	char	v_char;
@@ -122,13 +122,15 @@ int	main(void)
 	format[10] = "%5%|%0-5c|%0-14s|%0-14d|%0-14i|%0-14u|%0-12p|%0-12x|%0-12X|";
 	format[11] = "%5%|%.5c|%.14s|%.14d|%.14i|%.14u|%.14p|%.14x|%.12X|";
 	format[12] = "%5%|%.-5c|%.-14s|%.-14d|%.-14i|%.-14u|%.-14p|%.-14x|%.-12X|";
-	format[13] = "%%|%#c|%#s|%#d|%#i|%#u|%#p|%#x|%#X|";
-	format[14] = "%%|%.c|%.s|%.d|%.i|%.u|%.p|%.x|%.X|";
-	format[15] = "%%|%0c|%0s|%0d|%0i|%0u|%0p|%0x|%0X|";
-	format[16] = "%%|% c|% s|% d|% i|% u|% p|% x|% X|";
-	format[17] = "%%|%-c|%-s|%-d|%-i|%-u|%-p|%-x|%-X|";
-	format[18] = "%%|%+c|%+s|%+d|%+i|%+u|%+p|%+x|%+X|";
-	for (int i = 0; i <= 18; i++)
+	format[13] = "%5%|%5.5c|%14.14s|%14.14d|%14.14i|%14.14u|%14.14p|%14.14x|
+	%14.12X|";
+	format[14] = "%%|%#c|%#s|%#d|%#i|%#u|%#p|%#x|%#X|";
+	format[15] = "%%|%.c|%.s|%.d|%.i|%.u|%.p|%.x|%.X|";
+	format[16] = "%%|%0c|%0s|%0d|%0i|%0u|%0p|%0x|%0X|";
+	format[17] = "%%|% c|% s|% d|% i|% u|% p|% x|% X|";
+	format[18] = "%%|%-c|%-s|%-d|%-i|%-u|%-p|%-x|%-X|";
+	format[19] = "%%|%+c|%+s|%+d|%+i|%+u|%+p|%+x|%+X|";
+	for (int i = 0; i <= 13; i++)
 	{
 		ft_printf("----------------- TEST [%d] ----------- \n", i);
 		printf(":__ FORMAT __: %s", format[i]);
