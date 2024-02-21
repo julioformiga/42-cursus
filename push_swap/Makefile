@@ -36,7 +36,8 @@ re:			fclean all
 
 run:		all
 			$(CC) $(CFLAGS) $(NAME)
-			./a.out "2 1 3 6 5 8"
+#			./a.out "2 1 3 6 5 8"
+			valgrind --leak-check=full -s ./a.out "2 1 3 6 5 8"
 #			ARG="2 1 3 6 5 8"; ./a.out $$ARG
 #			ARG="1 3 2 2147483647 -3 0 -5"; ./a.out $$ARG -2147483648 4 -1 "6 -2"
 #			ARG="1 3 2 2147483647 -3 0 -5"; valgrind --leak-check=full -s ./a.out $$ARG -2147483648 4 -1 "6 -2"

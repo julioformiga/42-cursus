@@ -14,37 +14,41 @@
 
 void	rra(t_stack **stack_a)
 {
-	t_stack	*tmp;
-	t_stack	*last;
+	t_stack	*prev;
+	t_stack	*current;
 
-	if (stack_a && (*stack_a)->next)
+	if (*stack_a && (*stack_a)->next)
 	{
-		tmp = *stack_a;
-		*stack_a = (*stack_a)->next;
-		last = *stack_a;
-		while (last->next)
-			last = last->next;
-		*stack_a = last;
-		(*stack_a) = tmp->next;
-		ft_printf("rra\n");
+		current = *stack_a;
+		while (current->next != NULL)
+		{
+			prev = current;
+			current = current->next;
+		}
+		prev->next = NULL;
+		current->next = *stack_a;
+		*stack_a = current;
+		printf("rra\n");
 	}
 }
 
 void	rrb(t_stack **stack_b)
 {
-	t_stack	*tmp;
-	t_stack	*last;
+	t_stack	*prev;
+	t_stack	*current;
 
-	if (stack_b && (*stack_b)->next)
+	if (*stack_b && (*stack_b)->next)
 	{
-		tmp = *stack_b;
-		*stack_b = (*stack_b)->next;
-		last = *stack_b;
-		while (last->next)
-			last = last->next;
-		tmp->next = tmp;
-		tmp->next = NULL;
-		ft_printf("rrb\n");
+		current = *stack_b;
+		while (current->next != NULL)
+		{
+			prev = current;
+			current = current->next;
+		}
+		prev->next = NULL;
+		current->next = *stack_b;
+		*stack_b = current;
+		printf("rra\n");
 	}
 }
 
