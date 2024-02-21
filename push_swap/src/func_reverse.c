@@ -48,7 +48,7 @@ void	rrb(t_stack **stack_b)
 		prev->next = NULL;
 		current->next = *stack_b;
 		*stack_b = current;
-		printf("rra\n");
+		printf("rrb\n");
 	}
 }
 
