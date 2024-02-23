@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-static t_stack	*lst_new(int i)
+static t_stack	*ft_stack_new(int i)
 {
 	t_stack	*list;
 
@@ -24,13 +24,13 @@ static t_stack	*lst_new(int i)
 	return (list);
 }
 
-t_stack	*lst_add(t_stack *lst, int value)
+t_stack	*ft_stack_add(t_stack *lst, int value)
 {
 	t_stack	*current;
 
 	if (!lst)
 	{
-		current = lst_new(value);
+		current = ft_stack_new(value);
 		return (current);
 	}
 	current = lst;
@@ -49,10 +49,19 @@ t_stack	*lst_add(t_stack *lst, int value)
 	return (current);
 }
 
-void	lst_print(t_stack *stack_a, t_stack *stack_b)
+void	ft_print_stack(t_stack *stack_a)
 {
-	// ft_printf("Size: % 7d %d\n", ft_lstsize((t_list *)stack_a), ft_lstsize((t_list  *)stack_b));
-	// ft_printf("           __ __\n");
+	while (stack_a)
+	{
+		ft_printf("%d\n", stack_a->val);
+		stack_a = stack_a->next;
+	}
+	ft_printf("__\n");
+	ft_printf(" a\n");
+}
+
+void	ft_print_stacks(t_stack *stack_a, t_stack *stack_b)
+{
 	while (stack_a)
 	{
 		if (stack_b)
@@ -70,7 +79,7 @@ void	lst_print(t_stack *stack_a, t_stack *stack_b)
 	ft_printf("            a b\n");
 }
 
-static t_stack	*ft_lst_add_check(t_stack *stack, char **numbers)
+static t_stack	*ft_stack_add_check(t_stack *stack, char **numbers)
 {
 	int		i;
 
@@ -84,7 +93,7 @@ static t_stack	*ft_lst_add_check(t_stack *stack, char **numbers)
 				ft_free_stack(stack);
 				return (NULL);
 			}
-			stack = lst_add(stack, ft_atoi(numbers[i]));
+			stack = ft_stack_add(stack, ft_atoi(numbers[i]));
 			if (!stack)
 				return (NULL);
 		}
@@ -92,7 +101,7 @@ static t_stack	*ft_lst_add_check(t_stack *stack, char **numbers)
 	return (stack);
 }
 
-t_stack	*ft_lst_add_argc(t_stack *stack, int argc, char **argv)
+t_stack	*ft_stack_add_argc(t_stack *stack, int argc, char **argv)
 {
 	int		i;
 	char	**args_space;
@@ -104,13 +113,13 @@ t_stack	*ft_lst_add_argc(t_stack *stack, int argc, char **argv)
 		{
 			argv[i] = ft_replace(argv[i], '\t', ' ');
 			args_space = ft_split(argv[i], ' ');
-			stack = ft_lst_add_check(stack, args_space);
+			stack = ft_stack_add_check(stack, args_space);
 			ft_free(args_space);
 			if (!stack)
 				return (NULL);
 		}
 		else
-			stack = lst_add(stack, ft_atoi(argv[i]));
+			stack = ft_stack_add(stack, ft_atoi(argv[i]));
 	}
 	return (stack);
 }
