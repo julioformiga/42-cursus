@@ -35,12 +35,14 @@ fclean:		clean
 re:			fclean all
 
 run:		all
-			$(CC) $(CFLAGS) $(NAME)
-			./a.out $$(shuf -i 0-500 | tr "\n" " ")
+			@$(CC) $(CFLAGS) $(NAME)
+			./a.out $$(seq -500 500 | shuf | tr "\n" " ")
 #			./a.out "1 2 -3 0 -5"
+#			./a.out "4 1 2"
+#			./a.out "2 3 6 5 1 8"
 #			./a.out "2 1 3 6 5 8"
 #			valgrind --leak-check=full -s ./a.out "2 1 3 6 5 8"
-#			ARG="2 1 3 6 5 8"; ./a.out $$ARG
+#			ARG="2 1 3 6 5 8"; ./a.out $$ARG | ./checker_linux $$ARG
 #			ARG="1 3 2 2147483647 -3 0 -5"; ./a.out $$ARG -2147483648 4 -1 "6 -2"
 #			ARG="1 3 2 2147483647 -3 0 -5"; valgrind --leak-check=full -s ./a.out $$ARG -2147483648 4 -1 "6 -2"
 #			./push_swap 1 "  -2 	+11   "  5 	one -3  --5" - 90a   -19r4   	" - 7
