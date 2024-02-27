@@ -36,14 +36,158 @@ re:			fclean all
 
 run:		all
 			@$(CC) $(CFLAGS) $(NAME)
-#			./a.out $$(seq -500 500 | shuf | tr "\n" " ")
+#			./a.out $$(seq -100 100 | shuf | tr "\n" " ")
 #			./a.out "1 2 -3 0 -5"
-#			./a.out "1 3 2"
-#			./a.out "2 1 3"
-#			./a.out "2 3 1"
-#			./a.out "3 2 1"
-#			./a.out "3 1 2"
-			./a.out "1 5 2 4 3"
+#			./a.out 1 2 3
+#			./a.out 1 3 2
+#			./a.out 2 1 3
+#			./a.out 2 3 1
+#			./a.out 3 1 2
+#			./a.out 3 2 1
+#			./a.out 1 2 3 4
+#			./a.out 1 2 4 3
+#			./a.out 1 3 2 4
+#			./a.out 1 3 4 2
+#			./a.out 1 4 2 3
+#			./a.out 1 4 3 2
+#			./a.out 2 1 3 4
+#			./a.out 2 1 4 3
+#			./a.out 2 3 1 4
+#			./a.out 2 3 4 1
+#			./a.out 2 4 1 3
+#			./a.out 2 4 3 1
+#			./a.out 3 1 2 4
+#			./a.out 3 1 4 2
+#			./a.out 3 2 1 4
+#			./a.out 3 2 4 1
+#			./a.out 3 4 1 2
+#			./a.out 3 4 2 1
+#			./a.out 4 1 2 3
+#			./a.out 4 1 3 2
+#			./a.out 4 2 1 3
+#			./a.out 4 2 3 1
+#			./a.out 4 3 1 2
+#			./a.out 4 3 2 1
+			./a.out 1 2 3 4 5
+			./a.out 1 2 3 5 4
+			./a.out 1 2 4 3 5
+			./a.out 1 2 4 5 3
+			./a.out 1 2 5 3 4
+			./a.out 1 2 5 4 3
+			./a.out 1 3 2 4 5
+			./a.out 1 3 2 5 4
+			./a.out 1 3 4 2 5
+			./a.out 1 3 4 5 2
+			./a.out 1 3 5 2 4
+			./a.out 1 3 5 4 2
+			./a.out 1 4 2 3 5
+			./a.out 1 4 2 5 3
+			./a.out 1 4 3 2 5
+			./a.out 1 4 3 5 2
+			./a.out 1 4 5 2 3
+			./a.out 1 4 5 3 2
+			./a.out 1 5 2 3 4
+			./a.out 1 5 2 4 3
+			./a.out 1 5 3 2 4
+			./a.out 1 5 3 4 2
+			./a.out 1 5 4 2 3
+			./a.out 1 5 4 3 2
+			./a.out 2 1 3 4 5
+			./a.out 2 1 3 5 4
+			./a.out 2 1 4 3 5
+			./a.out 2 1 4 5 3
+			./a.out 2 1 5 3 4
+			./a.out 2 1 5 4 3
+			./a.out 2 3 1 4 5
+			./a.out 2 3 1 5 4
+			./a.out 2 3 4 1 5
+			./a.out 2 3 4 5 1
+			./a.out 2 3 5 1 4
+			./a.out 2 3 5 4 1
+			./a.out 2 4 1 3 5
+			./a.out 2 4 1 5 3
+			./a.out 2 4 3 1 5
+			./a.out 2 4 3 5 1
+			./a.out 2 4 5 1 3
+			./a.out 2 4 5 3 1
+			./a.out 2 5 1 3 4
+			./a.out 2 5 1 4 3
+			./a.out 2 5 3 1 4
+			./a.out 2 5 3 4 1
+			./a.out 2 5 4 1 3
+			./a.out 2 5 4 3 1
+			./a.out 3 1 2 4 5
+			./a.out 3 1 2 5 4
+			./a.out 3 1 4 2 5
+			./a.out 3 1 4 5 2
+			./a.out 3 1 5 2 4
+			./a.out 3 1 5 4 2
+			./a.out 3 2 1 4 5
+			./a.out 3 2 1 5 4
+			./a.out 3 2 4 1 5
+			./a.out 3 2 4 5 1
+			./a.out 3 2 5 1 4
+			./a.out 3 2 5 4 1
+			./a.out 3 4 1 2 5
+			./a.out 3 4 1 5 2
+			./a.out 3 4 2 1 5
+			./a.out 3 4 2 5 1
+			./a.out 3 4 5 1 2
+			./a.out 3 4 5 2 1
+			./a.out 3 5 1 2 4
+			./a.out 3 5 1 4 2
+			./a.out 3 5 2 1 4
+			./a.out 3 5 2 4 1
+			./a.out 3 5 4 1 2
+			./a.out 3 5 4 2 1
+			./a.out 4 1 2 3 5
+			./a.out 4 1 2 5 3
+			./a.out 4 1 3 2 5
+			./a.out 4 1 3 5 2
+			./a.out 4 1 5 2 3
+			./a.out 4 1 5 3 2
+			./a.out 4 2 1 3 5
+			./a.out 4 2 1 5 3
+			./a.out 4 2 3 1 5
+			./a.out 4 2 3 5 1
+			./a.out 4 2 5 1 3
+			./a.out 4 2 5 3 1
+			./a.out 4 3 1 2 5
+			./a.out 4 3 1 5 2
+			./a.out 4 3 2 1 5
+			./a.out 4 3 2 5 1
+			./a.out 4 3 5 1 2
+			./a.out 4 3 5 2 1
+			./a.out 4 5 1 2 3
+			./a.out 4 5 1 3 2
+			./a.out 4 5 2 1 3
+			./a.out 4 5 2 3 1
+			./a.out 4 5 3 1 2
+			./a.out 4 5 3 2 1
+			./a.out 5 1 2 3 4
+			./a.out 5 1 2 4 3
+			./a.out 5 1 3 2 4
+			./a.out 5 1 3 4 2
+			./a.out 5 1 4 2 3
+			./a.out 5 1 4 3 2
+			./a.out 5 2 1 3 4
+			./a.out 5 2 1 4 3
+			./a.out 5 2 3 1 4
+			./a.out 5 2 3 4 1
+			./a.out 5 2 4 1 3
+			./a.out 5 2 4 3 1
+			./a.out 5 3 1 2 4
+			./a.out 5 3 1 4 2
+			./a.out 5 3 2 1 4
+			./a.out 5 3 2 4 1
+			./a.out 5 3 4 1 2
+			./a.out 5 3 4 2 1
+			./a.out 5 4 1 2 3
+			./a.out 5 4 1 3 2
+			./a.out 5 4 2 1 3
+			./a.out 5 4 2 3 1
+			./a.out 5 4 3 1 2
+			./a.out 5 4 3 2 1
 #			./a.out "2 3 6 5 1 8"
 #			./a.out "2 1 3 6 5 8"
 #			valgrind --leak-check=full -s ./a.out "2 1 3 6 5 8"
@@ -53,9 +197,9 @@ run:		all
 #			./push_swap 1 "  -2 	+11   "  5 	one -3  --5" - 90a   -19r4   	" - 7
 #			valgrind --leak-check=full -s ./a.out $ARG
 #			./a.out 1 "  -2 5 -1	+11  2147483645 " 2147483644 0 3 -2147483648	 -3  -5 "  90   -194   " 4
-# ./push_swap "1 5 2" 8 "4 3"
-# ./push_swap 99 -21474836481 2147483647 0
-# ./push_swap 2 1 3 6 5 8
+#			./push_swap "1 5 2" 8 "4 3"
+#			./push_swap 99 -21474836481 2147483647 0
+#			./push_swap 2 1 3 6 5 8
 
 .SILENT: all clean fclean re
 .PHONY: all clean fclean re

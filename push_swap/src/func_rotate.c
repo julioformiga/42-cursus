@@ -26,7 +26,7 @@ void	ra(t_stack **stack_a)
 			last = last->next;
 		last->next = tmp;
 		tmp->next = NULL;
-		write(1, "ra\n", 3);
+		write(1, "ra ", 3);
 	}
 }
 
@@ -44,7 +44,7 @@ void	rb(t_stack **stack_b)
 			last = last->next;
 		last->next = tmp;
 		tmp->next = NULL;
-		write(1, "rb\n", 3);
+		write(1, "rb ", 3);
 	}
 }
 

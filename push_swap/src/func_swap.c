@@ -22,7 +22,7 @@ void	sa(t_stack *stack_a)
 		stack_a->val = stack_a->next->val;
 		stack_a->next->val = tmp;
 	}
-	write(1, "sa\n", 3);
+	write(1, "sa ", 3);
 }
 
 void	sb(t_stack *stack_b)
@@ -35,7 +35,7 @@ void	sb(t_stack *stack_b)
 		stack_b->val = stack_b->next->val;
 		stack_b->next->val = tmp;
 	}
-	write(1, "sb\n", 3);
+	write(1, "sb ", 3);
 }
 
 void	ss(t_stack *stack_a, t_stack *stack_b)

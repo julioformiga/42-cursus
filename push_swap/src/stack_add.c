@@ -49,36 +49,6 @@ t_stack	*ft_stack_add(t_stack *lst, int value)
 	return (current);
 }
 
-void	ft_print_stack(t_stack *stack_a)
-{
-	while (stack_a)
-	{
-		ft_printf("%d\n", stack_a->val);
-		stack_a = stack_a->next;
-	}
-	ft_printf("__\n");
-	ft_printf(" a\n");
-}
-
-void	ft_print_stacks(t_stack *stack_a, t_stack *stack_b)
-{
-	while (stack_a)
-	{
-		if (stack_b)
-		{
-			ft_printf("% 13d %d\n", stack_a->val, stack_b->val);
-			stack_b = stack_b->next;
-		}
-		else
-		{
-			ft_printf("% 13d\n", stack_a->val);
-		}
-		stack_a = stack_a->next;
-	}
-	ft_printf("           __ __\n");
-	ft_printf("            a b\n");
-}
-
 static t_stack	*ft_stack_add_check(t_stack *stack, char **numbers)
 {
 	int		i;
