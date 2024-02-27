@@ -36,9 +36,14 @@ re:			fclean all
 
 run:		all
 			@$(CC) $(CFLAGS) $(NAME)
-			./a.out $$(seq -500 500 | shuf | tr "\n" " ")
+#			./a.out $$(seq -500 500 | shuf | tr "\n" " ")
 #			./a.out "1 2 -3 0 -5"
-#			./a.out "4 1 2"
+#			./a.out "1 3 2"
+#			./a.out "2 1 3"
+#			./a.out "2 3 1"
+#			./a.out "3 2 1"
+#			./a.out "3 1 2"
+			./a.out "1 5 2 4 3"
 #			./a.out "2 3 6 5 1 8"
 #			./a.out "2 1 3 6 5 8"
 #			valgrind --leak-check=full -s ./a.out "2 1 3 6 5 8"

@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include "ft_printf/ft_printf.h"
 
 int	ft_stack_is_sorted(t_stack *stack)
 {
@@ -27,7 +26,53 @@ int	ft_stack_is_sorted(t_stack *stack)
 	return (1);
 }
 
-void	ft_stack_sort_short(t_stack *stack)
+void	ft_stack_3_sort(t_stack **stack)
+{
+	t_stack	*tmp;
+
+	tmp = *stack;
+	if (ft_lstsize((void *)tmp) == 2)
+	{
+		if (tmp->val > tmp->next->val)
+			sa(tmp);
+	}
+	else if (ft_lstsize((void *)tmp) == 3)
+	{
+		if ((tmp->val > tmp->next->val && tmp->next->val > tmp->next->next->val)
+			|| (tmp->next->next->val > tmp->val && tmp->val > tmp->next->val)
+			|| (tmp->next->val > tmp->next->next->val
+				&& tmp->val < tmp->next->next->val))
+			sa(tmp);
+		if (tmp->val > tmp->next->next->val
+			&& tmp->next->next->val > tmp->next->val)
+			ra(&tmp);
+		if (tmp->next->val > tmp->val && tmp->val > tmp->next->next->val)
+			rra(&tmp);
+	}
+	*stack = tmp;
+}
+
+void	ft_stack_5_sort(t_stack **stack_a, t_stack **stack_b)
+{
+	pb(stack_a, stack_b);
+	if (ft_lstsize((void *)*stack_a) == 5)
+	{
+		pb(stack_a, stack_b);
+		ft_stack_3_sort(stack_b);
+	}
+	ft_stack_3_sort(stack_a);
+	pa(stack_a, stack_b);
+	if ((*stack_a)->val > (*stack_a)->next->val)
+		ra(stack_a);
+	if (ft_lstsize((void *)*stack_a) == 5)
+	{
+		pa(stack_a, stack_b);
+		if ((*stack_a)->val > (*stack_a)->next->val)
+			rra(stack_a);
+	}
+}
+
+void	ft_stack_bubblesort(t_stack *stack)
 {
 	int		i;
 	int		size;
@@ -49,7 +94,22 @@ void	ft_stack_sort_short(t_stack *stack)
 	}
 }
 
-void	sort_test(t_stack *stack_a, t_stack *stack_b)
+void	ft_stack_sort(t_stack **stack_a, t_stack **stack_b)
+{
+	int	size;
+
+	size = ft_lstsize((void *)*stack_a);
+	if (size == 2 && (*stack_a)->val > (*stack_a)->next->val)
+		sa(*stack_a);
+	else if (size == 3)
+		ft_stack_3_sort(stack_a);
+	else if (size == 5)
+		ft_stack_5_sort(stack_a, stack_b);
+	else
+		ft_stack_bubblesort(*stack_a);
+}
+
+void	ft_sort_test(t_stack *stack_a, t_stack *stack_b)
 {
 	ft_printf(" --------------------------\n");
 	ft_print_stacks(stack_a, stack_b);
@@ -85,11 +145,12 @@ int	main(int argc, char **argv)
 	if (argc == 1)
 	{
 		argc = 6;
-		argv[1] = "2";
+		argv[1] = "4";
 		argv[2] = "1";
-		argv[3] = "3";
-		argv[4] = "0";
-		argv[5] = "-5";
+		argv[3] = "2";
+		// argv[4] = "6";
+		// argv[5] = "5";
+		// argv[6] = "8";
 	}
 	if (argc > 1)
 	{
@@ -103,8 +164,11 @@ int	main(int argc, char **argv)
 			ft_printf("Error\n");
 			return (1);
 		}
-		ft_stack_sort_short(stack_a);
-		ft_printf("--------------\n");
+		ft_print_stack(stack_a);
+		// ft_stack_3_sort(&stack_a);
+		ft_stack_sort(&stack_a, &stack_b);
+		// ft_stack_bubblesort(stack_a);
+		// ft_sort_test(stack_a, stack_b);
 		ft_print_stack(stack_a);
 		if (ft_stack_is_sorted(stack_a))
 			ft_printf("OK\n");
