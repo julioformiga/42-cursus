@@ -103,6 +103,8 @@ void	ft_stack_6_sort(t_stack **stack_a, t_stack **stack_b)
 	t_stackdata	data;
 
 	data = ft_stack_get_data(stack_a);
+	while ((*stack_a)->val != data.min && (*stack_a)->val != data.max)
+		ra(stack_a);
 	pb(stack_a, stack_b);
 	ft_stack_5_sort(stack_a, stack_b);
 	pa(stack_a, stack_b);
