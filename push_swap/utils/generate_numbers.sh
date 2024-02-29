@@ -1,16 +1,16 @@
-#!/bin/bash
+function permutate {
+    if [ "${#1}" = 1 ]; then
+        echo "Test:${2} ${1}"
+        ./a.out "${2} ${1}"
+    else
+        for i in $(seq 0 $((${#1}-1)) ); do
+            pre="${2} ${1:$i:1}"
+            seg1="${1:0:$i}"
+            seg2="${1:$((i+1))}"
+            seg="${seg1}${seg2}"
+            permutate "$seg" "$pre"
+        done
+    fi
+}
 
-R=1000
-PERM_OR_COMB=perm
-
-if [ $PERM_OR_COMB = perm ]; then
-    C_RANGE=$#
-else
-    C_RANGE=$(seq 0 $#)
-fi
-
-for C in $C_RANGE; do
-    for I in $(seq 1 $R); do
-        echo "$(for X in "$@"; do echo "$X"; done | shuf -n $C | paste -s -d' ')"
-    done | sort -u
-done
+permutate $1
