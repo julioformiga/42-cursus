@@ -80,21 +80,34 @@ void	ft_stack_5_sort(t_stack **stack_a, t_stack **stack_b)
 	while ((*stack_a)->val != data.min && (*stack_a)->val != data.max)
 		ra(stack_a);
 	pb(stack_a, stack_b);
-	if (ft_lstsize((void *)*stack_a) == 5)
+	if (data.size == 5)
 	{
+		while ((*stack_a)->val != data.min && (*stack_a)->val != data.max)
+			ra(stack_a);
 		pb(stack_a, stack_b);
-		ft_stack_3_sort(stack_b);
 	}
 	ft_stack_3_sort(stack_a);
 	pa(stack_a, stack_b);
 	if ((*stack_a)->val > (*stack_a)->next->val)
 		ra(stack_a);
-	if (ft_lstsize((void *)*stack_a) == 5)
+	if (data.size == 5)
 	{
 		pa(stack_a, stack_b);
-		if ((*stack_a)->val > (*stack_a)->next->val)
-			rra(stack_a);
+		while ((*stack_a)->val != data.min)
+			ra(stack_a);
 	}
+}
+
+void	ft_stack_6_sort(t_stack **stack_a, t_stack **stack_b)
+{
+	t_stackdata	data;
+
+	data = ft_stack_get_data(stack_a);
+	pb(stack_a, stack_b);
+	ft_stack_5_sort(stack_a, stack_b);
+	pa(stack_a, stack_b);
+	while ((*stack_a)->val != data.min)
+		ra(stack_a);
 }
 
 void	ft_stack_bubblesort(t_stack *stack)
@@ -130,6 +143,8 @@ void	ft_stack_sort(t_stack **stack_a, t_stack **stack_b)
 		ft_stack_3_sort(stack_a);
 	else if (size == 4 || size == 5)
 		ft_stack_5_sort(stack_a, stack_b);
+	else if (size == 6)
+		ft_stack_6_sort(stack_a, stack_b);
 	else
 		ft_stack_bubblesort(*stack_a);
 	if (!ft_stack_is_sorted(*stack_a))
@@ -143,18 +158,18 @@ void	ft_stack_sort(t_stack **stack_a, t_stack **stack_b)
 
 int	main(int argc, char **argv)
 {
-	t_stack	*stack_a;
-	t_stack	*stack_b;
+	t_stack		*stack_a;
+	t_stack		*stack_b;
 
 	if (argc == 1)
 	{
-		argc = 5;
+		argc = 7;
 		argv[1] = "2";
-		argv[2] = "1";
+		argv[2] = "4";
 		argv[3] = "3";
-		argv[4] = "4";
-		// argv[5] = "5";
-		// argv[6] = "8";
+		argv[4] = "1";
+		argv[5] = "5";
+		argv[6] = "8";
 	}
 	if (argc > 1)
 	{
@@ -168,7 +183,8 @@ int	main(int argc, char **argv)
 			ft_printf("Error\n");
 			return (1);
 		}
-		ft_stack_sort(&stack_a, &stack_b);
+		if (!ft_stack_is_sorted(stack_a))
+			ft_stack_sort(&stack_a, &stack_b);
 		ft_free_stack(stack_a);
 		ft_free_stack(stack_b);
 	}
