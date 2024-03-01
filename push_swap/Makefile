@@ -1,6 +1,6 @@
 CC			= cc
 INCLUDES	= -Ilib
-CFLAGS		= -Wall -Wextra -Werror -g -std=c99 $(INCLUDES)
+CFLAGS		= -Wall -Wextra -Werror -std=c99 $(INCLUDES)
 RM			= rm -f
 AR			= ar -src
 
@@ -36,15 +36,20 @@ re:			fclean all
 
 run:		all
 			@$(CC) $(CFLAGS) $(NAME)
-			./a.out $$(seq 0 5 | shuf | tr "\n" " ") | wc -l
+			./a.out $$(seq 0 99 | shuf | tr "\n" " ") | wc -l
+			./a.out $$(seq 0 499 | shuf | tr "\n" " ") | wc -l
+#			./a.out $$(seq 20948409 20948509 | shuf | tr "\n" " ") | wc -l
+#			./a.out $$(seq 20948509 20949009 | shuf | tr "\n" " ") | wc -l
 #			./a.out "1 2 -3 0 -5"
-#			bash ./utils/generate_numbers.sh 0123456
-#			./a.out "2 3 6 5 1 8"
-#			./a.out "2 1 3 6 5 8"
-#			./a.out "2 1 3 6 5 8" | wc -l
-#			./a.out "10 5 2 4 3 0 1 -3"
-#			./a.out "10 5 2 4 3 0 1 -3" | wc -l
-#			./a.out "10 5 2 4 3 0 1 -3" | ./checker_linux "10 5 2 4 3 0 1 -3"
+#			bash ./utils/generate_numbers.sh 0123456789
+#			./a.out "2 3 6 5 1 8" | wc -l
+#			24 mosse
+#			./a.out "2 1 3 6 5 8 0 9 4 10"
+#			./a.out "2 1 3 6 5 8 0 9 4 10" | wc -l
+#			valgrind --leak-check=full -s ./a.out "2 1 3 6 5 8 0 9 4 10"
+#			./a.out "0 5 2 4 3 1" | wc -l
+#			./a.out "10 5 2 4 3 0 1 -2" | wc -l
+#			./a.out "10 5 2 4 3 0 1 -2" | ./checker_linux "10 5 2 4 3 0 1 -2"
 #			valgrind --leak-check=full -s ./a.out "2 1 3 6 5 8"
 #			ARG="2 1 3 6 5 8"; ./a.out $$ARG | ./checker_linux $$ARG
 #			ARG="1 3 2 2147483647 -3 0 -5"; ./a.out $$ARG -2147483648 4 -1 "6 -2"

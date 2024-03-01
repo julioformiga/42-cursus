@@ -39,6 +39,6 @@ void	ft_print_stacks(t_stack *stack_a, t_stack *stack_b)
 		}
 		stack_a = stack_a->next;
 	}
-	// ft_printf("           __ __\n");
-	// ft_printf("            a b\n");
+	ft_printf("           __ __\n");
+	ft_printf("            a b\n");
 }

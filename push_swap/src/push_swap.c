@@ -12,11 +12,11 @@
 
 #include "push_swap.h"
 
-int	ft_stack_is_sorted(t_stack *stack)
+int	ft_stack_is_sorted(t_stack **stack)
 {
 	t_stack	*tmp;
 
-	tmp = stack;
+	tmp = *stack;
 	while (tmp->next)
 	{
 		if (tmp->val > tmp->next->val)
@@ -112,19 +112,29 @@ void	ft_stack_6_sort(t_stack **stack_a, t_stack **stack_b)
 		ra(stack_a);
 }
 
-void	ft_stack_100_sort(t_stack **stack_a, t_stack **stack_b)
+void	ft_stack_radix_sort(t_stack **stack_a, t_stack **stack_b)
 {
-	t_stackdata	data;
+	int	i;
+	int	j;
+	int	size;
 
-	while (*stack_a)
+	i = -1;
+	size = ft_lstsize((void *)*stack_a);
+	while (i++, !ft_stack_is_sorted(stack_a))
 	{
-		data = ft_stack_get_data(stack_a);
-		while ((*stack_a)->val != data.min)
-			rra(stack_a);
-		pb(stack_a, stack_b);
+		j = 0;
+		while (j++, j <= size)
+		{
+			if (ft_stack_is_sorted(stack_a))
+				break ;
+			if ((((*stack_a)->val >> i) & 1) == 1)
+				ra(stack_a);
+			else
+				pb(stack_a, stack_b);
+		}
+		while (ft_lstsize((void *)*stack_b) != 0)
+			pa(stack_a, stack_b);
 	}
-	while (*stack_b)
-		pa(stack_a, stack_b);
 }
 
 void	ft_stack_bubblesort(t_stack **stack)
@@ -163,8 +173,8 @@ void	ft_stack_sort(t_stack **stack_a, t_stack **stack_b)
 	else if (size == 6)
 		ft_stack_6_sort(stack_a, stack_b);
 	else
-		// ft_stack_bubblesort(stack_a);
-		ft_stack_100_sort(stack_a, stack_b);
+		ft_stack_radix_sort(stack_a, stack_b);
+		// ft_stack_long_sort(stack_a, stack_b);
 	// if (!ft_stack_is_sorted(*stack_a))
 	// {
 	// 	ft_printf("\t\t\t\033[1;31m[KO]\033[0m\n");
@@ -180,13 +190,14 @@ int	main(int argc, char **argv)
 
 	if (argc == 1)
 	{
-		argc = 7;
+		argc = 8;
 		argv[1] = "2";
 		argv[2] = "4";
 		argv[3] = "3";
 		argv[4] = "1";
 		argv[5] = "5";
 		argv[6] = "8";
+		argv[7] = "0";
 	}
 	if (argc > 1)
 	{
@@ -200,11 +211,11 @@ int	main(int argc, char **argv)
 			ft_printf("Error\n");
 			return (1);
 		}
-		if (!ft_stack_is_sorted(stack_a))
+		if (!ft_stack_is_sorted(&stack_a))
 			ft_stack_sort(&stack_a, &stack_b);
-		if (!ft_stack_is_sorted(stack_a))
+		// ft_print_stack(stack_a);
+		if (!ft_stack_is_sorted(&stack_a))
 		{
-			ft_print_stack(stack_a);
 			ft_printf("KO\n");
 			return (1);
 		}
