@@ -1,7 +1,11 @@
 function permutate {
     if [ "${#1}" = 1 ]; then
-        echo "Test:${2} ${1}"
-        ./a.out "${2} ${1}"
+        ARGS="${2} ${1}"
+        echo "Test:$ARGS"
+        echo -n "Mosse: "
+        ./a.out $ARGS | wc -l
+        ./a.out $ARGS | ./checker_linux $ARGS
+        # ./a.out $ARGS
     else
         for i in $(seq 0 $((${#1}-1)) ); do
             pre="${2} ${1:$i:1}"

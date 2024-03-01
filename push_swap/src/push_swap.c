@@ -32,7 +32,7 @@ t_stackdata	ft_stack_get_data(t_stack **stack)
 	t_stack		*tmp;
 
 	tmp = *stack;
-	data.size = ft_lstsize((void *)tmp);
+	data.len = ft_lstsize((void *)tmp);
 	data.min = tmp->val;
 	data.max = tmp->val;
 	while (tmp->next)
@@ -80,7 +80,7 @@ void	ft_stack_5_sort(t_stack **stack_a, t_stack **stack_b)
 	while ((*stack_a)->val != data.min && (*stack_a)->val != data.max)
 		ra(stack_a);
 	pb(stack_a, stack_b);
-	if (data.size == 5)
+	if (data.len == 5)
 	{
 		while ((*stack_a)->val != data.min && (*stack_a)->val != data.max)
 			ra(stack_a);
@@ -90,7 +90,7 @@ void	ft_stack_5_sort(t_stack **stack_a, t_stack **stack_b)
 	pa(stack_a, stack_b);
 	if ((*stack_a)->val > (*stack_a)->next->val)
 		ra(stack_a);
-	if (data.size == 5)
+	if (data.len == 5)
 	{
 		pa(stack_a, stack_b);
 		while ((*stack_a)->val != data.min)
@@ -112,16 +112,31 @@ void	ft_stack_6_sort(t_stack **stack_a, t_stack **stack_b)
 		ra(stack_a);
 }
 
-void	ft_stack_bubblesort(t_stack *stack)
+void	ft_stack_100_sort(t_stack **stack_a, t_stack **stack_b)
+{
+	t_stackdata	data;
+
+	while (*stack_a)
+	{
+		data = ft_stack_get_data(stack_a);
+		while ((*stack_a)->val != data.min)
+			rra(stack_a);
+		pb(stack_a, stack_b);
+	}
+	while (*stack_b)
+		pa(stack_a, stack_b);
+}
+
+void	ft_stack_bubblesort(t_stack **stack)
 {
 	int		i;
 	int		size;
 	t_stack	*tmp;
 
-	size = ft_lstsize((void *)stack) + 1;
+	size = ft_lstsize((void *)*stack) + 1;
 	i = size;
-	tmp = stack;
-	while (size--, size > 0 && stack->next)
+	tmp = *stack;
+	while (size--, size > 0 && (*stack)->next)
 	{
 		while (i--, i > 0 && tmp->next)
 		{
@@ -129,7 +144,7 @@ void	ft_stack_bubblesort(t_stack *stack)
 				sa(tmp);
 			tmp = tmp->next;
 		}
-		tmp = stack;
+		tmp = *stack;
 		i = size - 1;
 	}
 }
@@ -143,19 +158,19 @@ void	ft_stack_sort(t_stack **stack_a, t_stack **stack_b)
 		sa(*stack_a);
 	else if (size == 3)
 		ft_stack_3_sort(stack_a);
-	else if (size == 4 || size == 5)
+	else if (size <= 5)
 		ft_stack_5_sort(stack_a, stack_b);
 	else if (size == 6)
 		ft_stack_6_sort(stack_a, stack_b);
 	else
-		ft_stack_bubblesort(*stack_a);
-	if (!ft_stack_is_sorted(*stack_a))
-	{
-		ft_print_stack(*stack_a);
-		ft_printf("\t\t\t\033[1;31m[KO]\033[0m\n");
-	}
-	else
-		ft_printf("\n\t\t\t\033[1;32m[OK]\033[0m\n");
+		// ft_stack_bubblesort(stack_a);
+		ft_stack_100_sort(stack_a, stack_b);
+	// if (!ft_stack_is_sorted(*stack_a))
+	// {
+	// 	ft_printf("\t\t\t\033[1;31m[KO]\033[0m\n");
+	// }
+	// else
+	// 	ft_printf("\n\t\t\t\033[1;32m[OK]\033[0m\n");
 }
 
 int	main(int argc, char **argv)
@@ -187,6 +202,12 @@ int	main(int argc, char **argv)
 		}
 		if (!ft_stack_is_sorted(stack_a))
 			ft_stack_sort(&stack_a, &stack_b);
+		if (!ft_stack_is_sorted(stack_a))
+		{
+			ft_print_stack(stack_a);
+			ft_printf("KO\n");
+			return (1);
+		}
 		ft_free_stack(stack_a);
 		ft_free_stack(stack_b);
 	}

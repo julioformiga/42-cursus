@@ -36,11 +36,15 @@ re:			fclean all
 
 run:		all
 			@$(CC) $(CFLAGS) $(NAME)
-#			./a.out $$(seq -100 100 | shuf | tr "\n" " ")
+			./a.out $$(seq 0 5 | shuf | tr "\n" " ") | wc -l
 #			./a.out "1 2 -3 0 -5"
-			sh ./utils/generate_numbers.sh 123456
+#			bash ./utils/generate_numbers.sh 0123456
 #			./a.out "2 3 6 5 1 8"
 #			./a.out "2 1 3 6 5 8"
+#			./a.out "2 1 3 6 5 8" | wc -l
+#			./a.out "10 5 2 4 3 0 1 -3"
+#			./a.out "10 5 2 4 3 0 1 -3" | wc -l
+#			./a.out "10 5 2 4 3 0 1 -3" | ./checker_linux "10 5 2 4 3 0 1 -3"
 #			valgrind --leak-check=full -s ./a.out "2 1 3 6 5 8"
 #			ARG="2 1 3 6 5 8"; ./a.out $$ARG | ./checker_linux $$ARG
 #			ARG="1 3 2 2147483647 -3 0 -5"; ./a.out $$ARG -2147483648 4 -1 "6 -2"

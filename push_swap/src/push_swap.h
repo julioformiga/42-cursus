@@ -26,7 +26,7 @@ typedef struct s_stackdata
 {
 	int	min;
 	int	max;
-	int	size;
+	int	len;
 	int	pivot;
 }	t_stackdata;
 
@@ -59,7 +59,7 @@ void	rrr(t_stack **stack_a, t_stack **stack_b);
 int		ft_stack_is_sorted(t_stack *stack);
 // void	ft_stack_sort(t_stack *stack_a, t_stack *stack_b);
 // void	ft_stack_sort(t_stack *stack_a, t_stack *stack_b, int size);
-void	ft_stack_bubblesort(t_stack *stack_a);
+void	ft_stack_bubblesort(t_stack **stack_a);
 
 void	ft_free(char **str);
 t_stack	*ft_free_stack(t_stack *stack);
