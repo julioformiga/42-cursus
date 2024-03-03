@@ -20,24 +20,40 @@ void	ft_print_stack(t_stack *stack_a)
 		stack_a = stack_a->next;
 	}
 	ft_printf("\n");
-	// ft_printf("__\n");
-	// ft_printf(" a\n");
 }
 
-void	ft_print_stacks(t_stack *stack_a, t_stack *stack_b)
+void	ft_print_stacks(t_stack **stack_a, t_stack **stack_b)
 {
-	while (stack_a)
+	t_stackdata	data_a;
+	t_stackdata	data_b;
+	int			size;
+
+	data_a.len = 0;
+	if (*stack_a)
+		data_a = ft_stack_get_data(stack_a);
+	data_b.len = 0;
+	if (*stack_b)
+		data_b = ft_stack_get_data(stack_b);
+	size = data_a.len;
+	if (data_b.len > data_a.len)
+		size = data_b.len;
+	ft_printf("stacks:\n");
+	while (size--, size > -1)
 	{
-		if (stack_b)
+		if (*stack_a)
 		{
-			ft_printf("% 13d %d\n", stack_a->val, stack_b->val);
-			stack_b = stack_b->next;
+			ft_printf("% 13d", (*stack_a)->val);
+			stack_a = &(*stack_a)->next;
 		}
 		else
+			ft_printf("% 13s", "[]");
+		if (*stack_b)
 		{
-			ft_printf("% 13d\n", stack_a->val);
+			ft_printf(" %d\n", (*stack_b)->val);
+			stack_b = &(*stack_b)->next;
 		}
-		stack_a = stack_a->next;
+		else
+			ft_printf(" %s\n", "[]");
 	}
 	ft_printf("           __ __\n");
 	ft_printf("            a b\n");
