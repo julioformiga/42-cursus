@@ -36,17 +36,23 @@ re:			fclean all
 
 run:		all
 			@$(CC) $(CFLAGS) $(NAME)
-			./a.out $$(seq 0 99 | shuf | tr "\n" " ") | wc -l
-			./a.out $$(seq 0 499 | shuf | tr "\n" " ") | wc -l
+#			@./a.out $$(seq 0 99 | shuf | tr "\n" " ") | wc -l
+			@./a.out $$(seq -100 0 | shuf | tr "\n" " ") | wc -l
+			@./a.out $$(seq -1 499 | shuf | tr "\n" " ") | wc -l
+#			@./a.out $$(seq -1000 4 | shuf | tr "\n" " ") | wc -l
+#			@./a.out $$(seq 0 99 9850 | shuf | tr "\n" " ") | wc -l
+#			@./a.out $$(seq 0 19 9490 | shuf | tr "\n" " ") | wc -l
 #			./a.out $$(seq 20948409 20948509 | shuf | tr "\n" " ") | wc -l
 #			./a.out $$(seq 20948509 20949009 | shuf | tr "\n" " ") | wc -l
 #			./a.out "1 2 -3 0 -5"
 #			bash ./utils/generate_numbers.sh 0123456789
 #			./a.out "2 3 6 5 1 8" | wc -l
 #			24 mosse
-#			./a.out "2 1 3 6 5 8 0 9 4 10"
-#			./a.out "2 1 3 6 5 8 0 9 4 10" | wc -l
-#			valgrind --leak-check=full -s ./a.out "2 1 3 6 5 8 0 9 4 10"
+#			./a.out "6 8 7 9 3 1 10 2 0 4 5"
+#			./a.out "6 8 7 9 3 1 10 2 0 4 5" | wc -l
+#			./a.out "6 8 7 9 3 1 -1 2 0 4 5"
+#			./a.out "6 8 7 9 3 1 -1 2 0 4 5" | wc -l
+#			valgrind --leak-check=full -s ./a.out "2 1 3 6 -1 5 8 0 9 4 10"
 #			./a.out "0 5 2 4 3 1" | wc -l
 #			./a.out "10 5 2 4 3 0 1 -2" | wc -l
 #			./a.out "10 5 2 4 3 0 1 -2" | ./checker_linux "10 5 2 4 3 0 1 -2"
