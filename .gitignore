@@ -4,6 +4,7 @@ a.out
 libft2
 libftTester
 printfTester
+push_swap
 *.o
 *.a
 vgcore.*
