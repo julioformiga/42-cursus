@@ -5,6 +5,7 @@ libft2
 libftTester
 printfTester
 push_swap
+!push_swap/
 *.o
 *.a
 vgcore.*
