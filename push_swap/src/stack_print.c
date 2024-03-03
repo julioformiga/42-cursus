@@ -21,7 +21,7 @@ void	ft_print_stack(t_stack *stack_a)
 	}
 	ft_printf("\n");
 }
-
+/*
 void	ft_print_stacks(t_stack **stack_a, t_stack **stack_b)
 {
 	t_stackdata	data_a;
@@ -58,3 +58,4 @@ void	ft_print_stacks(t_stack **stack_a, t_stack **stack_b)
 	ft_printf("           __ __\n");
 	ft_printf("            a b\n");
 }
+*/

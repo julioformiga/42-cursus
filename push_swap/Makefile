@@ -1,6 +1,6 @@
 CC			= cc
 INCLUDES	= -Ilib
-CFLAGS		= -Wall -Wextra -Werror -std=c99 $(INCLUDES)
+CFLAGS		= -Wall -Wextra -Werror -std=c99 $(INCLUDES) -o push_swap
 RM			= rm -f
 AR			= ar -src
 
@@ -36,33 +36,35 @@ re:			fclean all
 
 run:		all
 			@$(CC) $(CFLAGS) $(NAME)
-#			@./a.out $$(seq 0 99 | shuf | tr "\n" " ") | wc -l
-			@./a.out $$(seq -100 0 | shuf | tr "\n" " ") | wc -l
-			@./a.out $$(seq -1 499 | shuf | tr "\n" " ") | wc -l
-#			@./a.out $$(seq -1000 4 | shuf | tr "\n" " ") | wc -l
-#			@./a.out $$(seq 0 99 9850 | shuf | tr "\n" " ") | wc -l
-#			@./a.out $$(seq 0 19 9490 | shuf | tr "\n" " ") | wc -l
-#			./a.out $$(seq 20948409 20948509 | shuf | tr "\n" " ") | wc -l
-#			./a.out $$(seq 20948509 20949009 | shuf | tr "\n" " ") | wc -l
-#			./a.out "1 2 -3 0 -5"
+#			@./push_swap $$(seq 0 99 | shuf | tr "\n" " ")
+#			@./push_swap $$(seq -100 400 | shuf | tr "\n" " ") | wc -l
+#			valgrind --leak-check=full -s ./push_swap $$(seq 0 99 | shuf | tr "\n" " ") | wc -l
+#			valgrind --leak-check=full -s ./push_swap $$(seq -100 400 | shuf | tr "\n" " ") | wc -l
+#			@./push_swap $$(seq -1 499 | shuf | tr "\n" " ") | wc -l
+#			@./push_swap $$(seq -1000 4 | shuf | tr "\n" " ") | wc -l
+#			@./push_swap $$(seq 0 99 9850 | shuf | tr "\n" " ") | wc -l
+#			@./push_swap $$(seq 0 19 9490 | shuf | tr "\n" " ") | wc -l
+#			./push_swap $$(seq 20948409 20948509 | shuf | tr "\n" " ") | wc -l
+#			./push_swap $$(seq 20948509 20949009 | shuf | tr "\n" " ") | wc -l
+#			./push_swap "1 2 -3 0 -5"
 #			bash ./utils/generate_numbers.sh 0123456789
-#			./a.out "2 3 6 5 1 8" | wc -l
+#			./push_swap "2 3 6 5 1 8" | wc -l
 #			24 mosse
-#			./a.out "6 8 7 9 3 1 10 2 0 4 5"
-#			./a.out "6 8 7 9 3 1 10 2 0 4 5" | wc -l
-#			./a.out "6 8 7 9 3 1 -1 2 0 4 5"
-#			./a.out "6 8 7 9 3 1 -1 2 0 4 5" | wc -l
-#			valgrind --leak-check=full -s ./a.out "2 1 3 6 -1 5 8 0 9 4 10"
-#			./a.out "0 5 2 4 3 1" | wc -l
-#			./a.out "10 5 2 4 3 0 1 -2" | wc -l
-#			./a.out "10 5 2 4 3 0 1 -2" | ./checker_linux "10 5 2 4 3 0 1 -2"
-#			valgrind --leak-check=full -s ./a.out "2 1 3 6 5 8"
-#			ARG="2 1 3 6 5 8"; ./a.out $$ARG | ./checker_linux $$ARG
-#			ARG="1 3 2 2147483647 -3 0 -5"; ./a.out $$ARG -2147483648 4 -1 "6 -2"
-#			ARG="1 3 2 2147483647 -3 0 -5"; valgrind --leak-check=full -s ./a.out $$ARG -2147483648 4 -1 "6 -2"
+#			./push_swap "6 8 7 9 3 1 10 2 0 4 5"
+#			./push_swap "6 8 7 9 3 1 10 2 0 4 5" | wc -l
+			./push_swap "6 8 7 9 -2147483647 3 1 -100 2 2147483647 0 4 5"
+#			./push_swap "6 8 7 9 -2147483647 3 1 -100 2 2147483647 0 4 5" | wc -l
+#			valgrind --leak-check=full -s ./push_swap "2 1 3 6 -1 5 8 0 9 4 10"
+#			./push_swap "0 5 2 4 3 1" | wc -l
+#			./push_swap "10 5 2 4 3 0 1 -2" | wc -l
+#			./push_swap "10 5 2 4 3 0 1 -2" | ./checker_linux "10 5 2 4 3 0 1 -2"
+#			valgrind --leak-check=full -s ./push_swap "2 1 3 6 5 8"
+#			ARG="2 1 3 6 5 8"; ./push_swap $$ARG | ./checker_linux $$ARG
+#			ARG="1 3 2 2147483647 -3 0 -5"; ./push_swap $$ARG -2147483648 4 -1 "6 -2"
+#			ARG="1 3 2 2147483647 -3 0 -5"; valgrind --leak-check=full -s ./push_swap $$ARG -2147483648 4 -1 "6 -2"
 #			./push_swap 1 "  -2 	+11   "  5 	one -3  --5" - 90a   -19r4   	" - 7
-#			valgrind --leak-check=full -s ./a.out $ARG
-#			./a.out 1 "  -2 5 -1	+11  2147483645 " 2147483644 0 3 -2147483648	 -3  -5 "  90   -194   " 4
+#			valgrind --leak-check=full -s ./push_swap $ARG
+#			./push_swap 1 "  -2 5 -1	+11  2147483645 " 2147483644 0 3 -2147483648	 -3  -5 "  90   -194   " 4
 #			./push_swap "1 5 2" 8 "4 3"
 #			./push_swap 99 -21474836481 2147483647 0
 #			./push_swap 2 1 3 6 5 8

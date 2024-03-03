@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf/libft/libft.h"
 #include "push_swap.h"
 
 char	*ft_replace(char *str, char s, char r)
@@ -60,4 +59,28 @@ int	ft_check_int_out_of_range(const char *str)
 			return (0);
 	}
 	return (1);
+}
+
+t_stackdata	ft_stack_get_data(t_stack **stack)
+{
+	t_stackdata	data;
+	t_stack		*tmp;
+	int			i;
+
+	tmp = *stack;
+	data.len = ft_lstsize((void *)tmp);
+	data.min = tmp->val;
+	data.max = tmp->val;
+	i = -1;
+	while (i++, tmp->next)
+	{
+		if (data.min > tmp->next->val)
+			data.min = tmp->next->val;
+		if (data.max < tmp->next->val)
+			data.max = tmp->next->val;
+		if (i == data.len / 2)
+			data.pivot = tmp->val;
+		tmp = tmp->next;
+	}
+	return (data);
 }
