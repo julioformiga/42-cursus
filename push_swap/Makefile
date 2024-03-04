@@ -37,7 +37,7 @@ clean:
 
 fclean:		clean
 			$(RM) $(NAME) push_swap bonus checker a.out
-			$(RM) src/*.o *.o vgcore.*
+			$(RM) *.a *.o src/*.o *.o vgcore.*
 			make fclean -C $(FT_PRINTF_DIR)
 
 bonus:		$(NAME_BONUS)
