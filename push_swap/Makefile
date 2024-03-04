@@ -1,12 +1,14 @@
 CC			= cc
 INCLUDES	= -Iincludes
-CFLAGS		= -Wall -Wextra -Werror -std=c99 $(INCLUDES) -o push_swap
+CFLAGS		= -Wall -Wextra -Werror -std=c99 $(INCLUDES)
 RM			= rm -f
 AR			= ar -src
 
 NAME		= push_swap.a
+NAME_BONUS	= push_swap_bonus.a
 
-SRCS		= $(wildcard src/*.c)
+SRCS		= $(wildcard src/*.c) push_swap.c
+SRCS_BONUS	= $(wildcard src/*.c) bonus.c
 
 FT_PRINTF_DIR	= includes/ft_printf/
 FT_LIBFT_DIR	= $(FT_PRINTF_DIR)libft/
@@ -15,27 +17,36 @@ OBJS_FT_PRINTF	= $(SRCS_FT_PRINTF:.c=.o)
 SRCS_LIBFT		= $(wildcard $(FT_PRINTF_DIR)libft/ft_*.c)
 OBJS_LIBFT		= $(SRCS_LIBFT:.c=.o)
 OBJS			= $(SRCS:.c=.o)
+OBJS_BONUS		= $(SRCS_BONUS:.c=.o)
 FT_PRINTF_A		= $(FT_PRINTF_DIR)libftprintf.a
 
 all:		$(NAME)
+			$(CC) $(CFLAGS) $(NAME) -o push_swap
 
 $(NAME):	$(OBJS)
 			make all -C $(FT_PRINTF_DIR)
-			@$(AR) $@ $(OBJS) $(OBJS_LIBFT) $(OBJS_FT_PRINTF)
+			$(AR) $@ $(OBJS) $(OBJS_LIBFT) $(OBJS_FT_PRINTF)
+
+$(NAME_BONUS):	$(OBJS_BONUS)
+				make all -C $(FT_PRINTF_DIR)
+				$(AR) $@ $(OBJS_BONUS) $(OBJS_LIBFT) $(OBJS_FT_PRINTF)
 
 clean:
 			$(RM) $(OBJS)
 			make clean -C $(FT_PRINTF_DIR)
 
 fclean:		clean
-			$(RM) $(NAME) push_swap
+			$(RM) $(NAME) push_swap bonus checker a.out
 			$(RM) src/*.o *.o vgcore.*
 			make fclean -C $(FT_PRINTF_DIR)
+
+bonus:		$(NAME_BONUS)
+			$(CC) $(CFLAGS) $(NAME_BONUS) -o checker
 
 re:			fclean all
 
 run:		all
-			@$(CC) $(CFLAGS) $(NAME)
+			@$(CC) $(CFLAGS) $(NAME) -o push_swap
 #			@./push_swap $$(seq 0 99 | shuf | tr "\n" " ")
 #			@./push_swap $$(seq -100 400 | shuf | tr "\n" " ") | wc -l
 #			valgrind --leak-check=full -s ./push_swap $$(seq 0 99 | shuf | tr "\n" " ") | wc -l
@@ -69,5 +80,5 @@ run:		all
 #			./push_swap 99 -21474836481 2147483647 0
 #			./push_swap 2 1 3 6 5 8
 
-.SILENT: all clean fclean re
-.PHONY: all clean fclean re
+.SILENT: all bonus clean fclean re
+.PHONY: all bonus clean fclean re
