@@ -24,6 +24,12 @@ static int	checker(int check)
 	return (0);
 }
 
+static void	ft_error(void)
+{
+	write(2, "Error\n", 6);
+	exit(2);
+}
+
 int	main(int argc, char **argv)
 {
 	t_stack		*stack_a;
@@ -32,15 +38,12 @@ int	main(int argc, char **argv)
 	if (argc > 1)
 	{
 		if (valid_args(argv))
-			return (1);
+			ft_error();
 		stack_a = NULL;
 		stack_b = NULL;
 		stack_a = ft_stack_add_argc(stack_a, argc, argv);
 		if (!stack_a)
-		{
-			ft_printf("Error\n");
-			return (1);
-		}
+			ft_error();
 		if (!ft_stack_is_sorted(&stack_a))
 			ft_stack_sort(&stack_a, &stack_b);
 		if (!checker(ft_stack_is_sorted(&stack_a)))

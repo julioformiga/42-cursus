@@ -5,7 +5,7 @@ RM			= rm -f
 AR			= ar -src
 
 NAME		= push_swap.a
-NAME_BONUS	= push_swap_bonus.a
+NAME_BONUS	= bonus.a
 
 SRCS		= $(wildcard src/*.c) push_swap.c
 SRCS_BONUS	= $(wildcard src/*.c) bonus.c
