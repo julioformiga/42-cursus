@@ -46,8 +46,7 @@ int	main(int argc, char **argv)
 			ft_error();
 		if (!ft_stack_is_sorted(&stack_a))
 			ft_stack_sort(&stack_a, &stack_b);
-		if (!checker(ft_stack_is_sorted(&stack_a)))
-			return (1);
+		checker(ft_stack_is_sorted(&stack_a));
 		ft_free_stack(stack_a);
 		ft_free_stack(stack_b);
 	}

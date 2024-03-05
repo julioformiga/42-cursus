@@ -63,7 +63,7 @@ run:		all
 #			24 mosse
 #			./push_swap "6 8 7 9 3 1 10 2 0 4 5"
 #			./push_swap "6 8 7 9 3 1 10 2 0 4 5" | wc -l
-			./push_swap "6 8 7 9 -2147483647 3 1 -100 2 2147483647 0 4 5"
+			./checker "6 8 7 9 -2147483647 3 1 -100 2 2147483647 0 4 5"
 			./push_swap "6 8 7 9 -2147483647 3 1 -100 2 2147483647 0 4 5" | wc -l
 #			valgrind --leak-check=full -s ./push_swap "2 1 3 6 -1 5 8 0 9 4 10"
 #			./push_swap "0 5 2 4 3 1" | wc -l
