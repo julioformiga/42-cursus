@@ -16,7 +16,7 @@ static int	check_string_arg(const char *str)
 {
 	int	i;
 
-	if (ft_strlen(str) == 1 && !ft_isdigit(str[0]))
+	if ((ft_strlen(str) == 1 && !ft_isdigit(str[0])) || str[0] == 0)
 		return (1);
 	if (ft_strlen(str) > 1)
 	{
