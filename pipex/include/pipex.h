@@ -16,6 +16,10 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <time.h>
+# include <sys/types.h>
 # include <sys/wait.h>
+
+void	pipex(int f1, int f2, char *cmd1, char *cmd2);
 
 #endif
