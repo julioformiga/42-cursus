@@ -18,7 +18,7 @@ OBJS_LIBFT		= $(SRCS_LIBFT:.c=.o)
 FT_PRINTF_A		= $(FT_PRINTF_DIR)libftprintf.a
 
 all:	$(NAME)
-		$(CC) $(CFLAGS) $(NAME) -o pipex
+#		$(CC) $(CFLAGS) $(NAME) -o pipex
 
 $(NAME):	$(OBJS)
 			make all -C $(FT_PRINTF_DIR)
