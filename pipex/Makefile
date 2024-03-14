@@ -1,6 +1,6 @@
 CC			= cc
 INCLUDE		= -Iinclude
-CFLAGS		= -Wall -Wextra -Werror -std=c99 $(INCLUDE)
+CFLAGS		= -Wall -Wextra -Werror $(INCLUDE) -std=c99
 RM			= rm -f
 AR			= ar -src
 
@@ -18,7 +18,6 @@ OBJS_LIBFT		= $(SRCS_LIBFT:.c=.o)
 FT_PRINTF_A		= $(FT_PRINTF_DIR)libftprintf.a
 
 all:	$(NAME)
-#		$(CC) $(CFLAGS) $(NAME) -o pipex
 
 $(NAME):	$(OBJS)
 			make all -C $(FT_PRINTF_DIR)
@@ -44,3 +43,9 @@ run:	all
 #		bat file0*
 #		< file01.txt seq 0 11 | cat > file03.txt
 #		bat file0*
+
+debug:	all
+		$(CC) $(CFLAGS) $(NAME) -g
+
+.SILENT:	all clean fclean re run debug $(NAME)
+.PHONY:		all clean fclean re run debug
