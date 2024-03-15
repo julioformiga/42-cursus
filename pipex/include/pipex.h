@@ -16,12 +16,14 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
-# include <time.h>
-# include <sys/types.h>
 # include <sys/wait.h>
 # include "../lib/ft_printf/libft/libft.h"
 # include "../lib/ft_printf/ft_printf.h"
 
 void	pipex(char *file1, char *file2, char *cmd1, char *cmd2);
+int		ft_error(char *str);
+char	*find_path(char *cmd, char **envp);
+void	execute(char *argv, char **envp);
+int		gnl(char **line);
 
 #endif
