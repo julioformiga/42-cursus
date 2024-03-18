@@ -73,7 +73,6 @@ int	gnl(char **line)
 	char	c;
 
 	i = 0;
-	r = 0;
 	buffer = (char *)malloc(10000);
 	if (buffer == NULL)
 		return (-1);

@@ -41,7 +41,10 @@ run:	all
 #		echo "content01.txt" > "file01.txt"
 #		echo "content02.txt" > "file02.txt"
 #		./pipex
-		./pipex input.txt "grep include" "cat" output.txt
+#		./pipex input.txt "grep dup" "cat" output.txt
+		valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes -s ./pipex input.txt "grep dup" "cat" output.txt
+#		./pipex input.txt "grep dup" "cat" output.txt
+#		cat output.txt
 #		bat file0*
 #		< file01.txt seq 0 11 | cat > file03.txt
 #		bat file0*
@@ -49,5 +52,5 @@ run:	all
 debug:	all
 		$(CC) $(CFLAGS) $(NAME) -g
 
-.SILENT:	all clean fclean re run debug $(NAME)
+.SILENT:	all clean fclean re debug $(NAME)
 .PHONY:		all clean fclean re run debug
