@@ -18,7 +18,7 @@ void	pid_child(char **argv, char **envp, int *fd)
 
 	input_file = open(argv[1], O_RDONLY);
 	if (input_file == -1)
-		ft_error("Error: open failed");
+		ft_error("Error: open failed", EXIT_FAILURE);
 	dup2(fd[1], STDOUT_FILENO);
 	dup2(input_file, STDIN_FILENO);
 	close(fd[0]);
@@ -31,7 +31,7 @@ void	pid_parent(char **argv, char **envp, int *fd)
 
 	output_file = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC);
 	if (output_file == -1)
-		ft_error("Error: open failed");
+		ft_error("Error: open failed", EXIT_FAILURE);
 	dup2(fd[0], STDIN_FILENO);
 	dup2(output_file, STDOUT_FILENO);
 	close(fd[1]);
@@ -44,12 +44,12 @@ int	main(int argc, char *argv[], char **envp)
 	pid_t	pid1;
 
 	if (argc != 5)
-		return (ft_error("Error: wrong number of arguments\n"));
+		ft_error(ERROR_ARGS, EXIT_SUCCESS);
 	if (pipe(fd) == -1)
-		ft_error("Error: pipe failed");
+		ft_error("Error: pipe failed", EXIT_FAILURE);
 	pid1 = fork();
 	if (pid1 == -1)
-		ft_error("Error: fork failed");
+		ft_error("Error: fork failed", EXIT_FAILURE);
 	if (pid1 == 0)
 		pid_child(argv, envp, fd);
 	waitpid(pid1, NULL, 0);

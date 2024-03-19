@@ -39,10 +39,10 @@ char	*find_path(char *cmd, char **envp)
 	return (NULL);
 }
 
-int	ft_error(char *str)
+void	ft_error(char *msg, int signal)
 {
-	perror(str);
-	exit(EXIT_FAILURE);
+	ft_printf("\033[31m%s\033[0m", msg);
+	exit(signal);
 }
 
 void	execute(char *argv, char **envp)
@@ -59,10 +59,10 @@ void	execute(char *argv, char **envp)
 		while (cmd[++i])
 			free(cmd[i]);
 		free(cmd);
-		ft_error("Error");
+		ft_error("Error", EXIT_FAILURE);
 	}
 	if (execve(path, cmd, envp) == -1)
-		ft_error("Error");
+		ft_error("Error", EXIT_FAILURE);
 }
 
 int	gnl(char **line)
@@ -89,4 +89,20 @@ int	gnl(char **line)
 	*line = buffer;
 	free(buffer);
 	return (r);
+}
+
+int	open_file(char *argv, int i)
+{
+	int	file;
+
+	file = 0;
+	if (i == 0)
+		file = open(argv, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	else if (i == 1)
+		file = open(argv, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else if (i == 2)
+		file = open(argv, O_RDONLY, 0644);
+	if (file == -1)
+		ft_error("Error open file", EXIT_FAILURE);
+	return (file);
 }
