@@ -41,7 +41,10 @@ char	*find_path(char *cmd, char **envp)
 
 void	ft_error(char *msg, int signal)
 {
-	ft_printf("\033[31m%s\033[0m", msg);
+	if (signal == EXIT_SUCCESS)
+		ft_printf("%s\n", msg);
+	else
+		perror(msg);
 	exit(signal);
 }
 
@@ -59,10 +62,10 @@ void	execute(char *argv, char **envp)
 		while (cmd[++i])
 			free(cmd[i]);
 		free(cmd);
-		ft_error("Error", EXIT_FAILURE);
+		ft_error(cmd[0], EXIT_FAILURE);
 	}
 	if (execve(path, cmd, envp) == -1)
-		ft_error("Error", EXIT_FAILURE);
+		ft_error(cmd[0], EXIT_FAILURE);
 }
 
 int	gnl(char **line)
@@ -73,7 +76,7 @@ int	gnl(char **line)
 	char	c;
 
 	i = 0;
-	buffer = (char *)malloc(10000);
+	buffer = (char *)malloc(10000 * sizeof(char));
 	if (buffer == NULL)
 		return (-1);
 	r = read(0, &c, 1);

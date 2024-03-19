@@ -43,7 +43,7 @@ void	here_doc(char *limiter, int argc)
 	char	*line;
 
 	if (argc < 6)
-		ft_error(ERROR_ARGS_BONUS, EXIT_SUCCESS);
+		ft_error(ERROR_ARGS_BONUS, EXIT_FAILURE);
 	if (pipe(fd) == -1)
 		ft_error("Pipe error", EXIT_FAILURE);
 	reader = fork();
@@ -68,26 +68,26 @@ void	here_doc(char *limiter, int argc)
 int	main(int argc, char **argv, char **envp)
 {
 	int	i;
-	int	input_file;
-	int	output_file;
+	int	file_input;
+	int	file_output;
 
 	if (argc < 5)
 		ft_error(ERROR_ARGS_BONUS, EXIT_SUCCESS);
 	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
 	{
 		i = 3;
-		output_file = open_file(argv[argc - 1], 0);
+		file_output = open_file(argv[argc - 1], 0);
 		here_doc(argv[2], argc);
 	}
 	else
 	{
 		i = 2;
-		output_file = open_file(argv[argc - 1], 1);
-		input_file = open_file(argv[1], 2);
-		dup2(input_file, STDIN_FILENO);
+		file_output = open_file(argv[argc - 1], 1);
+		file_input = open_file(argv[1], 2);
+		dup2(file_input, STDIN_FILENO);
 	}
 	while (i < argc - 2)
 		pid_child(argv[i++], envp);
-	dup2(output_file, STDOUT_FILENO);
+	dup2(file_output, STDOUT_FILENO);
 	execute(argv[argc - 2], envp);
 }

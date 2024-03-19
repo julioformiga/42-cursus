@@ -14,26 +14,26 @@
 
 void	pid_child(char **argv, char **envp, int *fd)
 {
-	int	input_file;
+	int	file_input;
 
-	input_file = open(argv[1], O_RDONLY);
-	if (input_file == -1)
-		ft_error("Error: open failed", EXIT_FAILURE);
+	file_input = open(argv[1], O_RDONLY);
+	if (file_input == -1)
+		ft_error(argv[1], EXIT_FAILURE);
 	dup2(fd[1], STDOUT_FILENO);
-	dup2(input_file, STDIN_FILENO);
+	dup2(file_input, STDIN_FILENO);
 	close(fd[0]);
 	execute(argv[2], envp);
 }
 
 void	pid_parent(char **argv, char **envp, int *fd)
 {
-	int	output_file;
+	int	file_output;
 
-	output_file = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC);
-	if (output_file == -1)
-		ft_error("Error: open failed", EXIT_FAILURE);
+	file_output = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (file_output == -1)
+		ft_error(argv[4], EXIT_FAILURE);
 	dup2(fd[0], STDIN_FILENO);
-	dup2(output_file, STDOUT_FILENO);
+	dup2(file_output, STDOUT_FILENO);
 	close(fd[1]);
 	execute(argv[3], envp);
 }
@@ -52,7 +52,10 @@ int	main(int argc, char *argv[], char **envp)
 		ft_error("Error: fork failed", EXIT_FAILURE);
 	if (pid1 == 0)
 		pid_child(argv, envp, fd);
-	waitpid(pid1, NULL, 0);
-	pid_parent(argv, envp, fd);
+	else
+	{
+		waitpid(pid1, NULL, 0);
+		pid_parent(argv, envp, fd);
+	}
 	return (0);
 }
