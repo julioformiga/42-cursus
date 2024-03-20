@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex.h"
+#include "pipex.h"
 
-void	pid_child(char **argv, char **envp, int *fd)
+static void	pid_child(char **argv, char **envp, int *fd)
 {
 	int	file_input;
 
@@ -25,7 +25,7 @@ void	pid_child(char **argv, char **envp, int *fd)
 	execute(argv[2], envp);
 }
 
-void	pid_parent(char **argv, char **envp, int *fd)
+static void	pid_parent(char **argv, char **envp, int *fd)
 {
 	int	file_output;
 
@@ -38,7 +38,7 @@ void	pid_parent(char **argv, char **envp, int *fd)
 	execute(argv[3], envp);
 }
 
-int	main(int argc, char *argv[], char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	int		fd[2];
 	pid_t	pid1;

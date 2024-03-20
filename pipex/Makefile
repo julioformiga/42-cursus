@@ -45,9 +45,9 @@ re:		fclean all
 
 bonus:	$(NAME_BONUS)
 
-# CMD1 = "grep include"
+CMD1 = "grep include"
 # CMD1 = "ls -lha"
-CMD1 = "notfound"
+# CMD1 = "notfound"
 CMD2 = "cat"
 
 run:	all

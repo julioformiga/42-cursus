@@ -36,6 +36,7 @@ char	*find_path(char *cmd, char **envp)
 	i = -1;
 	while (paths[++i])
 		free(paths[i]);
+	free(paths);
 	return (NULL);
 }
 
@@ -57,7 +58,7 @@ void	execute(char *argv, char **envp)
 	i = -1;
 	cmd = ft_split(argv, ' ');
 	path = find_path(cmd[0], envp);
-	if (path == NULL)
+	if (!path)
 	{
 		while (cmd[++i])
 			free(cmd[i]);
@@ -65,7 +66,12 @@ void	execute(char *argv, char **envp)
 		ft_error("Command not found", EXIT_FAILURE);
 	}
 	if (execve(path, cmd, envp) < 0)
-		ft_error(cmd[0], EXIT_FAILURE);
+	{
+		while (cmd[++i])
+			free(cmd[i]);
+		free(cmd);
+		ft_error("Command error", EXIT_FAILURE);
+	}
 }
 
 int	gnl(char **line)

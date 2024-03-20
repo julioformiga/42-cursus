@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex.h"
+#include "pipex.h"
 
-void	pid_child(char *argv, char **envp)
+static void	pid_child(char *argv, char **envp)
 {
 	pid_t	pid;
 	int		fd[2];
@@ -36,7 +36,7 @@ void	pid_child(char *argv, char **envp)
 	}
 }
 
-void	here_doc(char *limiter, int argc)
+static void	here_doc(char *limiter, int argc)
 {
 	pid_t	reader;
 	int		fd[2];
