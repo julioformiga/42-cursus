@@ -62,7 +62,7 @@ void	execute(char *argv, char **envp)
 		while (cmd[++i])
 			free(cmd[i]);
 		free(cmd);
-		ft_error(cmd[0], EXIT_FAILURE);
+		ft_error(path, EXIT_FAILURE);
 	}
 	if (execve(path, cmd, envp) == -1)
 		ft_error(cmd[0], EXIT_FAILURE);
