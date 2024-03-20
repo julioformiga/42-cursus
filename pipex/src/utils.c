@@ -62,9 +62,9 @@ void	execute(char *argv, char **envp)
 		while (cmd[++i])
 			free(cmd[i]);
 		free(cmd);
-		ft_error(path, EXIT_FAILURE);
+		ft_error("Command not found", EXIT_FAILURE);
 	}
-	if (execve(path, cmd, envp) == -1)
+	if (execve(path, cmd, envp) < 0)
 		ft_error(cmd[0], EXIT_FAILURE);
 }
 
