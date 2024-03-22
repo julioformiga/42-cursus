@@ -53,9 +53,6 @@ int	main(int argc, char **argv, char **envp)
 	if (pid1 == 0)
 		pid_child(argv, envp, fd);
 	else
-	{
-		waitpid(pid1, NULL, 0);
 		pid_parent(argv, envp, fd);
-	}
 	return (0);
 }
