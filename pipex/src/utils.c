@@ -31,6 +31,7 @@ char	*find_path(char *cmd, char **envp)
 		free(part_path);
 		if (access(path, F_OK) == 0)
 			return (path);
+		free(path);
 		i++;
 	}
 	i = -1;
@@ -42,10 +43,14 @@ char	*find_path(char *cmd, char **envp)
 
 void	ft_error(char *msg, int signal)
 {
+	char	*error;
+
+	error = ft_strjoin("pipex: ", msg);
 	if (signal == EXIT_SUCCESS)
-		ft_printf("%s\n", msg);
+		ft_printf("%s\n", error);
 	else
-		perror(msg);
+		perror(error);
+	free(error);
 	exit(signal);
 }
 
@@ -58,18 +63,19 @@ void	execute(char *argv, char **envp)
 	i = -1;
 	cmd = ft_split(argv, ' ');
 	path = find_path(cmd[0], envp);
-	if (!path)
+	if (path == NULL)
 	{
 		while (cmd[++i])
 			free(cmd[i]);
 		free(cmd);
-		ft_error("Command not found", EXIT_FAILURE);
+		ft_error("Command not found", 127);
 	}
-	if (execve(path, cmd, envp) < 0)
+	if (execve(path, cmd, envp) != 0)
 	{
 		while (cmd[++i])
 			free(cmd[i]);
 		free(cmd);
+		free(path);
 		ft_error("Command error", EXIT_FAILURE);
 	}
 }
@@ -100,18 +106,18 @@ int	gnl(char **line)
 	return (r);
 }
 
-int	open_file(char *argv, int i)
+int	open_file(char *file, int i)
 {
-	int	file;
+	int	fd;
 
-	file = 0;
+	fd = 0;
 	if (i == 0)
-		file = open(argv, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else if (i == 1)
-		file = open(argv, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (i == 2)
-		file = open(argv, O_RDONLY, 0644);
-	if (file == -1)
+		fd = open(file, O_RDONLY);
+	if (fd != 0)
 		ft_error("Error open file", EXIT_FAILURE);
-	return (file);
+	return (fd);
 }
