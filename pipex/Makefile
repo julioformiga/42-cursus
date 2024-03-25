@@ -1,6 +1,6 @@
 CC			= cc
 INCLUDE		= -Iinclude
-CFLAGS		= -Wall -Wextra -Werror -std=c99 $(INCLUDE)
+CFLAGS		= -Wall -Wextra -Werror -g -std=c99 $(INCLUDE)
 RM			= rm -f
 AR			= ar -src
 
@@ -22,6 +22,8 @@ FT_PRINTF_A		= $(FT_PRINTF_DIR)libftprintf.a
 
 all:	$(NAME)
 
+bonus:	$(NAME) $(NAME_BONUS)
+
 $(NAME):	$(OBJS)
 			make all -C $(FT_PRINTF_DIR)
 			$(AR) $@ $(OBJS) $(OBJS_LIBFT) $(OBJS_FT_PRINTF)
@@ -37,16 +39,14 @@ clean:
 		make clean -C $(FT_PRINTF_DIR)
 
 fclean:	clean
-		$(RM) $(NAME) a.out pipex
+		$(RM) $(NAME) $(NAME_BONUS) a.out pipex
 		$(RM) *.a *.o src/*.o *.o vgcore.*
 		make fclean -C $(FT_PRINTF_DIR)
 
 re:		fclean all
 
-bonus:	$(NAME_BONUS)
-
-CMD1 = "grep include"
-# CMD1 = "ls -lha"
+# CMD1 = "grep include"
+CMD1 = "ls as"
 # CMD1 = "notfound"
 CMD2 = "cat"
 
@@ -64,8 +64,5 @@ run:	all
 		cat output.txt
 #		< input.txt $(CMD1) | $(CMD2) > output.txt
 
-debug:	all
-		$(CC) $(CFLAGS) $(NAME) -g
-
-.SILENT:	all clean fclean re bonus debug $(NAME)
-.PHONY:		all clean fclean re bonus run debug
+.SILENT:	all clean fclean re bonus $(NAME)
+.PHONY:		all clean fclean re bonus run
