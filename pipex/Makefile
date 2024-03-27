@@ -45,8 +45,20 @@ fclean:	clean
 
 re:		fclean all
 
-# CMD1 = "grep include"
-CMD1 = "ls as"
+SHELL		= /bin/bash
+.ONESHELL:
+
+test:
+		[ ! -d "pipe-tester" ] && git clone https://github.com/vfurmane/pipex-tester.git
+		cd pipex-tester
+		./run.sh
+
+rmtest:
+		rm -rf pipex-tester
+		rm -rf pipexMedic
+
+CMD1 = "grep include"
+# CMD1 = "ls as"
 # CMD1 = "notfound"
 CMD2 = "cat"
 
