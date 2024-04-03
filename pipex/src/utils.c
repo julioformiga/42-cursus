@@ -117,7 +117,7 @@ int	open_file(char *file, int i)
 		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (i == 2)
 		fd = open(file, O_RDONLY);
-	if (fd != 0)
+	if (fd == EXIT_FAILURE)
 		ft_error("Error open file", EXIT_FAILURE);
 	return (fd);
 }

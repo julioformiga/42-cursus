@@ -12,7 +12,7 @@
 
 #include "pipex.h"
 
-static void	pid_child(char *argv, char **envp)
+static void	pid_main(char *argv, char **envp)
 {
 	pid_t	pid;
 	int		fd[2];
@@ -24,15 +24,14 @@ static void	pid_child(char *argv, char **envp)
 		ft_error("Fork error", EXIT_FAILURE);
 	if (pid == 0)
 	{
-		close(fd[0]);
 		dup2(fd[1], STDOUT_FILENO);
+		close(fd[0]);
 		execute(argv, envp);
 	}
 	else
 	{
-		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
-		waitpid(pid, NULL, 0);
+		close(fd[1]);
 	}
 }
 
@@ -59,8 +58,8 @@ static void	here_doc(char *limiter, int argc)
 	}
 	else
 	{
-		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
+		close(fd[1]);
 		wait(NULL);
 	}
 }
@@ -87,7 +86,9 @@ int	main(int argc, char **argv, char **envp)
 		dup2(file_input, STDIN_FILENO);
 	}
 	while (i < argc - 2)
-		pid_child(argv[i++], envp);
+		pid_main(argv[i++], envp);
 	dup2(file_output, STDOUT_FILENO);
+	close(file_output);
 	execute(argv[argc - 2], envp);
+	return (0);
 }
