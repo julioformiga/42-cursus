@@ -1,13 +1,14 @@
 CC		= cc
-INCLUDE	= -Iinclude
-CFLAGS	= -Wall -Werror -Wall -std=c99 -g $(INCLUDE)
+INCLUDE	= -I/usr/include -Iinclude -Ilib/minilibx
+# CFLAGS	= -Wall -Werror -Wextra -std=c99 $(INCLUDE) -lm -lX11 -lXext -lz
+CFLAGS	= -Wall -Wextra -std=c99 $(INCLUDE) -lm -lX11 -lXext -lz
 RM		= rm -f
 AR		= ar -src
 
 NAME	= fdf.a
 
-SRC	= src/fdf.c
-OBJ	= $(addprefix obj/,$(SRCS:.c=.o))
+SRC	= $(wildcard src/*.c)
+OBJ	= $(SRC:.c=.o)
 
 MINILIBX_DIR	= lib/minilibx/
 FT_PRINTF_DIR	= lib/ft_printf/
@@ -18,20 +19,23 @@ SRC_LIBFT		= $(wildcard $(FT_PRINTF_DIR)libft/ft_*.c)
 OBJ_LIBFT		= $(SRC_LIBFT:.c=.o)
 FT_PRINTF_A		= $(FT_PRINTF_DIR)libftprintf.a
 LIBMXL_A		= $(MINILIBX_DIR)libmlx.a
-LIBMXL_O		= $(wildcard $(MINILIBX_DIR)obj/*.o)
+SRC_LIBMXL		= $(wildcard $(MINILIBX_DIR)*.c)
+OBJ_LIBMXL		= $(wildcard $(MINILIBX_DIR)obj/*.o)
 
 all:	$(NAME)
 
+%.o:	%.c
+		$(CC) $(CFLAGS) -c $< -o $@
+
 $(NAME):	$(OBJ)
-			make all -C $(FT_PRINTF_DIR)
-			make all -C $(MINILIBX_DIR)
-			$(AR) $@ $(OBJ) $(OBJ_LIBFT) $(OBJ_FT_PRINTF) $(LIBMXL_O)
-			$(CC) $(CFLAGS) $(NAME) -o fdf
+			@make all -C $(FT_PRINTF_DIR)
+			@make all -C $(MINILIBX_DIR)
+			$(AR) $@ $(OBJ) $(OBJ_LIBFT) $(OBJ_FT_PRINTF) $(OBJ_LIBMXL)
 
 clean:
 		$(RM) $(OBJ)
 		make clean -C $(FT_PRINTF_DIR)
-		make clean -C $(MINILIBX_DIR)
+#		make clean -C $(MINILIBX_DIR)
 
 fclean:	clean
 		$(RM) $(NAME) a.out fdf
@@ -40,9 +44,9 @@ fclean:	clean
 
 re:		fclean all
 
-run:	$(NAME)
+run:	all
 		$(CC) $(CFLAGS) $(NAME) -o fdf
 		./fdf
 
-# .SILENT:	all $(NAME) clean fclean re
-.PHONY:		all $(NAME) clean fclean re run
+.SILENT:	all clean fclean re
+.PHONY:		all clean fclean re run
