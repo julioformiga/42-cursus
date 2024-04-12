@@ -1,7 +1,7 @@
 CC		= cc
-INCLUDE	= -I/usr/include -Iinclude -Ilib/minilibx
-# CFLAGS	= -Wall -Werror -Wextra -std=c99 $(INCLUDE) -lm -lX11 -lXext -lz
-CFLAGS	= -Wall -Wextra -std=c99 $(INCLUDE) -lm -lX11 -lXext -lz
+INCLUDE	= -Iinclude
+CFLAGS	= -Wall -Werror -Wextra -std=c99 $(INCLUDE)
+XFLAGS	= -lX11 -lXext -lz -lm
 RM		= rm -f
 AR		= ar -src
 
@@ -45,8 +45,12 @@ fclean:	clean
 re:		fclean all
 
 run:	all
-		$(CC) $(CFLAGS) $(NAME) -o fdf
+		$(CC) $(CFLAGS) $(XFLAGS) $(NAME) -o fdf
 		./fdf
+
+debug:	all
+		$(CC) $(CFLAGS) $(XFLAGS) $(NAME) -g
+
 
 .SILENT:	all clean fclean re
 .PHONY:		all clean fclean re run
