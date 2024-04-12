@@ -16,11 +16,9 @@ int	main(void)
 {
 	t_env	env;
 	int		i;
-	int		w;
 
-	env.mlx = mlx_init();
-	env.win = mlx_new_window(env.mlx, WIN_WIDTH, WIN_HEIGHT, "FdF 42 Firenze");
-	mlx_hook(env.win, 2, 1L << 0, closewin, &env);
+	env = ft_mlx_create_env();
+	ft_mlx_hooks(&env);
 	mlx_string_put(env.mlx, env.win, WIN_WIDTH / 2, WIN_HEIGHT / 2, RED,
 		"42 Firenze");
 	i = 0;
@@ -31,16 +29,6 @@ int	main(void)
 			GREEN
 			);
 	}
-	i = 0;
-	// while (i++ < WIN_HEIGHT)
-	// {
-	// 	w = -1;
-	// 	while (w++ < WIN_WIDTH)
-	// 		mlx_pixel_put(env.mlx, env.win,
-	// 		w, i,
-	// 		i * (WHITE / WIN_HEIGHT)
-	// 		);
-	// }
 	mlx_loop(env.mlx);
 	return (0);
 }

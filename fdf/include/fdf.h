@@ -22,6 +22,8 @@
 # define WHITE 16777215
 
 # include <stdio.h>
+# include <X11/X.h>
+# include <X11/keysym.h>
 # include "../lib/ft_printf/libft/libft.h"
 # include "../lib/ft_printf/ft_printf.h"
 # include "../lib/minilibx/mlx.h"
@@ -45,7 +47,10 @@ typedef struct s_line
 	t_point	p2;
 }	t_line;
 
-int	closewin(int keycode, t_env *env);
-int	create_trgb(int t, int r, int g, int b);
+t_env	ft_mlx_create_env(void);
+void	ft_mlx_hooks(t_env *env);
+int		ft_mlx_keypress(int keycode, t_env *env);
+int		ft_mlx_destroy_window(t_env *env);
+int		create_trgb(int t, int r, int g, int b);
 
 #endif
