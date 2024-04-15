@@ -15,7 +15,7 @@ FT_PRINTF_DIR	= lib/ft_printf/
 FT_LIBFT_DIR	= $(FT_PRINTF_DIR)libft/
 SRC_FT_PRINTF	= $(wildcard $(FT_PRINTF_DIR)*.c)
 OBJ_FT_PRINTF	= $(SRC_FT_PRINTF:.c=.o)
-SRC_LIBFT		= $(wildcard $(FT_PRINTF_DIR)libft/ft_*.c)
+SRC_LIBFT		= $(wildcard $(FT_PRINTF_DIR)libft/*.c)
 OBJ_LIBFT		= $(SRC_LIBFT:.c=.o)
 FT_PRINTF_A		= $(FT_PRINTF_DIR)libftprintf.a
 LIBMXL_A		= $(MINILIBX_DIR)libmlx.a
@@ -46,7 +46,7 @@ re:		fclean all
 
 run:	all
 		$(CC) $(CFLAGS) $(XFLAGS) $(NAME) -o fdf
-		./fdf
+		./fdf assets/test_maps/42.fdf
 
 debug:	all
 		$(CC) $(CFLAGS) $(XFLAGS) $(NAME) -g

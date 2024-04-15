@@ -3,16 +3,13 @@ CFLAGS		= -Wall -Werror -Wextra -std=c99
 RM			= rm -f
 AR			= ar -src
 
-# SRC			= ft_printf.c ft_printf_print.c ft_printf_get_strings.c \
-# 			  ft_printf_format.c ft_printf_format_space_plus.c \
-# 			  ft_uitoa.c ft_itoa_base.c print_pointers.c utils.c
 SRC			= $(wildcard *.c)
 OBJ			= $(SRC:.c=.o)
 
 LIBFT_DIR	= libft/
 LIBFT_A		= $(LIBFT_DIR)libft.a
 
-SRCS_LIBFT	= $(wildcard $(LIBFT_DIR)ft_*.c)
+SRCS_LIBFT	= $(wildcard $(LIBFT_DIR)*.c)
 OBJS_LIBFT	= $(SRCS_LIBFT:.c=.o)
 
 NAME		= libftprintf.a
@@ -24,7 +21,6 @@ all:		$(NAME)
 
 $(NAME):	$(OBJ)
 			@make all -C $(LIBFT_DIR)
-			@make bonus -C $(LIBFT_DIR)
 			@$(AR) $@ $(OBJ) $(OBJS_LIBFT)
 
 clean:
@@ -44,5 +40,5 @@ run:
 #			./a.out
 			valgrind --leak-check=full --show-leak-kinds=all -s ./a.out
 
-.SILENT: all clean fclean re
+.SILENT:	all clean fclean re
 .PHONY:		all clean fclean re run
