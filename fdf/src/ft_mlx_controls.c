@@ -50,7 +50,6 @@ int	ft_mlx_keypress(int keycode, t_env *env)
 {
 	t_line	line;
 
-	ft_mlx_create_line(env, line);
 	if (keycode == XK_Escape || keycode == 'q')
 		ft_mlx_destroy_window(env);
 	if (keycode == XK_Up || keycode == 'w')

@@ -12,6 +12,7 @@
 
 #ifndef FDF_H
 # define FDF_H
+# define WIN_TITLE "FdF"
 # define WIN_WIDTH 800
 # define WIN_HEIGHT 600
 
@@ -24,14 +25,25 @@
 # include <stdio.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
+# include <math.h>
 # include "../lib/ft_printf/libft/libft.h"
 # include "../lib/ft_printf/ft_printf.h"
 # include "../lib/minilibx/mlx.h"
+
+typedef struct s_map
+{
+	int		**map;
+	int		width;
+	int		height;
+}	t_map;
 
 typedef struct s_env
 {
 	void	*mlx;
 	void	*win;
+	int		cursor_x;
+	int		cursor_y;
+	t_map	map;
 }	t_env;
 
 typedef struct s_point
@@ -43,8 +55,9 @@ typedef struct s_point
 
 typedef struct s_line
 {
+	int		color;
+	t_point	p0;
 	t_point	p1;
-	t_point	p2;
 }	t_line;
 
 t_env	ft_mlx_create_env(void);
@@ -52,5 +65,8 @@ void	ft_mlx_hooks(t_env *env);
 int		ft_mlx_keypress(int keycode, t_env *env);
 int		ft_mlx_destroy_window(t_env *env);
 int		create_trgb(int t, int r, int g, int b);
+int		ft_mlx_draw_line(t_env *env, t_point p0, t_point p1, int color);
+
+t_map	ft_parse_map(char *file);
 
 #endif
