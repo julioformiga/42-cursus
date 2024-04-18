@@ -21,14 +21,17 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	if (!s1 || !s2)
 		return (NULL);
 	s3_len = ft_strlen(s1) + ft_strlen(s2) + 1;
-	s3 = (char *)malloc(s3_len);
+	s3 = malloc(s3_len * sizeof(char));
 	if (s3 == NULL)
+	{
+		free(s3);
 		return (NULL);
+	}
 	ps3 = s3;
 	while (*s1)
 		*s3++ = *s1++;
 	while (*s2)
 		*s3++ = *s2++;
-	*s3 = '\0';
+	*s3 = 0;
 	return (ps3);
 }

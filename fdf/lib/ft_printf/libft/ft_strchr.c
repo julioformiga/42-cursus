@@ -14,13 +14,17 @@
 
 char	*ft_strchr(const char *s, int c)
 {
+	unsigned int	i;
+	char			sc;
+
 	if (c > 127)
 		c %= 256;
-	s--;
-	while (s++, *s)
-		if (*s == c)
-			return ((char *)s);
-	if (*s == c)
-		return ((char *)s);
+	sc = (char)c;
+	i = -1;
+	while (i++, s[i])
+		if (s[i] == sc)
+			return ((char *)&s[i]);
+	if (s[i] == sc)
+		return ((char *)&s[i]);
 	return (NULL);
 }
