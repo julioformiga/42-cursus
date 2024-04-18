@@ -34,9 +34,9 @@ t_map	ft_parse_map(char *file)
 	int		i;
 
 	fd = ft_read_file(file);
-	line = get_next_line(fd);
 	map.width = 0;
 	map.height = 0;
+	line = get_next_line(fd);
 	while (line)
 	{
 		split = ft_split(line, ' ');
@@ -51,6 +51,9 @@ t_map	ft_parse_map(char *file)
 			exit(1);
 		}
 		map.height++;
+		while (i--)
+			free(split[i]);
+		free(split);
 		line = get_next_line(fd);
 	}
 	free(line);
