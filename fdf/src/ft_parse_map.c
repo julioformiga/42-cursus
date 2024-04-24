@@ -25,6 +25,25 @@ static int	ft_read_file(char *file)
 	return (fd);
 }
 
+static int	ft_count_lines(char *file)
+{
+	int		fd;
+	char	*line;
+	int		lines;
+
+	fd = ft_read_file(file);
+	lines = -1;
+	line = get_next_line(fd);
+	while (line)
+	{
+		lines++;
+		free(line);
+		line = get_next_line(fd);
+	}
+	free(line);
+	return (lines);
+}
+
 t_map	ft_parse_map(char *file)
 {
 	t_map	map;
@@ -33,9 +52,10 @@ t_map	ft_parse_map(char *file)
 	char	**split;
 	int		i;
 
-	fd = ft_read_file(file);
 	map.width = 0;
 	map.height = 0;
+	map.data = (int **)malloc((ft_count_lines(file) + 1) * sizeof(int *));
+	fd = ft_read_file(file);
 	line = get_next_line(fd);
 	while (line)
 	{
@@ -50,11 +70,18 @@ t_map	ft_parse_map(char *file)
 			ft_putstr_fd("Error: Map is not rectangular\n", 2);
 			exit(1);
 		}
+		map.data[map.height] = (int *)malloc((map.width + 1) * sizeof(int));
+		i = -1;
+		while (i++ < map.width && split[i])
+			map.data[map.height][i] = ft_atoi(split[i]);
 		map.height++;
+		i = map.width;
 		while (i--)
 			free(split[i]);
 		free(split);
 		line = get_next_line(fd);
+		if (!line)
+			break ;
 	}
 	free(line);
 	close(fd);

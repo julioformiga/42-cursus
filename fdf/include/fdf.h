@@ -26,13 +26,15 @@
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <math.h>
+# include <unistd.h>
+# include <time.h>
 # include "../lib/ft_printf/libft/libft.h"
 # include "../lib/ft_printf/ft_printf.h"
 # include "../lib/minilibx/mlx.h"
 
 typedef struct s_map
 {
-	int		**map;
+	int		**data;
 	int		width;
 	int		height;
 }	t_map;
@@ -50,7 +52,6 @@ typedef struct s_point
 {
 	int	x;
 	int	y;
-	int	z;
 }	t_point;
 
 typedef struct s_line
@@ -60,12 +61,12 @@ typedef struct s_line
 	t_point	p1;
 }	t_line;
 
-t_env	ft_mlx_create_env(void);
+t_env	ft_mlx_create_env(char *file);
 void	ft_mlx_hooks(t_env *env);
 int		ft_mlx_keypress(int keycode, t_env *env);
 int		ft_mlx_destroy_window(t_env *env);
 int		create_trgb(int t, int r, int g, int b);
-int		ft_mlx_draw_line(t_env *env, t_point p0, t_point p1, int color);
+void	ft_mlx_draw_line(t_env *env, t_point p0, t_point p1, int color);
 
 t_map	ft_parse_map(char *file);
 

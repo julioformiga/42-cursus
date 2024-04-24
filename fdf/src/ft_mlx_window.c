@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-t_env	ft_mlx_create_env(void)
+t_env	ft_mlx_create_env(char *file)
 {
 	t_env	env;
 
@@ -29,6 +29,7 @@ t_env	ft_mlx_create_env(void)
 		ft_putstr_fd("Error\nmlx_new_window() failed\n", 2);
 		exit(1);
 	}
+	env.map = ft_parse_map(file);
 	env.cursor_x = WIN_WIDTH / 2;
 	env.cursor_y = WIN_HEIGHT / 2;
 	return (env);
@@ -39,6 +40,9 @@ int	ft_mlx_destroy_window(t_env *env)
 	mlx_destroy_window(env->mlx, env->win);
 	mlx_destroy_display(env->mlx);
 	free(env->mlx);
+	while (env->map.height--)
+		free(env->map.data[env->map.height]);
+	free(env->map.data);
 	exit(EXIT_SUCCESS);
 	return (0);
 }
