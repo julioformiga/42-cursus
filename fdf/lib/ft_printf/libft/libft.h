@@ -14,8 +14,9 @@
 # define LIBFT_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
+#  define BUFFER_SIZE 42
 # endif
+# define MAX_FD 10240
 
 # include <unistd.h>
 # include <stdio.h>
