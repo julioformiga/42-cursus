@@ -39,6 +39,12 @@ typedef struct s_map
 	int		height;
 }	t_map;
 
+typedef struct view
+{
+	int	distance;
+	int	angle;
+}	t_view;
+
 typedef struct s_env
 {
 	void	*mlx;
@@ -46,6 +52,7 @@ typedef struct s_env
 	int		cursor_x;
 	int		cursor_y;
 	t_map	map;
+	t_view	view;
 }	t_env;
 
 typedef struct s_point
