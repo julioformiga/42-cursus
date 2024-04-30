@@ -16,9 +16,9 @@ int	main(int argc, char **argv )
 {
 	t_env	env;
 	t_point	init;
-	// t_point	b;
 	int		i;
 	int		j;
+	int		color;
 
 	if (argc != 2)
 	{
@@ -28,28 +28,41 @@ int	main(int argc, char **argv )
 	env = ft_mlx_create_env(argv[1]);
 	env.view.angle = 10;
 	env.view.distance = 30;
-	init.x = (env.view.distance * env.map.width) / 4;
+	init.x = (env.view.distance * env.map.width) / 3;
 	init.y = (env.view.distance * env.map.height) / 2;
 	env.cursor_x = init.x;
 	env.cursor_y = init.y;
 	ft_printf("x = %d, y = %d\n", env.cursor_x, env.cursor_y);
 	ft_printf("width = %d, height = %d\n", env.map.width, env.map.height);
 	i = -1;
+	color = WHITE;
 	while (i++ < env.map.height - 1)
 	{
 		j = -1;
 		while (j++ < env.map.width - 1)
 		{
 			if (env.map.data[i][j] == 0)
-				mlx_pixel_put(env.mlx, env.win, env.cursor_x, env.cursor_y, WHITE);
+				color = GRAY;
 			else
-				mlx_pixel_put(env.mlx, env.win, env.cursor_x, env.cursor_y, GREEN);
+				color = GREEN;
+			mlx_pixel_put(env.mlx, env.win, env.cursor_x, env.cursor_y, color);
+			if (j > 0)
+			{
+				ft_mlx_draw_line(&env,
+					(t_point){env.cursor_x, env.cursor_y},
+					(t_point){env.cursor_x - env.view.distance, env.cursor_y},
+					color
+					);
+			}
 			if (i > 0)
 			{
 				ft_mlx_draw_line(&env,
 					(t_point){env.cursor_x, env.cursor_y},
-					(t_point){env.cursor_x - env.view.distance, env.cursor_y - env.view.distance},
-					WHITE
+					(t_point){
+					((env.cursor_x + env.view.distance) - env.view.angle * 2),
+					env.cursor_y - env.view.distance
+				},
+					color
 					);
 			}
 			env.cursor_x += env.view.distance;

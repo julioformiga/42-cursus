@@ -37,7 +37,7 @@ void	ft_mlx_draw_line(t_env *env, t_point begin, t_point end, int color)
 	s = set_point(begin, end);
 	err = d.x + d.y;
 	e2 = 0;
-	while (begin.x != end.x && begin.y != end.y)
+	while (begin.x != end.x || begin.y != end.y)
 	{
 		mlx_pixel_put(env->mlx, env->win, begin.x, begin.y, color);
 		e2 = 2 * err;
