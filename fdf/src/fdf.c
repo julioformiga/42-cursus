@@ -35,18 +35,25 @@ int	main(int argc, char **argv )
 	ft_printf("x = %d, y = %d\n", env.cursor_x, env.cursor_y);
 	ft_printf("width = %d, height = %d\n", env.map.width, env.map.height);
 	i = -1;
-	color = WHITE;
+	color = 0;
+	while (i++ < WIN_HEIGHT - 1)
+	{
+		mlx_pixel_put(env.mlx, env.win, env.map.width, i, color += (1024 * 64));
+		if (i % 30 == 0)
+			mlx_string_put(env.mlx, env.win, env.map.width + 10, i, color, "Color");
+	}
+	i = -1;
 	while (i++ < env.map.height - 1)
 	{
 		j = -1;
 		while (j++ < env.map.width - 1)
 		{
 			if (env.map.data[i][j] == 0)
-				color = GRAY;
+				color = DARK_GRAY;
 			else
 				color = GREEN;
 			mlx_pixel_put(env.mlx, env.win, env.cursor_x, env.cursor_y, color);
-			if (j > 0)
+			if (j < env.map.width && j > 0)
 			{
 				ft_mlx_draw_line(&env,
 					(t_point){env.cursor_x, env.cursor_y},
@@ -54,12 +61,12 @@ int	main(int argc, char **argv )
 					color
 					);
 			}
-			if (i > 0)
+			if (i < env.map.height && i > 0)
 			{
 				ft_mlx_draw_line(&env,
 					(t_point){env.cursor_x, env.cursor_y},
 					(t_point){
-					((env.cursor_x + env.view.distance) - env.view.angle * 2),
+					((env.cursor_x + env.view.distance) - (env.view.angle * 2)),
 					env.cursor_y - env.view.distance
 				},
 					color
@@ -74,27 +81,25 @@ int	main(int argc, char **argv )
 		init.y--;
 		ft_printf("\n");
 	}
+	init.x = (env.view.distance * env.map.width) / 3;
+	init.y = (env.view.distance * env.map.height) / 2;
+	env.cursor_x = init.x;
+	env.cursor_y = init.y;
+	i = -1;
+	while (i++ < env.map.height - 1)
+	{
+		j = -1;
+		while (j++ < env.map.width - 1)
+		{
+			mlx_pixel_put(env.mlx, env.win, env.cursor_x, env.cursor_y, WHITE);
+			env.cursor_x += env.view.distance;
+		}
+		init.x -= env.view.angle;
+		env.cursor_x = init.x;
+		env.cursor_y += env.view.distance;
+		init.y--;
+	}
 	ft_mlx_hooks(&env);
-	// i = 0;
-	// while (i++ < 80)
-	// {
-	// 	mlx_pixel_put(env.mlx, env.win,
-	// 		(WIN_WIDTH / 2) - 10 + i, (WIN_HEIGHT / 2) + 2,
-	// 		GREEN
-	// 		);
-	// }
-	// i = 0;
-	// while (i++ < 400)
-	// {
-		// a.x = 130; a.y = 20; b.x = 550 + i; b.y = 550;
-		// ft_mlx_draw_line(&env, a, b, WHITE);
-		// mlx_pixel_put(env.mlx, env.win, a.x, a.y, RED);
-		// mlx_pixel_put(env.mlx, env.win, b.x, b.y, RED);
-		// usleep(50000);
-		// ft_mlx_draw_line(&env, a, b, BLACK);
-		// mlx_pixel_put(env.mlx, env.win, a.x, a.y, BLACK);
-		// mlx_pixel_put(env.mlx, env.win, b.x, b.y, BLACK);
-	// }
 	mlx_loop(env.mlx);
 	return (0);
 }

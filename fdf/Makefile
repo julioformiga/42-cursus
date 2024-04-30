@@ -1,7 +1,7 @@
 CC		= cc
 INCLUDE	= -Iinclude
-CFLAGS	= -Wall -Werror -Wextra -lm -lz -g $(INCLUDE)
-XFLAGS	= -lX11 -lXext
+CFLAGS	= -Wall -Werror -Wextra -g $(INCLUDE)
+XFLAGS	= -lX11 -lXext -lm -lz
 RM		= rm -f
 AR		= ar -src
 

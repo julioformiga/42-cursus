@@ -13,14 +13,17 @@
 #ifndef FDF_H
 # define FDF_H
 # define WIN_TITLE "FdF"
-# define WIN_WIDTH 800
-# define WIN_HEIGHT 600
+# define WIN_WIDTH 1024
+# define WIN_HEIGHT 768
 
 # define BLACK 0
 # define BLUE 255
 # define GREEN 65280
+# define DARK_GRAY 8421504
 # define GRAY 8421504
 # define RED 16711680
+# define MAGENTA 16711935
+# define YELLOW 16776960
 # define WHITE 16777215
 
 # include <stdio.h>
