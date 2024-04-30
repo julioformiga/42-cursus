@@ -19,6 +19,7 @@
 # define BLACK 0
 # define BLUE 255
 # define GREEN 65280
+# define GRAY 8421504
 # define RED 16711680
 # define WHITE 16777215
 
