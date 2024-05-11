@@ -74,11 +74,9 @@ static void	ft_draw_map(t_env env)
 		}
 		env.init.x -= env.view.angle;
 		env.cursor_x = env.init.x;
-		env.cursor_y += env.view.zoom + env.map.data[i][j - 1];
+		env.cursor_y += env.view.zoom + env.map.data[i][j + 1];
 		env.init.y--;
 	}
-	env.init.x = (env.view.zoom * env.map.width) / 2;
-	env.init.y = (env.view.zoom * env.map.height) / 2;
 	env.cursor_x = env.init.x;
 	env.cursor_y = env.init.y;
 }
@@ -93,14 +91,16 @@ int	main(int argc, char **argv )
 		exit(1);
 	}
 	env = ft_mlx_create_env(argv[1]);
-	env.view.zoom = 3;
-	while (env.view.zoom < 30)
-	{
-		ft_draw_map(env);
-		usleep(50000);
-		mlx_clear_window(env.mlx, env.win);
-		env.view.zoom += 3;
-	}
+	// env.view.zoom = 3;
+	// while (env.view.zoom < 30)
+	// {
+	// 	ft_draw_map(env);
+	// 	usleep(50000);
+	// 	mlx_clear_window(env.mlx, env.win);
+	// 	env.view.zoom += 3;
+	// }
+	env.view.zoom = 30;
+	ft_draw_map(env);
 	ft_draw_map(env);
 	ft_mlx_hooks(&env);
 	mlx_loop(env.mlx);
