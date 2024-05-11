@@ -45,9 +45,15 @@ typedef struct s_map
 
 typedef struct view
 {
-	int	distance;
+	int	zoom;
 	int	angle;
 }	t_view;
+
+typedef struct s_point
+{
+	int	x;
+	int	y;
+}	t_point;
 
 typedef struct s_env
 {
@@ -57,13 +63,8 @@ typedef struct s_env
 	int		cursor_y;
 	t_map	map;
 	t_view	view;
+	t_point	init;
 }	t_env;
-
-typedef struct s_point
-{
-	int	x;
-	int	y;
-}	t_point;
 
 typedef struct s_line
 {
