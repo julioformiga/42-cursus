@@ -13,16 +13,13 @@
 #include "fdf.h"
 #include <unistd.h>
 
-static void	ft_draw_map(t_env env)
+void	ft_draw_map(t_env env)
 {
 	t_point	dest;
 	int		i;
 	int		j;
 	int		color;
 
-	env.view.angle = env.view.zoom / 3;
-	env.init.x = (env.view.zoom * env.map.width) / 2;
-	env.init.y = (env.view.zoom * env.map.height) / 2 + 80;
 	env.cursor_x = env.init.x;
 	env.cursor_y = env.init.y;
 	dest = (t_point){env.cursor_x + env.view.zoom, env.cursor_y};
@@ -91,16 +88,10 @@ int	main(int argc, char **argv )
 		exit(1);
 	}
 	env = ft_mlx_create_env(argv[1]);
-	// env.view.zoom = 3;
-	// while (env.view.zoom < 30)
-	// {
-	// 	ft_draw_map(env);
-	// 	usleep(50000);
-	// 	mlx_clear_window(env.mlx, env.win);
-	// 	env.view.zoom += 3;
-	// }
-	env.view.zoom = 30;
-	ft_draw_map(env);
+	env.view.zoom = 27;
+	env.view.angle = env.view.zoom / 3;
+	env.init.x = (env.view.zoom * env.map.width) / 2;
+	env.init.y = (env.view.zoom * env.map.height) / 2 + 80;
 	ft_draw_map(env);
 	ft_mlx_hooks(&env);
 	mlx_loop(env.mlx);

@@ -79,6 +79,7 @@ int		ft_mlx_keypress(int keycode, t_env *env);
 int		ft_mlx_destroy_window(t_env *env);
 int		create_trgb(int t, int r, int g, int b);
 void	ft_mlx_draw_line(t_env *env, t_point p0, t_point p1, int color);
+void	ft_draw_map(t_env env);
 
 t_map	ft_parse_map(char *file);
 

@@ -27,56 +27,52 @@ void	ft_mlx_hooks(t_env *env)
 		ft_mlx_destroy_window, env);
 }
 
-static void	ft_mlx_create_point(t_env *env)
-{
-	mlx_pixel_put(env->mlx, env->win, env->cursor_x, env->cursor_y, WHITE);
-}
-
-static void	ft_mlx_create_line(t_env *env, t_line line)
-{
-	t_point	l;
-
-	l.x = line.p0.x;
-	l.y = line.p0.y;
-	while (l.x <= line.p1.x)
-	{
-		mlx_pixel_put(env->mlx, env->win, l.x, l.y, line.color);
-		l.x++;
-		l.y++;
-	}
-}
+// static void	ft_mlx_create_point(t_env *env)
+// {
+// 	mlx_pixel_put(env->mlx, env->win, env->cursor_x, env->cursor_y, WHITE);
+// }
 
 int	ft_mlx_keypress(int keycode, t_env *env)
 {
-	t_line	line;
-
 	if (keycode == XK_Escape || keycode == 'q')
 		ft_mlx_destroy_window(env);
-	if (keycode == XK_Up || keycode == 'w')
+	if (keycode == 'w')
 	{
-		line.p0.x = 300;
-		line.p0.y = 300;
-		line.p1.x = 400;
-		line.p1.y = 400;
-		line.color = WHITE;
-		ft_mlx_create_line(env, line);
-		ft_mlx_create_point(env);
-		env->cursor_y -= 10;
+		mlx_clear_window(env->mlx, env->win);
+		env->view.zoom += 3;
+		env->view.angle = env->view.zoom / 3;
+		ft_draw_map(*env);
 	}
-	if (keycode == XK_Down || keycode == 's')
+	if (keycode == 's')
 	{
-		ft_mlx_create_point(env);
-		env->cursor_y += 10;
+		mlx_clear_window(env->mlx, env->win);
+		env->view.zoom -= 3;
+		env->view.angle = env->view.zoom / 3;
+		ft_draw_map(*env);
+	}
+	if (keycode == XK_Up)
+	{
+		mlx_clear_window(env->mlx, env->win);
+		env->init.y -= 10;
+		ft_draw_map(*env);
+	}
+	if (keycode == XK_Down)
+	{
+		mlx_clear_window(env->mlx, env->win);
+		env->init.y += 10;
+		ft_draw_map(*env);
 	}
 	if (keycode == XK_Left || keycode == 'a')
 	{
-		ft_mlx_create_point(env);
-		env->cursor_x -= 10;
+		mlx_clear_window(env->mlx, env->win);
+		env->init.x -= 10;
+		ft_draw_map(*env);
 	}
 	if (keycode == XK_Right || keycode == 'd')
 	{
-		ft_mlx_create_point(env);
-		env->cursor_x += 10;
+		mlx_clear_window(env->mlx, env->win);
+		env->init.x += 10;
+		ft_draw_map(*env);
 	}
 	return (0);
 }
