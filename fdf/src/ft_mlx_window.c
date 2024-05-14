@@ -29,7 +29,7 @@ t_env	ft_mlx_create_env(char *file)
 		ft_putstr_fd("Error\nmlx_new_window() failed\n", 2);
 		exit(1);
 	}
-	env.map = ft_parse_map(file);
+	env.map = ft_map_parse(file);
 	env.cursor_x = WIN_WIDTH / 2;
 	env.cursor_y = WIN_HEIGHT / 2;
 	return (env);

@@ -44,7 +44,7 @@ static int	ft_count_lines(char *file)
 	return (lines);
 }
 
-t_map	ft_parse_map(char *file)
+t_map	ft_map_parse(char *file)
 {
 	t_map	map;
 	int		fd;

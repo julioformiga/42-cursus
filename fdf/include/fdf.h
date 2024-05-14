@@ -13,13 +13,17 @@
 #ifndef FDF_H
 # define FDF_H
 # define WIN_TITLE "FdF"
-# define WIN_WIDTH 1024
-# define WIN_HEIGHT 768
+// # define WIN_WIDTH 1024
+// # define WIN_HEIGHT 768
+# define WIN_WIDTH 1200
+# define WIN_HEIGHT 800
 
 # define BLACK 0
 # define BLUE 255
+# define GREEN_DARK 32768
 # define GREEN 65280
-# define DARK_GRAY 8421504
+# define CYAN 65535
+# define GRAY_DARK 8421504
 # define GRAY 8421504
 # define RED 16711680
 # define MAGENTA 16711935
@@ -36,7 +40,15 @@
 # include "../lib/ft_printf/ft_printf.h"
 # include "../lib/minilibx/mlx.h"
 
-typedef struct s_map
+typedef struct color
+{
+	int	t;
+	int	r;
+	int	g;
+	int	b;
+}	t_color;
+
+typedef struct map
 {
 	int		**data;
 	int		width;
@@ -49,13 +61,13 @@ typedef struct view
 	int	angle;
 }	t_view;
 
-typedef struct s_point
+typedef struct point
 {
 	int	x;
 	int	y;
 }	t_point;
 
-typedef struct s_env
+typedef struct env
 {
 	void	*mlx;
 	void	*win;
@@ -66,7 +78,7 @@ typedef struct s_env
 	t_point	init;
 }	t_env;
 
-typedef struct s_line
+typedef struct line
 {
 	int		color;
 	t_point	p0;
@@ -77,10 +89,10 @@ t_env	ft_mlx_create_env(char *file);
 void	ft_mlx_hooks(t_env *env);
 int		ft_mlx_keypress(int keycode, t_env *env);
 int		ft_mlx_destroy_window(t_env *env);
-int		create_trgb(int t, int r, int g, int b);
+int		ft_mlx_color(t_color color);
 void	ft_mlx_draw_line(t_env *env, t_point p0, t_point p1, int color);
-void	ft_draw_map(t_env env);
 
-t_map	ft_parse_map(char *file);
+t_map	ft_map_parse(char *file);
+void	ft_map_draw(t_env env);
 
 #endif

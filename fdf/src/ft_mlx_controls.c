@@ -27,11 +27,6 @@ void	ft_mlx_hooks(t_env *env)
 		ft_mlx_destroy_window, env);
 }
 
-// static void	ft_mlx_create_point(t_env *env)
-// {
-// 	mlx_pixel_put(env->mlx, env->win, env->cursor_x, env->cursor_y, WHITE);
-// }
-
 int	ft_mlx_keypress(int keycode, t_env *env)
 {
 	if (keycode == XK_Escape || keycode == 'q')
@@ -40,44 +35,43 @@ int	ft_mlx_keypress(int keycode, t_env *env)
 	{
 		mlx_clear_window(env->mlx, env->win);
 		env->view.zoom += 3;
+		env->init.x -= 15;
+		env->init.y -= 15;
 		env->view.angle = env->view.zoom / 3;
-		ft_draw_map(*env);
+		ft_map_draw(*env);
 	}
 	if (keycode == 's')
 	{
 		mlx_clear_window(env->mlx, env->win);
 		env->view.zoom -= 3;
+		env->init.x += 15;
+		env->init.y += 15;
 		env->view.angle = env->view.zoom / 3;
-		ft_draw_map(*env);
+		ft_map_draw(*env);
 	}
 	if (keycode == XK_Up)
 	{
 		mlx_clear_window(env->mlx, env->win);
 		env->init.y -= 10;
-		ft_draw_map(*env);
+		ft_map_draw(*env);
 	}
 	if (keycode == XK_Down)
 	{
 		mlx_clear_window(env->mlx, env->win);
 		env->init.y += 10;
-		ft_draw_map(*env);
+		ft_map_draw(*env);
 	}
 	if (keycode == XK_Left || keycode == 'a')
 	{
 		mlx_clear_window(env->mlx, env->win);
 		env->init.x -= 10;
-		ft_draw_map(*env);
+		ft_map_draw(*env);
 	}
 	if (keycode == XK_Right || keycode == 'd')
 	{
 		mlx_clear_window(env->mlx, env->win);
 		env->init.x += 10;
-		ft_draw_map(*env);
+		ft_map_draw(*env);
 	}
 	return (0);
-}
-
-int	create_trgb(int t, int r, int g, int b)
-{
-	return (t << 24 | r << 16 | g << 8 | b);
 }
