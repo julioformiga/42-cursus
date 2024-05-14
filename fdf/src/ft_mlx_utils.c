@@ -21,21 +21,28 @@ int	ft_map_value(t_range range_in, t_range range_out, int value)
 
 void	ft_mlx_scale(t_env env)
 {
-	t_color	color;
 	int		i;
 	int		y;
+	int		x;
 
 	i = -1;
-	color = (t_color){0, 100, 100, 100};
 	while (i++, i < WIN_WIDTH)
 	{
-		y = 15;
-		color.g++;
-		if (color.g > 255)
-			color.g = 100;
-		mlx_pixel_put(env.mlx, env.win, i, 10, ft_mlx_color(color));
-		if (i % 100 > -2 && i % 100 < 2)
-			while (y++, y < 40)
-				mlx_pixel_put(env.mlx, env.win, i, y, WHITE);
+		x = 7;
+		mlx_pixel_put(env.mlx, env.win, i, WIN_HEIGHT - 2, GRAY_DARK);
+		mlx_pixel_put(env.mlx, env.win, i, WIN_HEIGHT - 1, GRAY_DARK);
+		if (i % env.view.zoom > -2 && i % env.view.zoom < 2)
+			while (x--, x > 2)
+				mlx_pixel_put(env.mlx, env.win, i, WIN_HEIGHT - x, GRAY);
+	}
+	i = -1;
+	while (i++, i < WIN_HEIGHT)
+	{
+		y = 7;
+		mlx_pixel_put(env.mlx, env.win, 2, i, GRAY_DARK);
+		mlx_pixel_put(env.mlx, env.win, 1, i, GRAY_DARK);
+		if (i % env.view.zoom > -2 && i % env.view.zoom < 2)
+			while (y--, y > 2)
+				mlx_pixel_put(env.mlx, env.win, y, i, GRAY);
 	}
 }

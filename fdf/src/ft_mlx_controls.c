@@ -40,7 +40,7 @@ int	ft_mlx_keypress(int keycode, t_env *env)
 		env->view.angle = env->view.zoom / 3;
 		ft_map_draw(*env);
 	}
-	if (keycode == 's')
+	if (keycode == 's' && env->view.zoom > 3)
 	{
 		mlx_clear_window(env->mlx, env->win);
 		env->view.zoom -= 3;
