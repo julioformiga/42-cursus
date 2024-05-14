@@ -1,44 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: julio.formiga <julio.formiga@gmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/05 11:48:07 by julio.formiga     #+#    #+#             */
-/*   Updated: 2024/04/05 11:48:07 by julio.formiga    ###   ########.fr       */
+/*   Created: 2024/05/14 17:28:07 by julio.formiga     #+#    #+#             */
+/*   Updated: 2024/05/14 17:28:07 by julio.formiga    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <unistd.h>
+
+static int	ft_mlx_line_color(t_env *env, int i, int j, char type)
+{
+	t_color	color;
+	t_range	r_in;
+	t_range	r_out;
+	int		c_color;
+
+	r_in = (t_range){40, 255};
+	r_out = (t_range){0, 10};
+	color = (t_color){0, 40, 100, 40};
+	if (env->map.data[i][j] == env->map.data[i][j - 1] && type == 'h')
+		color.g = ft_map_value(r_in, r_out, env->map.data[i][j]);
+	if (env->map.data[i][j] == env->map.data[i - 1][j] && type == 'v')
+		color.g = ft_map_value(r_in, r_out, env->map.data[i][j]);
+	c_color = ft_mlx_color(color);
+	return (c_color);
+}
 
 void	ft_map_draw(t_env env)
 {
 	t_point	dest;
-	t_color	color;
 	int		i;
 	int		j;
-	int		c_color;
 
 	env.cursor_x = env.init.x;
 	env.cursor_y = env.init.y;
-	dest = (t_point){env.cursor_x + env.view.zoom, env.cursor_y};
 	i = -1;
-	color = (t_color){0, 100, 255, 100};
 	while (i++ < env.map.height - 1)
 	{
 		j = -1;
 		while (j++ < env.map.width - 1)
 		{
-			color.g = 255;
-			if (env.map.data[i][j] == 0)
-				color.g = 100;
 			if (j < env.map.width && j > 0)
 			{
-				if (env.map.data[i][j] == 0 && env.map.data[i][j - 1] != 0)
-					color.g = 255;
-				c_color = ft_mlx_color(color);
 				dest = (t_point){
 					env.cursor_x - env.view.zoom,
 					env.cursor_y - (env.map.data[i][j - 1] * 2)
@@ -46,15 +53,10 @@ void	ft_map_draw(t_env env)
 				ft_mlx_draw_line(&env,
 					(t_point){env.cursor_x,
 					env.cursor_y - (env.map.data[i][j] * 2)},
-					dest, c_color);
+					dest, ft_mlx_line_color(&env, i, j, 'h'));
 			}
-			if (env.map.data[i][j] == 0)
-				color.g = 100;
 			if (i < env.map.height && i > 0)
 			{
-				if (env.map.data[i][j] == 0 && env.map.data[i - 1][j] != 0)
-					color.g = 255;
-				c_color = ft_mlx_color(color);
 				dest = (t_point){
 					((env.cursor_x + env.view.zoom) - (env.view.angle * 2)),
 					env.cursor_y - env.view.zoom - (env.map.data[i - 1][j] * 2)
@@ -62,7 +64,7 @@ void	ft_map_draw(t_env env)
 				ft_mlx_draw_line(&env,
 					(t_point){env.cursor_x,
 					env.cursor_y - (env.map.data[i][j] * 2)},
-					dest, c_color);
+					dest, ft_mlx_line_color(&env, i, j, 'v'));
 			}
 			env.cursor_x += env.view.zoom;
 		}
@@ -71,14 +73,12 @@ void	ft_map_draw(t_env env)
 		env.cursor_y += env.view.zoom + env.map.data[i][j + 1];
 		env.init.y--;
 	}
+	ft_mlx_scale(env);
 }
 
 int	main(int argc, char **argv )
 {
 	t_env	env;
-	t_color	color;
-	int		i;
-	int		y;
 
 	if (argc != 2)
 	{
@@ -93,19 +93,6 @@ int	main(int argc, char **argv )
 	env.init.y = (env.view.zoom * env.map.height) / 2;
 	ft_printf("Init x: %d y: %d\n", env.init.x, env.init.y);
 	ft_map_draw(env);
-	i = -1;
-	color = (t_color){0, 100, 100, 100};
-	while (i++, i < WIN_WIDTH)
-	{
-		y = 15;
-		color.g++;
-		if (color.g > 255)
-			color.g = 100;
-		mlx_pixel_put(env.mlx, env.win, i, 10, ft_mlx_color(color));
-		if (i % 100 > -2 && i % 100 < 2)
-			while (y++, y < 40)
-				mlx_pixel_put(env.mlx, env.win, i, y, WHITE);
-	}
 	ft_mlx_hooks(&env);
 	mlx_loop(env.mlx);
 	return (0);

@@ -85,12 +85,20 @@ typedef struct line
 	t_point	p1;
 }	t_line;
 
+typedef struct range
+{
+	int	min;
+	int	max;
+}	t_range;
+
 t_env	ft_mlx_create_env(char *file);
 void	ft_mlx_hooks(t_env *env);
 int		ft_mlx_keypress(int keycode, t_env *env);
 int		ft_mlx_destroy_window(t_env *env);
 int		ft_mlx_color(t_color color);
 void	ft_mlx_draw_line(t_env *env, t_point p0, t_point p1, int color);
+int		ft_map_value(t_range range_in, t_range range_out, int value);
+void	ft_mlx_scale(t_env env);
 
 t_map	ft_map_parse(char *file);
 void	ft_map_draw(t_env env);
