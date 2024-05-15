@@ -74,6 +74,7 @@ void	ft_map_draw(t_env env)
 		env.init.y--;
 	}
 	ft_mlx_scale(env);
+	ft_mlx_xpm(&env, "./image/header.xpm");
 }
 
 int	main(int argc, char **argv )
