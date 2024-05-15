@@ -28,7 +28,7 @@ void	ft_mlx_scale(t_env env)
 	i = -1;
 	while (i++, i < WIN_WIDTH)
 	{
-		x = 7;
+		x = 10;
 		mlx_pixel_put(env.mlx, env.win, i, WIN_HEIGHT - 2, GRAY_DARK);
 		mlx_pixel_put(env.mlx, env.win, i, WIN_HEIGHT - 1, GRAY_DARK);
 		if (i % env.view.zoom > -2 && i % env.view.zoom < 2)
@@ -38,7 +38,7 @@ void	ft_mlx_scale(t_env env)
 	i = -1;
 	while (i++, i < WIN_HEIGHT)
 	{
-		y = 7;
+		y = 10;
 		mlx_pixel_put(env.mlx, env.win, 2, i, GRAY_DARK);
 		mlx_pixel_put(env.mlx, env.win, 1, i, GRAY_DARK);
 		if (i % env.view.zoom > -2 && i % env.view.zoom < 2)
