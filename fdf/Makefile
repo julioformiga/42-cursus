@@ -46,8 +46,8 @@ re:		fclean all
 
 run:	all
 		$(CC) $(CFLAGS) $(XFLAGS) $(NAME) -o fdf
-		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./fdf assets/test_maps/42.fdf
-#		valgrind --leak-check=full ./fdf assets/test_maps/42.fdf
+		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./fdf assets/test_maps/42.fdf
+#		valgrind --leak-check=full --show-leak-kinds=all ./fdf assets/test_maps/42.fdf
 #		./fdf assets/test_maps/42.fdf
 #		./fdf assets/test_maps/basictest.fdf
 

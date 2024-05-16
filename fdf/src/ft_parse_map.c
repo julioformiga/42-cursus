@@ -12,26 +12,28 @@
 
 #include "fdf.h"
 
-static int	ft_read_file(char *file)
+static int	ft_read_file(t_env env, char *file)
 {
 	int	fd;
 
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
+		free(env.win);
+		free(env.mlx);
 		ft_putstr_fd("Error\nopen() failed\n", 2);
 		exit(1);
 	}
 	return (fd);
 }
 
-static int	ft_count_lines(char *file)
+static int	ft_count_lines(t_env env, char *file)
 {
 	int		fd;
 	char	*line;
 	int		lines;
 
-	fd = ft_read_file(file);
+	fd = ft_read_file(env, file);
 	lines = -1;
 	line = get_next_line(fd);
 	while (line)
@@ -44,7 +46,7 @@ static int	ft_count_lines(char *file)
 	return (lines);
 }
 
-t_map	ft_map_parse(char *file)
+t_map	ft_map_parse(t_env env, char *file)
 {
 	t_map	map;
 	int		fd;
@@ -54,8 +56,9 @@ t_map	ft_map_parse(char *file)
 
 	map.width = 0;
 	map.height = 0;
-	map.data = (int **)malloc((ft_count_lines(file) + 1) * sizeof(int *));
-	fd = ft_read_file(file);
+	fd = ft_read_file(env, file);
+	i = ft_count_lines(env, file) + 1;
+	map.data = (int **)malloc(i * sizeof(int *));
 	line = get_next_line(fd);
 	while (line)
 	{
@@ -80,7 +83,7 @@ t_map	ft_map_parse(char *file)
 			free(split[i]);
 		free(split);
 		line = get_next_line(fd);
-		if (!line)
+		if (line == NULL)
 			break ;
 	}
 	free(line);

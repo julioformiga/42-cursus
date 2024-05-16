@@ -15,21 +15,22 @@
 t_env	ft_mlx_create_env(char *file)
 {
 	t_env	env;
+	int		fd;
 
-	env.mlx = mlx_init();
-	if (!env.mlx)
+	fd = open(file, O_RDONLY);
+	if (fd == -1)
 	{
-		ft_putstr_fd("Error\nmlx_init() failed\n", 2);
+		ft_putstr_fd("Error\nopen() failed\n", 2);
 		exit(1);
 	}
+	env.mlx = mlx_init();
 	env.win = mlx_new_window(env.mlx, WIN_WIDTH, WIN_HEIGHT, WIN_TITLE);
-	if (!env.win)
+	if (!env.win || !env.mlx)
 	{
-		free(env.win);
 		ft_putstr_fd("Error\nmlx_new_window() failed\n", 2);
 		exit(1);
 	}
-	env.map = ft_map_parse(file);
+	env.map = ft_map_parse(env, file);
 	env.cursor_x = WIN_WIDTH / 2;
 	env.cursor_y = WIN_HEIGHT / 2;
 	return (env);
@@ -39,10 +40,6 @@ int	ft_mlx_destroy_window(t_env *env)
 {
 	mlx_destroy_window(env->mlx, env->win);
 	mlx_destroy_display(env->mlx);
-	free(env->mlx);
-	while (env->map.height--)
-		free(env->map.data[env->map.height]);
-	free(env->map.data);
 	exit(EXIT_SUCCESS);
 	return (0);
 }
