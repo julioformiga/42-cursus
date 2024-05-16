@@ -30,9 +30,36 @@ static int	ft_mlx_line_color(t_env *env, int i, int j, char type)
 	return (c_color);
 }
 
-void	ft_map_draw(t_env env)
+static void	ft_mlx_draw_lines(t_env env, char type, int i, int j)
 {
 	t_point	dest;
+
+	if (type == 'h')
+	{
+		dest = (t_point){
+			env.cursor_x - env.view.zoom,
+			env.cursor_y - (env.map.data[i][j - 1] * 2)
+		};
+		ft_mlx_draw_line(&env,
+			(t_point){env.cursor_x,
+			env.cursor_y - (env.map.data[i][j] * 2)},
+			dest, ft_mlx_line_color(&env, i, j, 'h'));
+	}
+	if (type == 'v')
+	{
+		dest = (t_point){
+			((env.cursor_x + env.view.zoom) - (env.view.angle * 2)),
+			env.cursor_y - env.view.zoom - (env.map.data[i - 1][j] * 2)
+		};
+		ft_mlx_draw_line(&env,
+			(t_point){env.cursor_x,
+			env.cursor_y - (env.map.data[i][j] * 2)},
+			dest, ft_mlx_line_color(&env, i, j, 'v'));
+	}
+}
+
+void	ft_map_draw(t_env env)
+{
 	int		i;
 	int		j;
 
@@ -45,27 +72,9 @@ void	ft_map_draw(t_env env)
 		while (j++ < env.map.width - 1)
 		{
 			if (j < env.map.width && j > 0)
-			{
-				dest = (t_point){
-					env.cursor_x - env.view.zoom,
-					env.cursor_y - (env.map.data[i][j - 1] * 2)
-				};
-				ft_mlx_draw_line(&env,
-					(t_point){env.cursor_x,
-					env.cursor_y - (env.map.data[i][j] * 2)},
-					dest, ft_mlx_line_color(&env, i, j, 'h'));
-			}
+				ft_mlx_draw_lines(env, 'h', i, j);
 			if (i < env.map.height && i > 0)
-			{
-				dest = (t_point){
-					((env.cursor_x + env.view.zoom) - (env.view.angle * 2)),
-					env.cursor_y - env.view.zoom - (env.map.data[i - 1][j] * 2)
-				};
-				ft_mlx_draw_line(&env,
-					(t_point){env.cursor_x,
-					env.cursor_y - (env.map.data[i][j] * 2)},
-					dest, ft_mlx_line_color(&env, i, j, 'v'));
-			}
+				ft_mlx_draw_lines(env, 'v', i, j);
 			env.cursor_x += env.view.zoom;
 		}
 		env.init.x -= env.view.angle;
