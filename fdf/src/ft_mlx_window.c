@@ -12,34 +12,53 @@
 
 #include "fdf.h"
 
-t_env	ft_mlx_create_env(char *file)
+t_env	*ft_mlx_create_env(void)
 {
-	t_env	env;
-	int		fd;
+	t_env	*env;
 
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
+	env = (t_env *)malloc(sizeof(t_env));
+	if (!env)
 	{
-		ft_putstr_fd("Error\nopen() failed\n", 2);
+		ft_putstr_fd("Error\nmalloc() failed\n", 2);
 		exit(1);
 	}
-	env.mlx = mlx_init();
-	env.win = mlx_new_window(env.mlx, WIN_WIDTH, WIN_HEIGHT, WIN_TITLE);
-	if (!env.win || !env.mlx)
+	env->mlx = mlx_init();
+	if (!env->mlx)
+	{
+		ft_putstr_fd("Error\nmlx_init() failed\n", 2);
+		exit(1);
+	}
+	env->win = mlx_new_window(env->mlx, WIN_WIDTH, WIN_HEIGHT, "FdF");
+	if (!env->win)
 	{
 		ft_putstr_fd("Error\nmlx_new_window() failed\n", 2);
 		exit(1);
 	}
-	env.map = ft_map_parse(env, file);
-	env.cursor_x = WIN_WIDTH / 2;
-	env.cursor_y = WIN_HEIGHT / 2;
+	env->view.zoom = 36;
+	env->view.angle = env->view.zoom / 2;
+	env->cursor_x = WIN_WIDTH / 2;
+	env->cursor_y = WIN_HEIGHT / 2;
+	env->init = (t_point){0, 0};
+	// env->cursor_x = (env->view.zoom * env->map.width) / 2;
+	// env->cursor_y = (env->view.zoom * env->map.height) / 2;
 	return (env);
 }
 
 int	ft_mlx_destroy_window(t_env *env)
 {
-	mlx_destroy_window(env->mlx, env->win);
-	mlx_destroy_display(env->mlx);
+	if (env->mlx)
+	{
+		// if (env->img)
+		// 	mlx_destroy_image(env->mlx, env->img);
+		if (env->win)
+			mlx_destroy_window(env->mlx, env->win);
+		mlx_destroy_display(env->mlx);
+		free(env->mlx);
+		while (env->map.height--)
+			free(env->map.data[env->map.height]);
+		free(env->map.data);
+		free(env);
+	}
 	exit(EXIT_SUCCESS);
 	return (0);
 }

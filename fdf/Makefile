@@ -1,6 +1,6 @@
 CC		= cc
 INCLUDE	= -Iinclude
-CFLAGS	= -Wall -Werror -Wextra -O3 $(INCLUDE)
+CFLAGS	= -Wall -Werror -Wextra -g $(INCLUDE)
 XFLAGS	= -lX11 -lXext -lm -lz
 RM		= rm -f
 AR		= ar -src
@@ -44,9 +44,9 @@ fclean:	clean
 
 re:		fclean all
 
-run:	all
+run:	all debug
 		$(CC) $(CFLAGS) $(XFLAGS) $(NAME) -o fdf
-		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./fdf assets/test_maps/42.fdf
+		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./fdf assets/test_maps/42.fdf
 #		valgrind --leak-check=full --show-leak-kinds=all ./fdf assets/test_maps/42.fdf
 #		./fdf assets/test_maps/42.fdf
 #		./fdf assets/test_maps/basictest.fdf
