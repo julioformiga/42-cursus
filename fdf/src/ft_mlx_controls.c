@@ -50,25 +50,25 @@ int	ft_mlx_keypress(int keycode, t_env *env)
 		env->view.angle = env->view.zoom / 2;
 		ft_map_draw(env);
 	}
-	if (keycode == XK_Up)
+	if (keycode == XK_Up || keycode == 'k')
 	{
 		mlx_clear_window(env->mlx, env->win);
 		env->init.y -= 10;
 		ft_map_draw(env);
 	}
-	if (keycode == XK_Down)
+	if (keycode == XK_Down || keycode == 'j')
 	{
 		mlx_clear_window(env->mlx, env->win);
 		env->init.y += 10;
 		ft_map_draw(env);
 	}
-	if (keycode == XK_Left || keycode == 'a')
+	if (keycode == XK_Left || keycode == 'h')
 	{
 		mlx_clear_window(env->mlx, env->win);
 		env->init.x -= 10;
 		ft_map_draw(env);
 	}
-	if (keycode == XK_Right || keycode == 'd')
+	if (keycode == XK_Right || keycode == 'l')
 	{
 		mlx_clear_window(env->mlx, env->win);
 		env->init.x += 10;
