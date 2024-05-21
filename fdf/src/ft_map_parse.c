@@ -97,14 +97,22 @@ t_map	ft_map_parse(char *file)
 		if (i == 0)
 		{
 			ft_putstr_fd("Error: Empty line\n", 2);
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
 		if (map.width == 0)
 			map.width = i;
 		else if (map.width != i)
 		{
 			ft_putstr_fd("Error: Map is not rectangular\n", 2);
-			exit(1);
+			i = -1;
+			while (i++, split[i])
+				free(split[i]);
+			free(split);
+			i = -1;
+			while (i++, map.data[i])
+				free(map.data[i]);
+			free(map.data);
+			exit(EXIT_FAILURE);
 		}
 		map.data[map.height] = (int *)malloc((map.width + 1) * sizeof(int));
 		i = -1;

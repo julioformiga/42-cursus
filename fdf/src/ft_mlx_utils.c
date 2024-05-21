@@ -22,8 +22,8 @@ int	ft_map_value(t_range range_in, t_range range_out, int value)
 void	ft_mlx_scale(t_env *env)
 {
 	int		i;
-	int		y;
 	int		x;
+	int		y;
 
 	i = -1;
 	while (i++, i < WIN_WIDTH)

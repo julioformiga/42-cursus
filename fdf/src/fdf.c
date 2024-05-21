@@ -64,18 +64,35 @@ static void	int_handler(int _)
 	ft_printf("\b\bPress 'q' or 'ESC'\n");
 }
 
+static void	ft_check_file(char *file)
+{
+	int	fd;
+
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+	{
+		ft_printf("fdf: %s: No such file or directory", file);
+		ft_putstr_fd("\n", 2);
+		exit(EXIT_FAILURE);
+	}
+	close(fd);
+}
+
 int	main(int argc, char **argv)
 {
 	t_env	*env;
+	t_map	map;
 
 	signal (SIGINT, int_handler);
 	if (argc != 2)
 	{
 		ft_putstr_fd("Error\nUsage: ./fdf <file>\n", 2);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
+	ft_check_file(argv[1]);
+	map = ft_map_parse(argv[1]);
 	env = ft_mlx_create_env();
-	env->map = ft_map_parse(argv[1]);
+	env->map = map;
 	env->init.x = (env->view.zoom * env->map.width) / 2;
 	env->init.y = (env->view.zoom * env->map.height) / 2;
 	ft_map_draw(env);

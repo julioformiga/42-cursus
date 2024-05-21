@@ -47,6 +47,9 @@ int	ft_mlx_destroy_window(t_env *env)
 {
 	if (env->mlx)
 	{
+		while (env->map.height--)
+			free(env->map.data[env->map.height]);
+		free(env->map.data);
 		if (env->imgs->img)
 		{
 			mlx_destroy_image(env->mlx, env->imgs->img);
@@ -56,9 +59,6 @@ int	ft_mlx_destroy_window(t_env *env)
 			mlx_destroy_window(env->mlx, env->win);
 		mlx_destroy_display(env->mlx);
 		free(env->mlx);
-		while (env->map.height--)
-			free(env->map.data[env->map.height]);
-		free(env->map.data);
 		free(env);
 	}
 	exit(EXIT_SUCCESS);
