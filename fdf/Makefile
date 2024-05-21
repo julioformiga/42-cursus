@@ -1,6 +1,6 @@
 CC		= cc
 INCLUDE	= -Iinclude
-CFLAGS	= -Wall -Werror -Wextra -g $(INCLUDE)
+CFLAGS	= -Wall -Werror -Wextra -g -O3 $(INCLUDE)
 XFLAGS	= -lX11 -lXext -lm -lz
 RM		= rm -f
 AR		= ar -src

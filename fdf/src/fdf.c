@@ -22,7 +22,7 @@ int	ft_mlx_line_color(t_env *env, int i, int j, char type)
 	r_in = (t_range){40, 255};
 	r_out = (t_range){0, 10};
 	color = (t_color){0, 40, 100, 40};
-	if (j > 0 &&env->map.data[i][j] == env->map.data[i][j - 1] && type == 'h')
+	if (j > 0 && env->map.data[i][j] == env->map.data[i][j - 1] && type == 'h')
 		color.g = ft_map_value(r_in, r_out, env->map.data[i][j]);
 	if (i > 0 && env->map.data[i][j] == env->map.data[i - 1][j] && type == 'v')
 		color.g = ft_map_value(r_in, r_out, env->map.data[i][j]);
@@ -58,15 +58,21 @@ void	ft_mlx_draw_lines(t_env *env, char type, int i, int j)
 	}
 }
 
+static void	int_handler(int _)
+{
+	(void)_;
+	ft_printf("\b\bPress 'q' or 'ESC'\n");
+}
+
 int	main(int argc, char **argv)
 {
 	t_env	*env;
 
+	signal (SIGINT, int_handler);
 	if (argc != 2)
 	{
 		ft_putstr_fd("Error\nUsage: ./fdf <file>\n", 2);
 		exit(1);
-		// argv[1] = "assets/test_maps/42.fdf";
 	}
 	env = ft_mlx_create_env();
 	env->map = ft_map_parse(argv[1]);
@@ -75,6 +81,6 @@ int	main(int argc, char **argv)
 	ft_map_draw(env);
 	ft_mlx_hooks(env);
 	mlx_loop(env->mlx);
-	ft_mlx_destroy_window(env);
+	exit(EXIT_SUCCESS);
 	return (0);
 }

@@ -35,6 +35,7 @@
 # include <unistd.h>
 # include <time.h>
 # include <string.h>
+# include <signal.h>
 # include <X11/keysym.h>
 # include <X11/X.h>
 # include "../lib/ft_printf/libft/libft.h"
