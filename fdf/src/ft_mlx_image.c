@@ -14,13 +14,18 @@
 
 void	ft_mlx_xpm(t_env *env, char *filename)
 {
-	int		x_init;
-	t_point	size;
+	env->imgs = (t_img *)malloc(sizeof(t_img));
+	env->imgs->size.w = 340;
+	env->imgs->size.h = 115;
+	env->imgs->img = mlx_xpm_file_to_image(env->mlx, filename,
+			&env->imgs->size.w, &env->imgs->size.h);
+}
 
-	size = (t_point){340, 115};
-	x_init = (WIN_WIDTH / 2) - (size.x / 2);
-	env->img = mlx_xpm_file_to_image(env->mlx, filename, &size.x, &size.y);
-	mlx_xpm_to_image(env->mlx, env->img, &size.x, &size.y);
-	mlx_put_image_to_window(env->mlx, env->win, env->img, x_init, 0);
+void	ft_mlx_put_image(t_env *env)
+{
+	int	x_init;
+
+	x_init = (WIN_WIDTH / 2) - (env->imgs->size.w / 2);
+	mlx_put_image_to_window(env->mlx, env->win, env->imgs->img, x_init, 0);
 	mlx_do_sync(env->mlx);
 }

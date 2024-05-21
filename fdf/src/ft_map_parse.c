@@ -59,7 +59,7 @@ void	ft_map_draw(t_env *env)
 		// env->init.y--;
 	}
 	ft_mlx_scale(env);
-	// ft_mlx_xpm(env, "./image/header.xpm");
+	ft_mlx_put_image(env);
 }
 
 t_map	ft_map_parse(char *file)

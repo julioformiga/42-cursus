@@ -68,13 +68,16 @@ typedef struct s_point
 	int	y;
 }	t_point;
 
+typedef struct s_size
+{
+	int	w;
+	int	h;
+}	t_size;
+
 typedef struct s_img
 {
 	void	*img;
-	char	*data;
-	int		bpp;
-	int		size_line;
-	int		endian;
+	t_size	size;
 }	t_img;
 
 typedef struct s_env
@@ -84,7 +87,7 @@ typedef struct s_env
 	void	*img;
 	int		cursor_x;
 	int		cursor_y;
-	// t_img	*imgs;
+	t_img	*imgs;
 	t_map	map;
 	t_view	view;
 	t_point	init;
@@ -117,5 +120,6 @@ void	ft_mlx_draw_lines(t_env *env, char type, int i, int j);
 void	ft_mlx_xpm(t_env *env, char *filename);
 t_map	ft_map_parse(char *file);
 void	ft_map_draw(t_env *env);
+void	ft_mlx_put_image(t_env *env);
 
 #endif

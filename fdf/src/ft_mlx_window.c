@@ -39,8 +39,7 @@ t_env	*ft_mlx_create_env(void)
 	env->cursor_x = WIN_WIDTH / 2;
 	env->cursor_y = WIN_HEIGHT / 2;
 	env->init = (t_point){0, 0};
-	// env->cursor_x = (env->view.zoom * env->map.width) / 2;
-	// env->cursor_y = (env->view.zoom * env->map.height) / 2;
+	ft_mlx_xpm(env, "./image/header.xpm");
 	return (env);
 }
 
@@ -48,8 +47,11 @@ int	ft_mlx_destroy_window(t_env *env)
 {
 	if (env->mlx)
 	{
-		// if (env->img)
-		// 	mlx_destroy_image(env->mlx, env->img);
+		if (env->imgs->img)
+		{
+			mlx_destroy_image(env->mlx, env->imgs->img);
+			free(env->imgs);
+		}
 		if (env->win)
 			mlx_destroy_window(env->mlx, env->win);
 		mlx_destroy_display(env->mlx);
