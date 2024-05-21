@@ -25,6 +25,32 @@ static t_point	set_point(t_point begin, t_point end)
 	return (point_s);
 }
 
+void	ft_map_draw(t_env *env)
+{
+	int		i;
+	int		j;
+
+	env->cursor_x = env->init.x;
+	env->cursor_y = env->init.y;
+	i = -1;
+	while (i++ < env->map.height - 1)
+	{
+		j = -1;
+		while (j++ < env->map.width - 1)
+		{
+			if (j < env->map.width && j > 0)
+				ft_mlx_draw_lines(env, 'h', i, j);
+			if (i < env->map.height && i > 0)
+				ft_mlx_draw_lines(env, 'v', i, j);
+			env->cursor_x += env->view.zoom;
+		}
+		env->cursor_x = env->init.x;
+		env->cursor_y += env->view.zoom;
+	}
+	ft_mlx_scale(env);
+	ft_mlx_put_image(env);
+}
+
 void	ft_mlx_draw_line(t_env *env, t_point begin, t_point end, int color)
 {
 	t_point	d;

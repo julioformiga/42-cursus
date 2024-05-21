@@ -29,37 +29,40 @@ static int	ft_count_lines(int fd)
 	return (lines);
 }
 
-void	ft_map_draw(t_env *env)
+static void	ft_check_map_parse(char **split, t_map *map)
+{
+	int	i;
+
+	i = 0;
+	if (!split)
+	{
+		ft_free_array(map->data);
+		ft_mlx_error("Error splitting line\n");
+	}
+	i = 0;
+	while (split[i])
+		i++;
+	if (i == 0)
+		ft_mlx_error("Empty line\n");
+	if (map->width == 0)
+		map->width = i;
+	else if (map->width != i)
+	{
+		ft_free_array(map->data);
+		ft_free_array_char(split);
+		ft_mlx_error("Map is not rectangular\n");
+	}
+}
+
+static void	ft_map_fill_values(t_map *map, char **split)
 {
 	int		i;
-	int		j;
 
-	env->cursor_x = env->init.x;
-	env->cursor_y = env->init.y;
 	i = -1;
-	while (i++ < env->map.height - 1)
-	{
-		j = -1;
-		while (j++ < env->map.width - 1)
-		{
-			if (j < env->map.width && j > 0)
-				ft_mlx_draw_lines(env, 'h', i, j);
-			if (i < env->map.height && i > 0)
-				ft_mlx_draw_lines(env, 'v', i, j);
-			env->cursor_x += env->view.zoom;
-		}
-		// env->init.x -= env->view.zoom;
-		env->cursor_x = env->init.x;
-		env->cursor_y += env->view.zoom;
-		// env->cursor_y = env->view.zoom + env->map.data[i][j];
-		// if (j < env->map.width)
-		// 	env->cursor_y += env->view.zoom + env->map.data[i][j + 1];
-		// else
-		//  env->cursor_y += env->view.zoom;
-		// env->init.y--;
-	}
-	ft_mlx_scale(env);
-	ft_mlx_put_image(env);
+	while (i++, i < map->width && split[i])
+		map->data[map->height][i] = ft_atoi(split[i]);
+	map->height++;
+	ft_free_array_char(split);
 }
 
 t_map	ft_map_parse(char *file)
@@ -81,48 +84,9 @@ t_map	ft_map_parse(char *file)
 	{
 		split = ft_split(line, ' ');
 		free(line);
-		if (!split)
-		{
-			perror("Error splitting line");
-			close(fd);
-			i = -1;
-			while (i++, map.data[i])
-				free(map.data[i]);
-			free(map.data);
-			exit(EXIT_FAILURE);
-		}
-		i = 0;
-		while (split[i])
-			i++;
-		if (i == 0)
-		{
-			ft_putstr_fd("Error: Empty line\n", 2);
-			exit(EXIT_FAILURE);
-		}
-		if (map.width == 0)
-			map.width = i;
-		else if (map.width != i)
-		{
-			ft_putstr_fd("Error: Map is not rectangular\n", 2);
-			i = -1;
-			while (i++, split[i])
-				free(split[i]);
-			free(split);
-			i = -1;
-			while (i++, map.data[i])
-				free(map.data[i]);
-			free(map.data);
-			exit(EXIT_FAILURE);
-		}
+		ft_check_map_parse(split, &map);
 		map.data[map.height] = (int *)malloc((map.width + 1) * sizeof(int));
-		i = -1;
-		while (i++, i < map.width && split[i])
-			map.data[map.height][i] = ft_atoi(split[i]);
-		map.height++;
-		i = -1;
-		while (i++, split[i])
-			free(split[i]);
-		free(split);
+		ft_map_fill_values(&map, split);
 		line = get_next_line(fd);
 	}
 	free(line);

@@ -118,9 +118,12 @@ int		ft_map_value(t_range range_in, t_range range_out, int value);
 void	ft_mlx_scale(t_env *env);
 void	ft_mlx_draw_lines(t_env *env, char type, int i, int j);
 
+void	ft_free_array(int **ar);
+void	ft_free_array_char(char **ar);
 void	ft_mlx_xpm(t_env *env, char *filename);
 t_map	ft_map_parse(char *file);
 void	ft_map_draw(t_env *env);
 void	ft_mlx_put_image(t_env *env);
+void	ft_mlx_error(char *msg);
 
 #endif

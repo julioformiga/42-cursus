@@ -18,22 +18,13 @@ t_env	*ft_mlx_create_env(void)
 
 	env = (t_env *)malloc(sizeof(t_env));
 	if (!env)
-	{
-		ft_putstr_fd("Error\nmalloc() failed\n", 2);
-		exit(1);
-	}
+		ft_mlx_error("malloc() failed");
 	env->mlx = mlx_init();
 	if (!env->mlx)
-	{
-		ft_putstr_fd("Error\nmlx_init() failed\n", 2);
-		exit(1);
-	}
+		ft_mlx_error("mlx_init() failed");
 	env->win = mlx_new_window(env->mlx, WIN_WIDTH, WIN_HEIGHT, "FdF");
 	if (!env->win)
-	{
-		ft_putstr_fd("Error\nmlx_new_window() failed\n", 2);
-		exit(1);
-	}
+		ft_mlx_error("mlx_new_window() failed");
 	env->view.zoom = 36;
 	env->view.angle = env->view.zoom / 2;
 	env->cursor_x = WIN_WIDTH / 2;

@@ -12,11 +12,39 @@
 
 #include "fdf.h"
 
+void	ft_mlx_error(char *msg)
+{
+	ft_putstr_fd("Error: ", 2);
+	ft_putstr_fd(msg, 2);
+	ft_putstr_fd("\n", 2);
+	exit(EXIT_FAILURE);
+}
+
 int	ft_map_value(t_range range_in, t_range range_out, int value)
 {
 	return (range_in.min
 		+ ((range_in.max - range_in.min) / (range_out.max - range_out.min))
 		* (value - range_out.min));
+}
+
+void	ft_free_array(int **ar)
+{
+	int	i;
+
+	i = -1;
+	while (i++, ar[i])
+		free(ar[i]);
+	free(ar);
+}
+
+void	ft_free_array_char(char **ar)
+{
+	int	i;
+
+	i = -1;
+	while (i++, ar[i])
+		free(ar[i]);
+	free(ar);
 }
 
 void	ft_mlx_scale(t_env *env)
