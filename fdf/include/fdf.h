@@ -107,6 +107,7 @@ typedef struct s_range
 	int	max;
 }	t_range;
 
+void	ft_check_file(char *file);
 t_env	*ft_mlx_create_env(void);
 void	ft_mlx_hooks(t_env *env);
 int		ft_mlx_keypress(int keycode, t_env *env);
@@ -118,6 +119,7 @@ int		ft_map_value(t_range range_in, t_range range_out, int value);
 void	ft_mlx_scale(t_env *env);
 void	ft_mlx_draw_lines(t_env *env, char type, int i, int j);
 
+void	ft_mlx_map_zoom(t_env *env, char zoom);
 void	ft_free_array(int **ar);
 void	ft_free_array_char(char **ar);
 void	ft_mlx_xpm(t_env *env, char *filename);

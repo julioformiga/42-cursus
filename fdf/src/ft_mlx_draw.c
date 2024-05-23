@@ -12,19 +12,6 @@
 
 #include "fdf.h"
 
-static t_point	set_point(t_point begin, t_point end)
-{
-	t_point	point_s;
-
-	point_s.x = -1;
-	if (begin.x < end.x)
-		point_s.x = 1;
-	point_s.y = -1;
-	if (begin.y < end.y)
-		point_s.y = 1;
-	return (point_s);
-}
-
 void	ft_map_draw(t_env *env)
 {
 	int		i;
@@ -51,31 +38,30 @@ void	ft_map_draw(t_env *env)
 	ft_mlx_put_image(env);
 }
 
-void	ft_mlx_draw_line(t_env *env, t_point begin, t_point end, int color)
+void	ft_mlx_scale(t_env *env)
 {
-	t_point	d;
-	t_point	s;
-	int		err;
-	int		e2;
+	int		i;
+	int		x;
+	int		y;
 
-	d.x = abs(end.x - begin.x);
-	d.y = -abs(end.y - begin.y);
-	s = set_point(begin, end);
-	err = d.x + d.y;
-	e2 = 0;
-	while (begin.x != end.x || begin.y != end.y)
+	i = -1;
+	while (i++, i < WIN_WIDTH)
 	{
-		mlx_pixel_put(env->mlx, env->win, begin.x, begin.y, color);
-		e2 = 2 * err;
-		if (e2 >= d.y)
-		{
-			err += d.y;
-			begin.x += s.x;
-		}
-		if (e2 <= d.x)
-		{
-			err += d.x;
-			begin.y += s.y;
-		}
+		x = 10;
+		mlx_pixel_put(env->mlx, env->win, i, WIN_HEIGHT - 2, GRAY_DARK);
+		mlx_pixel_put(env->mlx, env->win, i, WIN_HEIGHT - 1, GRAY_DARK);
+		if (i % env->view.zoom > -2 && i % env->view.zoom < 2)
+			while (x--, x > 2)
+				mlx_pixel_put(env->mlx, env->win, i, WIN_HEIGHT - x, GRAY);
+	}
+	i = -1;
+	while (i++, i < WIN_HEIGHT)
+	{
+		y = 10;
+		mlx_pixel_put(env->mlx, env->win, 2, i, GRAY_DARK);
+		mlx_pixel_put(env->mlx, env->win, 1, i, GRAY_DARK);
+		if (i % env->view.zoom > -2 && i % env->view.zoom < 2)
+			while (y--, y > 2)
+				mlx_pixel_put(env->mlx, env->win, y, i, GRAY);
 	}
 }

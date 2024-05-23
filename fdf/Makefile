@@ -46,13 +46,16 @@ re:		fclean all
 
 run:	all debug
 		$(CC) $(CFLAGS) $(XFLAGS) $(NAME) -o fdf
-		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./fdf assets/test_maps/42.fdf
+#		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./fdf assets/test_maps/42.fdf
 #		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./fdf assets/test_maps/mars.fdf
 #		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./fdf assets/test_maps/basictest.fdf
 #		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./fdf assets/nonesist.fdf
 #		valgrind --leak-check=full --show-leak-kinds=all ./fdf assets/test_maps/42.fdf
-#		./fdf assets/test_maps/42.fdf
+		./fdf assets/test_maps/42.fdf
 #		./fdf assets/test_maps/basictest.fdf
+#		./fdf ./assets/test_maps/t1.fdf
+#		./fdf ./assets/test_maps/t2.fdf
+#		./fdf ./assets/test_maps/joydivision.fdf
 
 debug:	all
 		$(CC) $(CFLAGS) $(XFLAGS) $(NAME) -g -o a.out

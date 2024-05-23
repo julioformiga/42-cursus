@@ -25,8 +25,6 @@ t_env	*ft_mlx_create_env(void)
 	env->win = mlx_new_window(env->mlx, WIN_WIDTH, WIN_HEIGHT, "FdF");
 	if (!env->win)
 		ft_mlx_error("mlx_new_window() failed");
-	env->view.zoom = 36;
-	env->view.angle = env->view.zoom / 2;
 	env->cursor_x = WIN_WIDTH / 2;
 	env->cursor_y = WIN_HEIGHT / 2;
 	env->init = (t_point){0, 0};

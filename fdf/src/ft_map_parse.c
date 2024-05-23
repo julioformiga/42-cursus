@@ -1,16 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_parse_map.c                                     :+:      :+:    :+:   */
+/*   ft_map_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: julio.formiga <julio.formiga@gmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/17 03:53:30 by julio.formiga     #+#    #+#             */
-/*   Updated: 2024/05/17 03:53:30 by julio.formiga    ###   ########.fr       */
+/*   Created: 2024/05/22 01:59:54 by julio.formiga     #+#    #+#             */
+/*   Updated: 2024/05/22 01:59:54 by julio.formiga    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+int	ft_map_value(t_range range_in, t_range range_out, int value)
+{
+	return (range_in.min
+		+ ((range_in.max - range_in.min) / (range_out.max - range_out.min))
+		* (value - range_out.min));
+}
 
 static int	ft_count_lines(int fd)
 {

@@ -27,21 +27,32 @@ void	ft_mlx_hooks(t_env *env)
 		ft_mlx_destroy_window, env);
 }
 
+void	ft_mlx_map_zoom(t_env *env, char zoom)
+{
+	if (zoom == '+')
+	{
+		env->view.zoom += 2;
+		env->init.x -= env->view.zoom / 2;
+		env->init.y -= env->view.zoom / 2;
+	}
+	if (zoom == '-' && env->view.zoom > 2)
+	{
+		env->view.zoom -= 2;
+		env->init.x += env->view.zoom / 2;
+		env->init.y += env->view.zoom / 2;
+	}
+	env->view.angle = env->view.zoom / 2;
+}
+
 int	ft_mlx_keypress(int keycode, t_env *env)
 {
 	if (keycode == XK_Escape || keycode == 'q')
 		ft_mlx_destroy_window(env);
 	mlx_clear_window(env->mlx, env->win);
 	if (keycode == 'w')
-	{
-		env->view.zoom += 2;
-		env->view.angle = env->view.zoom / 2;
-	}
+		ft_mlx_map_zoom(env, '+');
 	if (keycode == 's' && env->view.zoom > 2)
-	{
-		env->view.zoom -= 2;
-		env->view.angle = env->view.zoom / 2;
-	}
+		ft_mlx_map_zoom(env, '-');
 	if (keycode == XK_Up || keycode == 'k')
 		env->init.y -= 10;
 	if (keycode == XK_Down || keycode == 'j')
