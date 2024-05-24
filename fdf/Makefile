@@ -31,6 +31,7 @@ $(NAME):	$(OBJ)
 			@make all -C $(FT_PRINTF_DIR)
 			@make all -C $(MINILIBX_DIR)
 			$(AR) $@ $(OBJ) $(OBJ_LIBFT) $(OBJ_FT_PRINTF) $(OBJ_LIBMXL)
+			$(CC) $(CFLAGS) $(XFLAGS) $(NAME) -o fdf
 
 clean:
 		$(RM) $(OBJ)
@@ -45,13 +46,12 @@ fclean:	clean
 re:		fclean all
 
 run:	all debug
-		$(CC) $(CFLAGS) $(XFLAGS) $(NAME) -o fdf
-#		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./fdf assets/test_maps/42.fdf
+		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./fdf assets/test_maps/42.fdf
 #		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./fdf assets/test_maps/mars.fdf
 #		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./fdf assets/test_maps/basictest.fdf
 #		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./fdf assets/nonesist.fdf
 #		valgrind --leak-check=full --show-leak-kinds=all ./fdf assets/test_maps/42.fdf
-		./fdf assets/test_maps/42.fdf
+#		./fdf assets/test_maps/42.fdf
 #		./fdf assets/test_maps/basictest.fdf
 #		./fdf ./assets/test_maps/t1.fdf
 #		./fdf ./assets/test_maps/t2.fdf
