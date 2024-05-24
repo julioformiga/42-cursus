@@ -12,10 +12,13 @@
 
 #include "fdf.h"
 
-static int	ft_mlx_mouse(t_env *env, int button, int x, int y)
+static int	ft_mlx_mouse(int button, int x, int y, t_env *env)
 {
-	(void)env;
 	ft_printf("Mouse: %d x: %d y: %d\n", button, x, y);
+	if (button == 5)
+		ft_mlx_keypress('w', env);
+	if (button == 4)
+		ft_mlx_keypress('s', env);
 	return (0);
 }
 
@@ -35,7 +38,7 @@ void	ft_mlx_map_zoom(t_env *env, char zoom)
 		env->init.x -= env->view.zoom / 2;
 		env->init.y -= env->view.zoom / 2;
 	}
-	if (zoom == '-' && env->view.zoom > 2)
+	if (zoom == '-')
 	{
 		env->view.zoom -= 2;
 		env->init.x += env->view.zoom / 2;
