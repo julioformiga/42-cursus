@@ -12,18 +12,11 @@
 
 #include "fdf.h"
 
-static void	int_handler(int _)
-{
-	(void)_;
-	ft_printf("\b\bPress 'q' or 'ESC'\n");
-}
-
 int	main(int argc, char **argv)
 {
 	t_env	*env;
 	t_map	map;
 
-	signal (SIGINT, int_handler);
 	if (argc != 2)
 		ft_mlx_error("Usage: ./fdf <file>");
 	ft_check_file(argv[1]);
@@ -34,7 +27,7 @@ int	main(int argc, char **argv)
 	if (env->view.zoom % 2)
 		env->view.zoom++;
 	env->view.angle = env->view.zoom / 2;
-	env->init.x = (WIN_WIDTH / 2) - (env->view.zoom * env->map.width) / 2;
+	env->init.x = (WIN_WIDTH / 2) - (env->view.zoom * (env->map.width - 1)) / 2;
 	env->init.y = (WIN_HEIGHT / 2) - (env->view.zoom * env->map.height) / 2;
 	ft_map_draw(env);
 	ft_mlx_hooks(env);
