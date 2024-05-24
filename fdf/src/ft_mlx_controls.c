@@ -14,7 +14,8 @@
 
 static int	ft_mlx_mouse(int button, int x, int y, t_env *env)
 {
-	ft_printf("Mouse: %d x: %d y: %d\n", button, x, y);
+	(void)x;
+	(void)y;
 	if (button == 5)
 		ft_mlx_keypress('w', env);
 	if (button == 4)
