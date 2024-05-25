@@ -44,10 +44,10 @@ static void	ft_check_map_parse(char **split, t_map *map)
 	if (!split)
 	{
 		ft_free_array(map->data);
-		ft_mlx_error("Error splitting line\n");
+		ft_mlx_error("Splitting line\n");
 	}
 	i = 0;
-	while (split[i])
+	while (split[i] && ft_isprint(split[i][0]))
 		i++;
 	if (i == 0)
 		ft_mlx_error("Empty line\n");
