@@ -60,6 +60,7 @@ typedef struct s_view
 {
 	int	zoom;
 	int	angle;
+	int	height;
 }	t_view;
 
 typedef struct s_point
@@ -80,6 +81,15 @@ typedef struct s_img
 	t_size	size;
 }	t_img;
 
+typedef struct s_scr
+{
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line;
+	int		endian;
+}	t_scr;
+
 typedef struct s_env
 {
 	void	*mlx;
@@ -87,6 +97,7 @@ typedef struct s_env
 	void	*img;
 	int		cursor_x;
 	int		cursor_y;
+	t_scr	screen;
 	t_img	*imgs;
 	t_map	map;
 	t_view	view;

@@ -17,6 +17,7 @@ void	ft_map_draw(t_env *env)
 	int		i;
 	int		j;
 
+	ft_bzero(env->screen.addr, WIN_WIDTH * WIN_HEIGHT * (env->screen.bpp / 8));
 	env->cursor_x = env->init.x;
 	env->cursor_y = env->init.y;
 	i = -1;
@@ -35,7 +36,9 @@ void	ft_map_draw(t_env *env)
 		env->cursor_y += env->view.zoom;
 	}
 	ft_mlx_scale(env);
+	mlx_put_image_to_window(env->mlx, env->win, env->screen.img, 0, 0);
 	ft_mlx_put_image(env);
+	mlx_do_sync(env->mlx);
 }
 
 void	ft_mlx_scale(t_env *env)

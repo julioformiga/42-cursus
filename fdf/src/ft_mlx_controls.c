@@ -52,7 +52,6 @@ int	ft_mlx_keypress(int keycode, t_env *env)
 {
 	if (keycode == XK_Escape || keycode == 'q')
 		ft_mlx_destroy_window(env);
-	mlx_clear_window(env->mlx, env->win);
 	if (keycode == 'w')
 		ft_mlx_map_zoom(env, '+');
 	if (keycode == 's' && env->view.zoom > 2)
@@ -65,6 +64,10 @@ int	ft_mlx_keypress(int keycode, t_env *env)
 		env->init.x -= 10;
 	if (keycode == XK_Right || keycode == 'l')
 		env->init.x += 10;
+	if (keycode == 'r')
+		env->view.height += 1;
+	if (keycode == 'f')
+		env->view.height -= 1;
 	ft_map_draw(env);
 	return (0);
 }
