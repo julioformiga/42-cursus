@@ -35,8 +35,8 @@ void	ft_map_draw(t_env *env)
 		env->cursor_x = env->init.x;
 		env->cursor_y += env->view.zoom;
 	}
-	ft_mlx_scale(env);
 	mlx_put_image_to_window(env->mlx, env->win, env->screen.img, 0, 0);
+	ft_mlx_scale(env);
 	ft_mlx_put_image(env);
 	mlx_do_sync(env->mlx);
 }

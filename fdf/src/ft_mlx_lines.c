@@ -25,22 +25,16 @@ static t_point	set_point(t_point begin, t_point end)
 	return (point_s);
 }
 
-int	ft_mlx_line_color(t_env *env, int i, int j, char type)
+void	ft_draw_line_to_image(t_env *env, int x, int y, int color)
 {
-	t_color	color;
-	t_range	r_in;
-	t_range	r_out;
-	int		c_color;
+	char	*dst;
 
-	r_in = (t_range){40, 255};
-	r_out = (t_range){0, 10};
-	color = (t_color){0, 40, 100, 40};
-	if (j > 0 && env->map.data[i][j] == env->map.data[i][j - 1] && type == 'h')
-		color.g = ft_map_value(r_in, r_out, env->map.data[i][j]);
-	if (i > 0 && env->map.data[i][j] == env->map.data[i - 1][j] && type == 'v')
-		color.g = ft_map_value(r_in, r_out, env->map.data[i][j]);
-	c_color = ft_mlx_color(color);
-	return (c_color);
+	if (x >= 0 && x < WIN_WIDTH && y >= 0 && y < WIN_HEIGHT)
+	{
+		dst = env->screen.addr
+			+ (y * env->screen.line + x * (env->screen.bpp / 8));
+		*(unsigned int *)dst = color;
+	}
 }
 
 void	ft_mlx_draw_lines(t_env *env, char type, int i, int j)
@@ -76,9 +70,8 @@ void	ft_mlx_draw_line(t_env *env, t_point begin, t_point end, int color)
 {
 	t_point	d;
 	t_point	s;
-	int		err;
 	int		e2;
-	char	*dst;
+	int		err;
 
 	d.x = abs(end.x - begin.x);
 	d.y = -abs(end.y - begin.y);
@@ -86,9 +79,7 @@ void	ft_mlx_draw_line(t_env *env, t_point begin, t_point end, int color)
 	err = d.x + d.y;
 	while (begin.x != end.x || begin.y != end.y)
 	{
-		dst = env->screen.addr + (begin.y * env->screen.line + begin.x
-				* (env->screen.bpp / 8));
-		*(unsigned int *)dst = color;
+		ft_draw_line_to_image(env, begin.x, begin.y, color);
 		e2 = 2 * err;
 		if (e2 >= d.y)
 		{

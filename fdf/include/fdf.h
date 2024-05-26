@@ -125,6 +125,7 @@ int		ft_mlx_destroy_window(t_env *env);
 int		ft_mlx_color(t_color color);
 void	ft_mlx_draw_line(t_env *env, t_point p0, t_point p1, int color);
 int		ft_mlx_line_color(t_env *env, int i, int j, char type);
+void	ft_draw_line_to_image(t_env *env, int x, int y, int color);
 int		ft_map_value(t_range range_in, t_range range_out, int value);
 void	ft_mlx_scale(t_env *env);
 void	ft_mlx_draw_lines(t_env *env, char type, int i, int j);
