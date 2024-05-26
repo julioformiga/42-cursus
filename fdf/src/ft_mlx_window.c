@@ -44,6 +44,7 @@ int	ft_mlx_destroy_window(t_env *env)
 			mlx_destroy_image(env->mlx, env->imgs->img);
 			free(env->imgs);
 		}
+		mlx_destroy_image(env->mlx, env->screen.img);
 		if (env->win)
 			mlx_destroy_window(env->mlx, env->win);
 		mlx_destroy_display(env->mlx);
