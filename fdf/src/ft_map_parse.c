@@ -85,7 +85,7 @@ t_map	ft_map_parse(char *file)
 	i = ft_count_lines(open(file, O_RDONLY)) + 1;
 	fd = open(file, O_RDONLY);
 	map.data = (int **)malloc(i * sizeof(int *));
-	memset(map.data, 0, i * sizeof(int *));
+	ft_memset(map.data, 0, i * sizeof(int *));
 	line = get_next_line(fd);
 	while (line)
 	{
