@@ -14,6 +14,8 @@
 
 int	ft_map_value(t_range range_in, t_range range_out, int value)
 {
+	if (range_out.max - range_out.min == 0)
+		range_out.max = range_out.min + 1;
 	return (range_in.min
 		+ ((range_in.max - range_in.min) / (range_out.max - range_out.min))
 		* (value - range_out.min));
