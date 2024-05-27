@@ -1,5 +1,5 @@
 CC			= cc
-CFLAGS		= -Wall -Werror -Wextra -std=c99
+CFLAGS		= -Wall -Werror -Wextra -g -std=c99
 RM			= rm -f
 AR			= ar -src
 
