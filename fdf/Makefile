@@ -43,16 +43,17 @@ fclean:	clean
 		$(RM) *.a *.o src/*.o *.o vgcore.*
 		make fclean -C $(FT_PRINTF_DIR)
 
-re:		fclean all
+re:		fclean all run
 
 run:	all debug
 #		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./fdf assets/test_maps/42.fdf
 #		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./fdf assets/test_maps/mars.fdf
+		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./fdf assets/test_maps/pylone.fdf
 #		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./fdf assets/test_maps/basictest.fdf
 #		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./fdf assets/nonesist.fdf
 #		valgrind --leak-check=full --show-leak-kinds=all ./fdf assets/test_maps/42.fdf
-		./fdf assets/test_maps/42.fdf
-#		./fdf assets/test_maps/basictest.fdf
+#		./fdf ./assets/test_maps/42.fdf
+#		./fdf ./assets/test_maps/basictest.fdf
 #		./fdf ./assets/test_maps/t1.fdf
 #		./fdf ./assets/test_maps/t2.fdf
 #		./fdf ./assets/test_maps/joydivision.fdf
