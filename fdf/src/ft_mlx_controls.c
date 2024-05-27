@@ -35,17 +35,34 @@ void	ft_mlx_map_zoom(t_env *env, char zoom)
 {
 	if (zoom == '+')
 	{
-		env->view.zoom += 2;
-		env->init.x -= env->view.zoom / 2;
-		env->init.y -= env->view.zoom / 2;
+		env->view.zoom++;
+		env->init.x--;
+		env->init.y--;
 	}
 	if (zoom == '-')
 	{
-		env->view.zoom -= 2;
-		env->init.x += env->view.zoom / 2;
-		env->init.y += env->view.zoom / 2;
+		env->view.zoom--;
+		env->init.x++;
+		env->init.y++;
 	}
-	env->view.angle = env->view.zoom / 2;
+}
+
+void	ft_mlx_map_rotate(t_env *env, char rotate)
+{
+	if (rotate == 'a')
+	{
+		env->view.angle += 0.01;
+		env->view.angle_rotate += 0.1;
+	}
+	if (rotate == 'd')
+	{
+		env->view.angle -= 0.01;
+		env->view.angle_rotate -= 0.1;
+	}
+	if (rotate == 'z')
+	{
+		env->view.angle -= 0.01;
+	}
 }
 
 int	ft_mlx_keypress(int keycode, t_env *env)
@@ -56,6 +73,8 @@ int	ft_mlx_keypress(int keycode, t_env *env)
 		ft_mlx_map_zoom(env, '+');
 	if (keycode == 's' && env->view.zoom > 2)
 		ft_mlx_map_zoom(env, '-');
+	if (ft_strchr("adzxc", keycode))
+		ft_mlx_map_rotate(env, keycode);
 	if (keycode == XK_Up || keycode == 'k')
 		env->init.y -= 10;
 	if (keycode == XK_Down || keycode == 'j')
@@ -65,9 +84,9 @@ int	ft_mlx_keypress(int keycode, t_env *env)
 	if (keycode == XK_Right || keycode == 'l')
 		env->init.x += 10;
 	if (keycode == 'r')
-		env->view.height += 1;
+		env->view.height += 0.05;
 	if (keycode == 'f')
-		env->view.height -= 1;
+		env->view.height -= 0.05;
 	ft_map_draw(env);
 	return (0);
 }

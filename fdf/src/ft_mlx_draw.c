@@ -12,31 +12,45 @@
 
 #include "fdf.h"
 
+t_point	ft_iso_transform(int x, int y, int z, t_view view)
+{
+	t_point		point;
+	t_point3d	rotated;
+	float		iso_x;
+	float		iso_y;
+
+	rotated = ft_map_rotate3d(x, y, z, view);
+	iso_x = (rotated.x - rotated.y) * cos(view.angle);
+	iso_y = (rotated.x + rotated.y) * sin(view.angle) - rotated.z * view.height;
+	point.x = (int)(iso_x * view.zoom);
+	point.y = (int)(iso_y * view.zoom);
+	return (point);
+}
+
 void	ft_map_draw(t_env *env)
 {
 	int		i;
 	int		j;
+	t_point	point;
 
 	ft_bzero(env->screen.addr, WIN_WIDTH * WIN_HEIGHT * (env->screen.bpp / 8));
-	env->cursor_x = env->init.x;
-	env->cursor_y = env->init.y;
 	i = -1;
-	while (i++ < env->map.height - 1)
+	while (i++, i < env->map.height)
 	{
 		j = -1;
-		while (j++ < env->map.width - 1)
+		while (j++, j < env->map.width)
 		{
-			if (j < env->map.width && j > 0)
+			point = ft_iso_transform(j, i, env->map.data[i][j], env->view);
+			env->cursor_x = env->init.x + point.x;
+			env->cursor_y = env->init.y + point.y;
+			if (j < env->map.width - 1)
 				ft_mlx_draw_lines(env, 'h', i, j);
-			if (i < env->map.height && i > 0)
+			if (i < env->map.height - 1)
 				ft_mlx_draw_lines(env, 'v', i, j);
-			env->cursor_x += env->view.zoom;
 		}
-		env->cursor_x = env->init.x;
-		env->cursor_y += env->view.zoom;
 	}
-	mlx_put_image_to_window(env->mlx, env->win, env->screen.img, 0, 0);
 	ft_mlx_scale(env);
+	mlx_put_image_to_window(env->mlx, env->win, env->screen.img, 0, 0);
 	ft_mlx_put_image(env);
 	mlx_do_sync(env->mlx);
 }
@@ -51,20 +65,18 @@ void	ft_mlx_scale(t_env *env)
 	while (i++, i < WIN_WIDTH)
 	{
 		x = 10;
-		mlx_pixel_put(env->mlx, env->win, i, WIN_HEIGHT - 2, GRAY_DARK);
-		mlx_pixel_put(env->mlx, env->win, i, WIN_HEIGHT - 1, GRAY_DARK);
-		if (i % env->view.zoom > -2 && i % env->view.zoom < 2)
+		ft_draw_line_to_image(env, i, WIN_HEIGHT - 1, GREEN);
+		if (i % (int)env->view.zoom > -2 && i % (int)env->view.zoom < 2)
 			while (x--, x > 2)
-				mlx_pixel_put(env->mlx, env->win, i, WIN_HEIGHT - x, GRAY);
+				ft_draw_line_to_image(env, i, WIN_HEIGHT - x, GREEN_DARK);
 	}
 	i = -1;
 	while (i++, i < WIN_HEIGHT)
 	{
 		y = 10;
-		mlx_pixel_put(env->mlx, env->win, 2, i, GRAY_DARK);
-		mlx_pixel_put(env->mlx, env->win, 1, i, GRAY_DARK);
-		if (i % env->view.zoom > -2 && i % env->view.zoom < 2)
+		ft_draw_line_to_image(env, 1, i, GREEN);
+		if (i % (int)env->view.zoom > -2 && i % (int)env->view.zoom < 2)
 			while (y--, y > 2)
-				mlx_pixel_put(env->mlx, env->win, y, i, GRAY);
+				ft_draw_line_to_image(env, y, i, GREEN_DARK);
 	}
 }

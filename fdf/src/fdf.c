@@ -12,6 +12,21 @@
 
 #include "fdf.h"
 
+static void	ft_init_mlx_values(t_env *env)
+{
+	env->view.zoom = (float)WIN_WIDTH / env->map.width / (float)2;
+	env->view.angle = 120;
+	env->view.angle_rotate = 10;
+	env->view.height = 0.05;
+	env->view.rotation_angle_x = 0;
+	env->view.rotation_angle_y = 0;
+	env->view.rotation_angle_z = 0;
+	env->init.x = ((float)WIN_WIDTH / 2)
+		- (env->view.zoom * (env->map.width - 1)) / 2;
+	env->init.y = ((float)WIN_HEIGHT / 2)
+		- (env->view.zoom * env->map.height) / 2;
+}
+
 int	main(int argc, char **argv)
 {
 	t_env	*env;
@@ -26,13 +41,7 @@ int	main(int argc, char **argv)
 	env->screen.img = mlx_new_image(env->mlx, WIN_WIDTH, WIN_HEIGHT);
 	env->screen.addr = mlx_get_data_addr(env->screen.img,
 			&env->screen.bpp, &env->screen.line, &env->screen.endian);
-	env->view.zoom = WIN_WIDTH / env->map.width / 2;
-	if (env->view.zoom % 2)
-		env->view.zoom++;
-	env->view.angle = env->view.zoom / 2;
-	env->view.height = 0;
-	env->init.x = (WIN_WIDTH / 2) - (env->view.zoom * (env->map.width - 1)) / 2;
-	env->init.y = (WIN_HEIGHT / 2) - (env->view.zoom * env->map.height) / 2;
+	ft_init_mlx_values(env);
 	ft_map_draw(env);
 	ft_mlx_hooks(env);
 	mlx_loop(env->mlx);

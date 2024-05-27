@@ -39,30 +39,25 @@ void	ft_draw_line_to_image(t_env *env, int x, int y, int color)
 
 void	ft_mlx_draw_lines(t_env *env, char type, int i, int j)
 {
+	t_point	start;
 	t_point	dest;
 
-	if (type == 'h' && j > 0)
+	start = ft_iso_transform(j, i, env->map.data[i][j], env->view);
+	start.x += env->init.x;
+	start.y += env->init.y;
+	if (type == 'h' && j < env->map.width - 1)
 	{
-		dest = (t_point){
-			env->cursor_x - env->view.zoom,
-			env->cursor_y - (env->map.data[i][j - 1] * env->view.height)
-		};
-		ft_mlx_draw_line(env,
-			(t_point){env->cursor_x,
-			env->cursor_y - (env->map.data[i][j] * env->view.height)},
-			dest, ft_mlx_line_color(env, i, j, 'h'));
+		dest = ft_iso_transform(j + 1, i, env->map.data[i][j + 1], env->view);
+		dest.x += env->init.x;
+		dest.y += env->init.y;
+		ft_mlx_draw_line(env, start, dest, ft_mlx_line_color(env, i, j, 'h'));
 	}
-	if (type == 'v' && i > 0)
+	if (type == 'v' && i < env->map.height - 1)
 	{
-		dest = (t_point){
-			((env->cursor_x + env->view.zoom) - (env->view.angle * 2)),
-			env->cursor_y - env->view.zoom
-			- (env->map.data[i - 1][j] * env->view.height)
-		};
-		ft_mlx_draw_line(env,
-			(t_point){env->cursor_x,
-			env->cursor_y - (env->map.data[i][j] * env->view.height)},
-			dest, ft_mlx_line_color(env, i, j, 'v'));
+		dest = ft_iso_transform(j, i + 1, env->map.data[i + 1][j], env->view);
+		dest.x += env->init.x;
+		dest.y += env->init.y;
+		ft_mlx_draw_line(env, start, dest, ft_mlx_line_color(env, i, j, 'v'));
 	}
 }
 

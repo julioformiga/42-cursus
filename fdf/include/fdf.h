@@ -58,9 +58,13 @@ typedef struct s_map
 
 typedef struct s_view
 {
-	int	zoom;
-	int	angle;
-	int	height;
+	float	zoom;
+	float	angle;
+	float	angle_rotate;
+	float	height;
+	float	rotation_angle_x;
+	float	rotation_angle_y;
+	float	rotation_angle_z;
 }	t_view;
 
 typedef struct s_point
@@ -68,6 +72,13 @@ typedef struct s_point
 	int	x;
 	int	y;
 }	t_point;
+
+typedef struct s_point3d
+{
+	int	x;
+	int	y;
+	int	z;
+}	t_point3d;
 
 typedef struct s_size
 {
@@ -117,26 +128,28 @@ typedef struct s_range
 	int	max;
 }	t_range;
 
-void	ft_check_file(char *file);
-t_env	*ft_mlx_create_env(void);
-void	ft_mlx_hooks(t_env *env);
-int		ft_mlx_keypress(int keycode, t_env *env);
-int		ft_mlx_destroy_window(t_env *env);
-int		ft_mlx_color(t_color color);
-void	ft_mlx_draw_line(t_env *env, t_point p0, t_point p1, int color);
-int		ft_mlx_line_color(t_env *env, int i, int j, char type);
-void	ft_draw_line_to_image(t_env *env, int x, int y, int color);
-int		ft_map_value(t_range range_in, t_range range_out, int value);
-void	ft_mlx_scale(t_env *env);
-void	ft_mlx_draw_lines(t_env *env, char type, int i, int j);
+void		ft_check_file(char *file);
+t_env		*ft_mlx_create_env(void);
+void		ft_mlx_hooks(t_env *env);
+int			ft_mlx_keypress(int keycode, t_env *env);
+int			ft_mlx_destroy_window(t_env *env);
+int			ft_mlx_color(t_color color);
+void		ft_mlx_draw_line(t_env *env, t_point p0, t_point p1, int color);
+int			ft_mlx_line_color(t_env *env, int i, int j, char type);
+void		ft_draw_line_to_image(t_env *env, int x, int y, int color);
+int			ft_map_value(t_range range_in, t_range range_out, int value);
+void		ft_mlx_scale(t_env *env);
+void		ft_mlx_draw_lines(t_env *env, char type, int i, int j);
+t_point		ft_iso_transform(int x, int y, int z, t_view view);
+t_point3d	ft_map_rotate3d(int x, int y, int z, t_view view);
 
-void	ft_mlx_map_zoom(t_env *env, char zoom);
-void	ft_free_array(int **ar);
-void	ft_free_array_char(char **ar);
-void	ft_mlx_xpm(t_env *env, char *filename);
-t_map	ft_map_parse(char *file);
-void	ft_map_draw(t_env *env);
-void	ft_mlx_put_image(t_env *env);
-void	ft_mlx_error(char *msg);
+void		ft_mlx_map_zoom(t_env *env, char zoom);
+void		ft_free_array(int **ar);
+void		ft_free_array_char(char **ar);
+void		ft_mlx_xpm(t_env *env, char *filename);
+t_map		ft_map_parse(char *file);
+void		ft_map_draw(t_env *env);
+void		ft_mlx_put_image(t_env *env);
+void		ft_mlx_error(char *msg);
 
 #endif
