@@ -22,7 +22,7 @@ static void	ft_init_mlx_values(t_env *env)
 	env->view.rotation_angle_y = 0;
 	env->view.rotation_angle_z = 0;
 	env->init.x = ((float)WIN_WIDTH / 2)
-		- (env->view.zoom * (env->map.width - 1)) / 2;
+		- (env->view.zoom * (env->map.width - 1)) / 8;
 	env->init.y = ((float)WIN_HEIGHT / 2)
 		- (env->view.zoom * env->map.height) / 2;
 }
