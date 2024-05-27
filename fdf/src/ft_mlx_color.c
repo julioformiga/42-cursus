@@ -25,12 +25,13 @@ int	ft_mlx_line_color(t_env *env, int i, int j, char type)
 	int		c_color;
 
 	r_in = (t_range){40, 255};
-	r_out = (t_range){0, 10};
+	r_out = (t_range){env->map.min, env->map.max};
 	color = (t_color){0, 40, 100, 40};
-	if (j > 0 && env->map.data[i][j] == env->map.data[i][j - 1] && type == 'h')
+	if (j > 0 && env->map.data[i][j] == env->map.data[i][j + 1] && type == 'h')
 		color.g = ft_map_value(r_in, r_out, env->map.data[i][j]);
 	if (i > 0 && env->map.data[i][j] == env->map.data[i - 1][j] && type == 'v')
 		color.g = ft_map_value(r_in, r_out, env->map.data[i][j]);
+	color.g = ft_map_value(r_in, r_out, env->map.data[i][j]);
 	c_color = ft_mlx_color(color);
 	return (c_color);
 }

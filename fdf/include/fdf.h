@@ -54,6 +54,8 @@ typedef struct s_map
 	int		**data;
 	int		width;
 	int		height;
+	int		min;
+	int		max;
 }	t_map;
 
 typedef struct s_view

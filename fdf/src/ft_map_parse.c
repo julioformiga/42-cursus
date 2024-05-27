@@ -63,11 +63,22 @@ static void	ft_check_map_parse(char **split, t_map *map)
 
 static void	ft_map_fill_values(t_map *map, char **split)
 {
-	int		i;
+	int	i;
+	int	n;
 
+	map->min = 0;
+	map->max = 0;
+	n = 0;
 	i = -1;
 	while (i++, i < map->width && split[i])
-		map->data[map->height][i] = ft_atoi(split[i]);
+	{
+		n = ft_atoi(split[i]);
+		map->data[map->height][i] = n;
+		if (n > map->max)
+			map->max = n;
+		if (n < map->min)
+			map->min = n;
+	}
 	map->height++;
 	ft_free_array_char(split);
 }
