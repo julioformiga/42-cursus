@@ -46,6 +46,6 @@ void	ft_check_file(char *file)
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		ft_mlx_error("Error opening file");
+		ft_mlx_error("Opening file");
 	close(fd);
 }
