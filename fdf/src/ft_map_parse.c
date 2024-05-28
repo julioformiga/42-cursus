@@ -38,11 +38,10 @@ static int	ft_count_lines(int fd)
 	return (lines);
 }
 
-static void	ft_check_map_parse(char **split, t_map *map)
+static void	ft_check_map_parse(t_map *map, char **split)
 {
 	int	i;
 
-	i = 0;
 	if (!split)
 	{
 		ft_free_array(map->data);
@@ -104,8 +103,8 @@ t_map	ft_map_parse(char *file)
 	{
 		split = ft_split(line, ' ');
 		free(line);
-		ft_check_map_parse(split, &map);
-		map.data[map.height] = (int *)malloc((map.width + 1) * sizeof(int));
+		ft_check_map_parse(&map, split);
+		map.data[map.height] = (int *)malloc(map.width * sizeof(int));
 		ft_map_fill_values(&map, split);
 		line = get_next_line(fd);
 	}

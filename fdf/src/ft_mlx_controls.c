@@ -33,13 +33,13 @@ void	ft_mlx_hooks(t_env *env)
 
 void	ft_mlx_map_zoom(t_env *env, char zoom)
 {
-	if (zoom == '+')
+	if (zoom == '-')
 	{
 		env->view.zoom++;
 		env->init.x--;
 		env->init.y--;
 	}
-	if (zoom == '-')
+	if (zoom == '+')
 	{
 		env->view.zoom--;
 		env->init.x++;
