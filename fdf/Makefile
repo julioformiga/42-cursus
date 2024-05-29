@@ -30,8 +30,8 @@ all:	$(NAME)
 $(NAME):	$(OBJ)
 			@make all -C $(FT_PRINTF_DIR)
 			@make all -C $(MINILIBX_DIR)
-			$(AR) $@ $(OBJ) $(OBJ_LIBFT) $(OBJ_FT_PRINTF) $(OBJ_LIBMXL)
-			$(CC) $(CFLAGS) $(XFLAGS) $(NAME) -o fdf
+			@$(AR) $@ $(OBJ) $(OBJ_LIBFT) $(OBJ_FT_PRINTF) $(OBJ_LIBMXL)
+			@$(CC) $(CFLAGS) $(XFLAGS) $(NAME) -o fdf
 
 clean:
 		$(RM) $(OBJ)
@@ -49,6 +49,7 @@ run:	all debug
 #		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./fdf assets/test_maps/42.fdf
 #		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./fdf assets/test_maps/mars.fdf
 		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./fdf assets/test_maps/pylone.fdf
+#		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./fdf assets/test_maps/t1.fdf
 #		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./fdf assets/test_maps/basictest.fdf
 #		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./fdf assets/nonesist.fdf
 #		valgrind --leak-check=full --show-leak-kinds=all ./fdf assets/test_maps/42.fdf
@@ -63,7 +64,7 @@ run:	all debug
 #		./fdf ./assets/test_maps/pylone.fdf
 
 debug:	all
-		$(CC) $(CFLAGS) $(XFLAGS) $(NAME) -g -o a.out
+		@$(CC) $(CFLAGS) $(XFLAGS) $(NAME) -g -o a.out
 
 
 .SILENT:	all clean fclean re
