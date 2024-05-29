@@ -49,3 +49,20 @@ void	ft_check_file(char *file)
 		ft_mlx_error("Opening file");
 	close(fd);
 }
+
+int	ft_file_count_lines(int fd)
+{
+	char	*line;
+	int		lines;
+
+	lines = -1;
+	line = get_next_line(fd);
+	while (line)
+	{
+		lines++;
+		free(line);
+		line = get_next_line(fd);
+	}
+	free(line);
+	return (lines);
+}

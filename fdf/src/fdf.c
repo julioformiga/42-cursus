@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-static void	ft_init_mlx_values(t_env *env)
+void	ft_init_mlx_values(t_env *env)
 {
 	env->view.zoom = (float)WIN_WIDTH / env->map.width / (float)2;
 	env->view.angle = 120;

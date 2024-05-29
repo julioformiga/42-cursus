@@ -146,6 +146,7 @@ t_point		ft_iso_transform(int x, int y, int z, t_view view);
 t_point3d	ft_map_rotate3d(int x, int y, int z, t_view view);
 void		ft_map_init(t_map *map, int n);
 
+int			ft_file_count_lines(int fd);
 void		ft_mlx_map_zoom(t_env *env, char zoom);
 void		ft_free_array(int **ar);
 void		ft_free_array_char(char **ar);
