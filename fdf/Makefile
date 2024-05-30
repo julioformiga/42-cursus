@@ -10,7 +10,7 @@ NAME	= fdf.a
 SRC	= $(wildcard src/*.c)
 OBJ	= $(SRC:.c=.o)
 
-MINILIBX_DIR	= lib/minilibx/
+MINILIBX_DIR	= lib/.minilibx/
 FT_PRINTF_DIR	= lib/ft_printf/
 FT_LIBFT_DIR	= $(FT_PRINTF_DIR)libft/
 SRC_FT_PRINTF	= $(wildcard $(FT_PRINTF_DIR)*.c)

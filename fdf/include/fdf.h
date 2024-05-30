@@ -39,7 +39,7 @@
 # include <X11/X.h>
 # include "../lib/ft_printf/libft/libft.h"
 # include "../lib/ft_printf/ft_printf.h"
-# include "../lib/minilibx/mlx.h"
+# include "../lib/.minilibx/mlx.h"
 
 typedef struct s_color
 {
