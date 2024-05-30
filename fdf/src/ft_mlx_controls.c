@@ -35,13 +35,13 @@ void	ft_mlx_map_zoom(t_env *env, char zoom)
 {
 	if (zoom == '-')
 	{
-		env->view.zoom++;
+		env->view.zoom += 2;
 		env->init.x--;
 		env->init.y--;
 	}
-	if (zoom == '+')
+	if (zoom == '+' && env->view.zoom > 2)
 	{
-		env->view.zoom--;
+		env->view.zoom -= 2;
 		env->init.x++;
 		env->init.y++;
 	}
@@ -71,7 +71,7 @@ int	ft_mlx_keypress(int keycode, t_env *env)
 		ft_mlx_destroy_window(env);
 	if (keycode == 'w')
 		ft_mlx_map_zoom(env, '+');
-	if (keycode == 's' && env->view.zoom > 2)
+	if (keycode == 's')
 		ft_mlx_map_zoom(env, '-');
 	if (ft_strchr("adzxc", keycode))
 		ft_mlx_map_rotate(env, keycode);
