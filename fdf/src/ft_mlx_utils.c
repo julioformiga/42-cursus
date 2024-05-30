@@ -44,6 +44,9 @@ void	ft_check_file(char *file)
 {
 	int	fd;
 
+	fd = open(file, O_RDONLY | O_DIRECTORY);
+	if (fd >= 0)
+		ft_mlx_error("Is a directory");
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		ft_mlx_error("Opening file");
