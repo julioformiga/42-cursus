@@ -12,21 +12,6 @@
 
 #include "fdf.h"
 
-t_point	ft_iso_transform(int x, int y, int z, t_view view)
-{
-	t_point		point;
-	t_point3d	rotated;
-	float		iso_x;
-	float		iso_y;
-
-	rotated = ft_map_rotate3d(x, y, z, view);
-	iso_x = (rotated.x - rotated.y) * cos(view.angle);
-	iso_y = (rotated.x + rotated.y) * sin(view.angle) - rotated.z * view.height;
-	point.x = (int)(iso_x * view.zoom);
-	point.y = (int)(iso_y * view.zoom);
-	return (point);
-}
-
 void	ft_map_draw(t_env *env)
 {
 	int		i;
@@ -40,7 +25,7 @@ void	ft_map_draw(t_env *env)
 		j = -1;
 		while (j++, j < env->map.width)
 		{
-			point = ft_iso_transform(j, i, env->map.data[i][j], env->view);
+			point = ft_select_projection(j, i, env->map.data[i][j], env->view);
 			env->cursor_x = env->init.x + point.x;
 			env->cursor_y = env->init.y + point.y;
 			if (j < env->map.width - 1)

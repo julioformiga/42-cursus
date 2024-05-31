@@ -15,6 +15,7 @@
 void	ft_init_mlx_values(t_env *env)
 {
 	env->view.zoom = (float)WIN_WIDTH / env->map.width / (float)2;
+	env->view.projection = 1;
 	env->view.angle = 120;
 	env->view.angle_rotate = 10;
 	env->view.height = 0.05;

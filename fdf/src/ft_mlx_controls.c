@@ -33,15 +33,18 @@ void	ft_mlx_hooks(t_env *env)
 
 void	ft_mlx_map_zoom(t_env *env, char zoom)
 {
+	float	zoom_value;
+
+	zoom_value = 0.1;
 	if (zoom == '-')
 	{
-		env->view.zoom += 2;
+		env->view.zoom += zoom_value;
 		env->init.x--;
 		env->init.y--;
 	}
-	if (zoom == '+' && env->view.zoom > 2)
+	if (zoom == '+' && env->view.zoom > zoom_value + 1)
 	{
-		env->view.zoom -= 2;
+		env->view.zoom -= zoom_value;
 		env->init.x++;
 		env->init.y++;
 	}
@@ -61,7 +64,11 @@ void	ft_mlx_map_rotate(t_env *env, char rotate)
 	}
 	if (rotate == 'z')
 	{
-		env->view.angle -= 0.01;
+		if (env->view.projection == 2)
+			env->view.projection = 1;
+		else
+			env->view.projection = 2;
+		ft_map_draw(env);
 	}
 }
 

@@ -60,6 +60,7 @@ typedef struct s_map
 
 typedef struct s_view
 {
+	int		projection;
 	float	zoom;
 	float	angle;
 	float	angle_rotate;
@@ -142,7 +143,9 @@ void		ft_draw_line_to_image(t_env *env, int x, int y, int color);
 int			ft_map_value(t_range range_in, t_range range_out, int value);
 void		ft_mlx_scale(t_env *env);
 void		ft_mlx_draw_lines(t_env *env, char type, int i, int j);
+t_point		ft_select_projection(int x, int y, int z, t_view view);
 t_point		ft_iso_transform(int x, int y, int z, t_view view);
+t_point		ft_parallel_transform(int x, int y, int z, t_view view);
 t_point3d	ft_map_rotate3d(int x, int y, int z, t_view view);
 void		ft_map_init(t_map *map, int n);
 
