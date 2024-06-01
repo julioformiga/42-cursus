@@ -15,8 +15,8 @@
 t_point	ft_select_projection(int x, int y, int z, t_view view)
 {
 	if (view.projection == 1)
-		return (ft_iso_transform(x, y, z, view));
-	return (ft_parallel_transform(x, y, z, view));
+		return (ft_parallel_transform(x, y, z, view));
+	return (ft_iso_transform(x, y, z, view));
 }
 
 t_point	ft_parallel_transform(int x, int y, int z, t_view view)

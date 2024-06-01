@@ -54,15 +54,17 @@ void	ft_mlx_map_rotate(t_env *env, char rotate)
 {
 	if (rotate == 'a')
 	{
+		env->init.y -= 2;
 		env->view.angle += 0.01;
 		env->view.angle_rotate += 0.1;
 	}
 	if (rotate == 'd')
 	{
+		env->init.y += 2;
 		env->view.angle -= 0.01;
 		env->view.angle_rotate -= 0.1;
 	}
-	if (rotate == 'z')
+	if (rotate == 'p')
 	{
 		if (env->view.projection == 2)
 			env->view.projection = 1;
@@ -77,10 +79,10 @@ int	ft_mlx_keypress(int keycode, t_env *env)
 	if (keycode == XK_Escape || keycode == 'q')
 		ft_mlx_destroy_window(env);
 	if (keycode == 'w')
-		ft_mlx_map_zoom(env, '+');
-	if (keycode == 's')
 		ft_mlx_map_zoom(env, '-');
-	if (ft_strchr("adzxc", keycode))
+	if (keycode == 's')
+		ft_mlx_map_zoom(env, '+');
+	if (ft_strchr("adzxcp", keycode))
 		ft_mlx_map_rotate(env, keycode);
 	if (keycode == XK_Up || keycode == 'k')
 		env->init.y -= 10;
