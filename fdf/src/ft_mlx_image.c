@@ -15,8 +15,8 @@
 void	ft_mlx_xpm(t_env *env, char *filename)
 {
 	env->imgs = (t_img *)malloc(sizeof(t_img));
-	env->imgs->size.w = 340;
-	env->imgs->size.h = 115;
+	env->imgs->size.w = 1280;
+	env->imgs->size.h = 90;
 	env->imgs->img = mlx_xpm_file_to_image(env->mlx, filename,
 			&env->imgs->size.w, &env->imgs->size.h);
 }
