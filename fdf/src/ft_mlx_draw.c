@@ -37,6 +37,7 @@ void	ft_map_draw(t_env *env)
 	ft_mlx_scale(env);
 	mlx_put_image_to_window(env->mlx, env->win, env->screen.img, 0, 0);
 	ft_mlx_put_image(env);
+	ft_mlx_info(env);
 	mlx_do_sync(env->mlx);
 }
 
@@ -64,4 +65,29 @@ void	ft_mlx_scale(t_env *env)
 			while (y--, y > 2)
 				ft_draw_line_to_image(env, y, i, GREEN_DARK);
 	}
+}
+
+void	ft_mlx_info(t_env *env)
+{
+	char	*str;
+	char	*tmp;
+
+	str = ft_strdup("Projection: ");
+	if (env->view.projection == 1)
+		tmp = ft_strjoin(str, "Parallel");
+	else
+		tmp = ft_strjoin(str, "Isometric");
+	mlx_string_put(env->mlx, env->win, 1140, 20, BLACK, tmp);
+	free(tmp);
+	free(str);
+	str = ft_itoa(env->view.zoom);
+	tmp = ft_strjoin("Zoom: ", str);
+	mlx_string_put(env->mlx, env->win, 1140, 40, BLACK, tmp);
+	free(tmp);
+	free(str);
+	str = ft_itoa(env->view.angle_rotate);
+	tmp = ft_strjoin("Angle: ", str);
+	mlx_string_put(env->mlx, env->win, 1140, 60, BLACK, tmp);
+	free(tmp);
+	free(str);
 }
