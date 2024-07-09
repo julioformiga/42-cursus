@@ -34,20 +34,32 @@ void	*routine(void *arg)
 	return (NULL);
 }
 
-int	main(int argc, char *argv[])
+void	parse_input(t_table *table, char **argv)
 {
+	table->philo_n = ft_atol(argv[1]);
+	table->time_to_die = ft_atol(argv[2]) * 1e3;
+	table->time_to_eat = ft_atol(argv[3]) * 1e3;
+	table->time_to_sleep = ft_atol(argv[4]) * 1e3;
+	if (table->time_to_die < 6e4 || table->time_to_eat < 6e4
+		|| table->time_to_sleep < 6e4)
+		ft_error("Timestamp must be greater than 60ms.");
+	if (argv[5])
+		table->meals_limit = ft_atol(argv[5]);
+	else
+		table->meals_limit = -1;
+}
+
+int	main(int argc, char **argv)
+{
+	t_table	table;
+
 	printf("Hello, World!\n");
 	if (argc < 5 || argc > 6)
-	{
-		printf("Error: Invalid number of arguments.\n");
-		return (1);
-	}
+		ft_error("Invalid number of arguments.");
 	if (argc == 5)
 	{
-		printf("Number of philosophers: %d\n", atoi(argv[1]));
-		printf("Time to die: %d\n", atoi(argv[2]));
-		printf("Time to eat: %d\n", atoi(argv[3]));
-		printf("Time to sleep: %d\n", atoi(argv[4]));
+		parse_input(&table, argv);
+		data_init(&table);
 	}
 	return (0);
 }
