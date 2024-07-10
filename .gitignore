@@ -1,8 +1,6 @@
 subjects
 main
 a.out
-.clangd
-*/.clangd
 *.o
 *.a
 vgcore.*
@@ -15,3 +13,7 @@ pipex
 !pipex/
 fdf
 !fdf/
+philo
+!philo/
+philo_bonus
+!philo_bonus/
