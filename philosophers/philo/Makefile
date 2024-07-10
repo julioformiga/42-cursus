@@ -1,6 +1,7 @@
 CC = cc
 INCLUDE = -Iinclude
-CFLAGS = -Wall -Wextra -Werror $(INCLUDE) -lpthread -g
+# CFLAGS = -Wall -Wextra -Werror $(INCLUDE) -lpthread -g
+CFLAGS = -Wall -Wextra -Werror $(INCLUDE) -g
 RM		= rm -f
 AR		= ar -src
 
@@ -30,4 +31,4 @@ debug:	all
 		@$(CC) $(CFLAGS) $(NAME) -o a.out
 
 run: all
-	./philo 5 800 200 200
+	./philo 5 800 200 200 1

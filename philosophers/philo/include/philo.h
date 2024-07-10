@@ -51,6 +51,8 @@ typedef struct s_table
 	long		meals_limit;
 	long		simulation_start;
 	bool		simulation_end;
+	bool		threads_ready;
+	t_mutex		table_mutex;
 	t_fork		*forks;
 	t_philo		*philos;
 }	t_table;
@@ -70,6 +72,15 @@ void	ft_error(char *msg);
 long	ft_atol(const char *str);
 void	*safe_malloc(size_t size);
 void	safe_mutex_handle(t_mutex *mutex, t_opcode opcode);
+void	safe_thread_handle(pthread_t *thread, void *(*foo)(void *), void *data,
+			t_opcode opcode);
 void	data_init(t_table *table);
+void	set_bool(t_mutex *mutex, bool *dest, bool value);
+bool	get_bool(t_mutex *mutex, bool *src);
+void	set_long(t_mutex *mutex, long *dest, long value);
+long	get_long(t_mutex *mutex, long *src);
+bool	simulation_finished(t_table *table);
 
+void	wait_all_threads(t_table *table);
+void	*dinner_simulation(void *data);
 #endif

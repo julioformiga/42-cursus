@@ -1,0 +1,7 @@
+[
+  {
+    "directory": "src",
+    "command": "cc -Wall -Wextra -Werror -g -I../includes -c philo.c -o philo.o",
+    "file": "philo.c"
+  }
+]
