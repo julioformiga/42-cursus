@@ -125,4 +125,5 @@ void	*monitor_dinner(void *data);
 void	increase_long(t_mutex *mutex, long *value);
 void	precise_usleep(long usec, t_table *table);
 void	clean(t_table *table);
+void	print_data_table(t_table *table);
 #endif

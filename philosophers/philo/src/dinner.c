@@ -19,7 +19,8 @@ static void	eat(t_philo *philo)
 	safe_mutex_handle(&philo->second_fork->fork, LOCK);
 	write_status(TAKE_SECOND_FORK, philo);
 	set_long(&philo->philo_mutex, &philo->last_meal_time, gettime(MILLISECOND));
-	philo->meals_counter++;
+	set_long(&philo->philo_mutex, &philo->meals_counter,
+		philo->meals_counter + 1);
 	write_status(EATING, philo);
 	precise_usleep(philo->table->time_to_eat, philo->table);
 	if (philo->table->meals_limit > 0

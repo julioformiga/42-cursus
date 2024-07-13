@@ -66,8 +66,7 @@ void	parse_input(t_table *table, char **argv)
 	if (table->time_to_die < 6e4 || table->time_to_eat < 6e4
 		|| table->time_to_sleep < 6e4)
 		ft_error("Timestamp must be greater than 60ms.");
+	table->meals_limit = -1;
 	if (argv[5])
 		table->meals_limit = ft_atol(argv[5]);
-	else
-		table->meals_limit = -1;
 }

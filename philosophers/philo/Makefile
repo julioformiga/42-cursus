@@ -30,4 +30,4 @@ debug:	all
 		@$(CC) $(CFLAGS) $(NAME) -o a.out
 
 run: all
-	./philo 4 410 200 200
+	./philo 4 510 200 181 5

@@ -12,35 +12,27 @@
 
 #include "philo.h"
 
-static void	assign_forks(t_philo *philo, t_fork *forks, int position)
-{
-	int	philo_n;
-
-	philo_n = philo->table->philo_n;
-	philo->first_fork = &forks[(position + 1) % philo_n];
-	philo->second_fork = &forks[position];
-	if (philo->id % 2 == 0)
-	{
-		philo->first_fork = &forks[position];
-		philo->second_fork = &forks[(position + 1) % philo_n];
-	}
-}
-
 static void	philo_init(t_table *table)
 {
 	int		i;
-	t_philo	*philo;
 
 	i = -1;
 	while (++i < table->philo_n)
 	{
-		philo = table->philos + 1;
-		philo->id = i + 1;
-		philo->full = false;
-		philo->meals_counter = 0;
-		philo->table = table;
-		safe_mutex_handle(&philo->philo_mutex, INIT);
-		assign_forks(philo, table->forks, i);
+		table->philos[i].id = i + 1;
+		table->philos[i].full = false;
+		table->philos[i].meals_counter = 0;
+		table->philos[i].table = table;
+		safe_mutex_handle(&table->philos[i].philo_mutex, INIT);
+		table->philos[i].last_meal_time = gettime(MILLISECOND);
+		table->philos[i].first_fork = &table->forks[(i + 1) % table->philo_n];
+		table->philos[i].second_fork = &table->forks[i];
+		if (table->philos[i].id % 2 == 0)
+		{
+			table->philos[i].first_fork = &table->forks[i];
+			table->philos[i].second_fork = &table->forks[(i + 1)
+				% table->philo_n];
+		}
 	}
 }
 
@@ -48,7 +40,6 @@ void	data_init(t_table *table)
 {
 	int	i;
 
-	i = -1;
 	table->simulation_end = false;
 	table->threads_ready = false;
 	table->threads_running = 0;
@@ -56,6 +47,7 @@ void	data_init(t_table *table)
 	safe_mutex_handle(&table->table_mutex, INIT);
 	safe_mutex_handle(&table->write_mutex, INIT);
 	table->forks = safe_malloc(sizeof(t_fork) * table->philo_n);
+	i = -1;
 	while (++i < table->philo_n)
 	{
 		safe_mutex_handle(&table->forks[i].fork, INIT);
