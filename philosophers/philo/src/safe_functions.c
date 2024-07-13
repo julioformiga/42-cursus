@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <bits/pthreadtypes.h>
 
 void	*safe_malloc(size_t size)
 {
@@ -36,10 +35,11 @@ static void	handle_mutex_error(int status, t_opcode opcode)
 		ft_error("A deadlock condition was detected.");
 	else if (status == EPERM)
 		ft_error("The current thread does not hold the mutex.");
-	else if (status == EBUSY || status == EAGAIN)
+	else if (status == ENOMEM)
+		ft_error("The process does not have enough memory \
+			to initialize the mutex.");
+	else if (status == EBUSY)
 		ft_error("Mutex is locked.");
-	else
-		ft_error("Unknown mutex error.");
 }
 
 void	safe_mutex_handle(t_mutex *mutex, t_opcode opcode)

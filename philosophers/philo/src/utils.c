@@ -12,49 +12,61 @@
 
 #include "philo.h"
 
-static inline bool	is_digit(char c)
+long	gettime(t_timecode timecode)
 {
-	return (c >= '0' && c <= '9');
+	struct timeval	tv;
+
+	if (gettimeofday(&tv, NULL))
+		ft_error("gettimeofday failed");
+	if (timecode == SECOND)
+		return (tv.tv_sec + (tv.tv_usec / 1e6));
+	else if (timecode == MILLISECOND)
+		return ((tv.tv_sec * 1e3) + (tv.tv_usec / 1e3));
+	else if (timecode == MICROSECOND)
+		return ((tv.tv_sec * 1e6) + tv.tv_usec);
+	else
+		ft_error("Invalid timecode");
+	return (1337);
 }
 
-static inline bool	is_space(char c)
+void	precise_usleep(long usec, t_table *table)
 {
-	return (c == ' ' || (c >= 9 && c <= 13));
+	long	start;
+	long	elapsed;
+	long	remaning;
+
+	start = gettime(MICROSECOND);
+	while (gettime(MICROSECOND) - start < usec)
+	{
+		if (simulation_finished(table))
+			break ;
+		elapsed = gettime(MICROSECOND) - start;
+		remaning = usec - elapsed;
+		if (remaning > 1e3)
+			usleep(remaning / 2);
+		else
+		{
+			while (gettime(MICROSECOND) - start < usec)
+				;
+		}
+	}
 }
 
-static const char	*valid_input(const char *str)
+void	clean(t_table *table)
 {
-	int			len;
-	const char	*number;
+	t_philo	*philo;
+	int		i;
 
-	len = 0;
-	while (is_space(*str))
-		str++;
-	if (*str == '+')
-		++str;
-	else if (*str == '-')
-		ft_error("Invalid input (negative number)");
-	if (!is_digit(*str))
-		ft_error("Invalid input (not a number)");
-	number = str;
-	while (is_digit(*str))
-		++len;
-	if (len > 10)
-		ft_error("Invalid input (number too big)");
-	return (number);
-}
-
-long	ft_atol(const char *str)
-{
-	long	num;
-
-	num = 0;
-	str = valid_input(str);
-	while (is_digit(*str))
-		num = (num * 10) + (*str++ - '0');
-	if (num > INT_MAX)
-		ft_error("Invalid input (number too big)");
-	return (num);
+	i = -1;
+	while (++i < table->philo_n)
+	{
+		philo = table->philos + i;
+		safe_mutex_handle(&philo->philo_mutex, DESTROY);
+	}
+	safe_mutex_handle(&table->table_mutex, DESTROY);
+	safe_mutex_handle(&table->write_mutex, DESTROY);
+	free(table->philos);
+	free(table->forks);
 }
 
 void	ft_error(char *msg)

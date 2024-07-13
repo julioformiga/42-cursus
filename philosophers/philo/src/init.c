@@ -14,15 +14,15 @@
 
 static void	assign_forks(t_philo *philo, t_fork *forks, int position)
 {
-	int	philo_nbr;
+	int	philo_n;
 
-	philo_nbr = philo->table->philo_n;
-	philo->first_fork = &forks[(position + 1) % philo_nbr];
+	philo_n = philo->table->philo_n;
+	philo->first_fork = &forks[(position + 1) % philo_n];
 	philo->second_fork = &forks[position];
 	if (philo->id % 2 == 0)
 	{
 		philo->first_fork = &forks[position];
-		philo->second_fork = &forks[(position + 1) % philo_nbr];
+		philo->second_fork = &forks[(position + 1) % philo_n];
 	}
 }
 
@@ -39,6 +39,7 @@ static void	philo_init(t_table *table)
 		philo->full = false;
 		philo->meals_counter = 0;
 		philo->table = table;
+		safe_mutex_handle(&philo->philo_mutex, INIT);
 		assign_forks(philo, table->forks, i);
 	}
 }
@@ -50,8 +51,10 @@ void	data_init(t_table *table)
 	i = -1;
 	table->simulation_end = false;
 	table->threads_ready = false;
+	table->threads_running = 0;
 	table->philos = safe_malloc(sizeof(t_philo) * table->philo_n);
 	safe_mutex_handle(&table->table_mutex, INIT);
+	safe_mutex_handle(&table->write_mutex, INIT);
 	table->forks = safe_malloc(sizeof(t_fork) * table->philo_n);
 	while (++i < table->philo_n)
 	{
