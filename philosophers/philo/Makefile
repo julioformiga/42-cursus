@@ -1,6 +1,8 @@
 CC = cc
 INCLUDE = -Iinclude
-CFLAGS = -Wall -Wextra -Werror $(INCLUDE) -lpthread -g
+# CFLAGS = -Wall -Wextra -Werror $(INCLUDE) -pthread
+CFLAGS = -Wall -Wextra -Werror $(INCLUDE) -pthread -fsanitize=thread -g
+# CFLAGS = -Wall -Wextra -Werror $(INCLUDE) -pthread -g
 RM		= rm -f
 AR		= ar -src
 
@@ -29,5 +31,5 @@ re: fclean all run
 debug:	all
 		@$(CC) $(CFLAGS) $(NAME) -o a.out
 
-run: all
-	./philo 4 510 200 181 5
+run: re
+	./philo 100 410 200 200 10

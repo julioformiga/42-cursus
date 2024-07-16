@@ -18,7 +18,7 @@ int	main(int argc, char **argv)
 
 	if (argc < 5 || argc > 6)
 		ft_error("Invalid number of arguments.");
-	if (argc == 5)
+	else
 	{
 		parse_input(&table, argv);
 		data_init(&table);
