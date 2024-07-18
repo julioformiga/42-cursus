@@ -1,5 +1,6 @@
 CC = cc
 INCLUDE = -Iinclude
+# sudo sysctrl vm.mmap_rnd_bits=30 (in archome = 32)
 # CFLAGS = -Wall -Wextra -Werror $(INCLUDE) -pthread
 CFLAGS = -Wall -Wextra -Werror $(INCLUDE) -pthread -fsanitize=thread -g
 # CFLAGS = -Wall -Wextra -Werror $(INCLUDE) -pthread -g
@@ -26,10 +27,10 @@ clean:
 fclean:	clean
 		@$(RM) $(NAME) a.out philo
 
-re: fclean all run
+re: fclean all
 
 debug:	all
 		@$(CC) $(CFLAGS) $(NAME) -o a.out
 
 run: re
-	./philo 100 410 200 200 10
+	./philo 16 480 200 200 10
