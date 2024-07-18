@@ -16,18 +16,18 @@ static void	write_status_debug(t_philo_status status, t_philo *philo,
 		long elapsed)
 {
 	if (status == TAKE_FIRST_FORK && !simulation_finished(philo->table))
-		printf(W"%-6ld"RST" %d has taken a 1st fork 🍽️\n", elapsed, philo->id);
+		printf(W"%-6ld"W" %d has taken a 1st fork 🍽️\n", elapsed, philo->id);
 	else if (status == TAKE_SECOND_FORK && !simulation_finished(philo->table))
-		printf(W"%-6ld"RST" %d has taken a 2nd fork 🍽️\n", elapsed, philo->id);
+		printf(W"%-6ld"W" %d has taken a 2nd fork 🍽️\n", elapsed, philo->id);
 	else if (status == EATING && !simulation_finished(philo->table))
 		printf(W"%-6ld"C" %d is eating\t\t (%ld times)\n", elapsed, philo->id,
 			philo->meals_counter);
 	else if (status == SLEEPING && !simulation_finished(philo->table))
-		printf(W"%-6ld"RST" %d is sleeping\n", elapsed, philo->id);
+		printf(W"%-6ld"B" %d is sleeping\n", elapsed, philo->id);
 	else if (status == THINKING && !simulation_finished(philo->table))
-		printf(W"%-6ld"RST" %d is thinking\n", elapsed, philo->id);
+		printf(W"%-6ld"Y" %d is thinking\n", elapsed, philo->id);
 	else if (status == DIED)
-		printf(W"%-6ld"RST" %d died\n", elapsed, philo->id);
+		printf(W"%-6ld"RED" %d died\n", elapsed, philo->id);
 	else
 		printf(W"%-6ld"RST" %d has finished\n", elapsed, philo->id);
 }
@@ -54,9 +54,9 @@ void	write_status(t_philo_status status, t_philo *philo)
 		else if (status == THINKING && !simulation_finished(philo->table))
 			printf("%ld %d is thinking\n", elapsed, philo->id);
 		else if (status == DIED)
-			printf("%ld %d - died\n", elapsed, philo->id);
+			printf("%ld %d died\n", elapsed, philo->id);
 		else
-			printf("%ld %d - finished\n", elapsed, philo->id);
+			printf("%ld %d finished\n", elapsed, philo->id);
 	}
 	safe_mutex_handle(&philo->table->write_mutex, UNLOCK);
 }
