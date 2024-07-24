@@ -1,9 +1,9 @@
+# For Arch linux need to set mmap_rnd_bits to 30 (in archome = 32)
+# sudo sysctl vm.mmap_rnd_bits=30
 CC = cc
 INCLUDE = -Iinclude
-# sudo sysctrl vm.mmap_rnd_bits=30 (in archome = 32)
 # CFLAGS = -Wall -Wextra -Werror $(INCLUDE) -pthread
 CFLAGS = -Wall -Wextra -Werror $(INCLUDE) -pthread -fsanitize=thread -g
-# CFLAGS = -Wall -Wextra -Werror $(INCLUDE) -pthread -g
 RM		= rm -f
 AR		= ar -src
 
@@ -33,4 +33,7 @@ debug:	all
 		@$(CC) $(CFLAGS) $(NAME) -o a.out
 
 run: re
-	./philo 16 480 200 200 10
+#	./philo 50 410 200 200 7
+#	./philo 5 800 200 200 7
+	./philo 1 410 200 200 10
+#	./philo 16 480 200 200 10 | xsel -ib
