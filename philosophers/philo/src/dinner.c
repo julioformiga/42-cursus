@@ -56,9 +56,12 @@ void	*lone_philo_simulation(void *arg)
 	wait_all_threads(philo->table);
 	set_long(&philo->philo_mutex, &philo->last_meal_time, gettime(MILLISECOND));
 	write_status(TAKE_FIRST_FORK, philo);
+	precise_usleep(philo->table->time_to_die, philo->table);
+	set_bool(&philo->philo_mutex, &philo->table->simulation_end, true);
 	while (!simulation_finished(philo->table))
-		usleep(200);
-	return (NULL);
+		;
+	write_status(DIED, philo);
+	exit(0);
 }
 
 void	dinner_start(t_table *table)
