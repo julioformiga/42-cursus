@@ -114,6 +114,7 @@ bool	get_bool(t_mutex *mutex, bool *value);
 void	set_long(t_mutex *mutex, long *dest, long value);
 long	get_long(t_mutex *mutex, long *value);
 bool	simulation_finished(t_table *table);
+void	desync_all_threads(t_philo *philo);
 
 void	thinking(t_philo *philo, bool pre_simulation);
 void	wait_all_threads(t_table *table);
