@@ -99,7 +99,7 @@ void	*dinner_simulation(void *data)
 	desync_all_threads(philo);
 	while (!simulation_finished(philo->table))
 	{
-		if (philo->full)
+		if (get_bool(&philo->philo_mutex, &philo->full))
 			break ;
 		eat(philo);
 		write_status(SLEEPING, philo);
