@@ -55,7 +55,7 @@ void	write_status(t_philo_status status, t_philo *philo)
 			printf("%ld %d is thinking\n", elapsed, philo->id);
 		else if (status == DIED)
 			printf("%ld %d died\n", elapsed, philo->id);
-		else
+		else if (DEBUG == 1)
 			printf("%ld %d finished\n", elapsed, philo->id);
 	}
 	safe_mutex_handle(&philo->table->write_mutex, UNLOCK);
