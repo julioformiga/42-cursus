@@ -60,8 +60,9 @@ void	*lone_philo_simulation(void *arg)
 	set_bool(&philo->philo_mutex, &philo->table->simulation_end, true);
 	while (!simulation_finished(philo->table))
 		;
+	increase_long(&philo->table->table_mutex, &philo->table->threads_running);
 	write_status(DIED, philo);
-	exit(0);
+	return (NULL);
 }
 
 void	dinner_start(t_table *table)
