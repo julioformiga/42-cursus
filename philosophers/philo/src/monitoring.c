@@ -22,7 +22,7 @@ static bool	philo_died(t_philo *philo)
 	elapsed = gettime(MILLISECOND) - get_long(&philo->philo_mutex,
 			&philo->last_meal_time);
 	t_to_died = philo->table->time_to_die / 1e3;
-	if (philo->table->philo_n % 2)
+	if (philo->table->philo_n % 2 && philo->table->philo_n > 1)
 		t_to_died = philo->table->time_to_die / (1e3 * 0.68);
 	if (elapsed > t_to_died)
 	{
