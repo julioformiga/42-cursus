@@ -41,7 +41,7 @@ void	*monitor_dinner(void *data)
 	table = (t_table *)data;
 	while (!all_threads_running(&table->table_mutex, &table->threads_running,
 			table->philo_n))
-		;
+		usleep(1);
 	while (!simulation_finished(table))
 	{
 		i = -1;
