@@ -45,7 +45,7 @@ void	thinking(t_philo *philo, bool pre_simulation)
 	t_think = t_eat * 2 - t_sleep;
 	if (t_think < 0)
 		t_think = 0;
-	precise_usleep(t_think * 0.42, philo->table);
+	precise_usleep(t_think, philo->table);
 }
 
 void	*lone_philo_simulation(void *arg)
@@ -59,7 +59,7 @@ void	*lone_philo_simulation(void *arg)
 	precise_usleep(philo->table->time_to_die, philo->table);
 	set_bool(&philo->philo_mutex, &philo->table->simulation_end, true);
 	while (!simulation_finished(philo->table))
-		;
+		usleep(1);
 	increase_long(&philo->table->table_mutex, &philo->table->threads_running);
 	write_status(DIED, philo);
 	return (NULL);
