@@ -24,6 +24,7 @@ $(NAME):	$(OBJ)
 
 clean:
 	@$(RM) $(OBJ)
+	@$(RM) src/*.o
 
 fclean:	clean
 		@$(RM) $(NAME) a.out philo vgcore.*
@@ -36,13 +37,13 @@ debug:	all
 run: re
 #	./philo 50 410 200 200 7
 #	./philo 5 800 200 200 7
-	./philo 13 310 200 100 2
+	./philo 3 310 200 100 2
 	@echo "---------------------------"
-	./philo 14 310 200 100 3
-	@echo "==========================="
-	./philo 13 410 200 200 2
-	@echo "---------------------------"
-	./philo 14 410 200 200 2
+	./philo 4 310 200 100 2
+#	@echo "==========================="
+#	./philo 3 410 200 200 2
+#	@echo "---------------------------"
+#	./philo 4 410 200 200 2
 #	valgrind ./philo 1 410 200 200 10
 #	valgrind --leak-check=full ./philo 1 410 200 200 10
 #	./philo 3 390 200 200 2
