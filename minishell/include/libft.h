@@ -12,14 +12,17 @@
 
 #ifndef LIBFT_H
 # define LIBFT_H
+// ======= GET_NEXT_LINE ========
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
 # define MAX_FD 10240
+// ========= FT_PRINTF ==========
 # define PRINTF_TYPES "cspdiuxX%"
 # define PRINTF_FORMAT "-0.# +"
 # define PRINTF_NUMBERS "0123456789"
 # define HEX_STR "0123456789abcdef"
+// ==============================
 
 # include <unistd.h>
 # include <stdio.h>
