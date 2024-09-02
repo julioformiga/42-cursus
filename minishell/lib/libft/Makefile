@@ -25,27 +25,29 @@ RESET  = \033[0m
 all:		$(NAME)
 
 $(OBJ)/%.o:	$(SRC)/%.c
-			@if [ ! -d $(OBJ) ]; then mkdir $(OBJ); fi
-			@echo -e "\t☑️ libft/$@"
-			@$(CC) $(CFLAGS) $< -o $@
+			if [ ! -d $(OBJ) ]; then mkdir $(OBJ); fi
+#			echo -e "\t☑️ libft/$@"
+			echo -n "☑️ "
+			$(CC) $(CFLAGS) $< -o $@
 
 $(OBJ_PRINTF)/%.o:	$(SRC_PRINTF)/%.c
-			@if [ ! -d $(OBJ_PRINTF) ]; then mkdir $(OBJ_PRINTF); fi
-			@echo -e "\t☑️ ft_printf/$@"
-			@$(CC) $(CFLAGS) $< -o $@
+			if [ ! -d $(OBJ_PRINTF) ]; then mkdir $(OBJ_PRINTF); fi
+#			echo -e "\t☑️ ft_printf/$@"
+			echo -n "☑️ "
+			$(CC) $(CFLAGS) $< -o $@
 
 $(NAME):	$(OBJS) $(OBJS_PRINTF)
-			@$(AR) $@ $(OBJS) $(OBJS_PRINTF)
-			@echo -e "✅ $(GREEN)Build finished$(RESET): $@"
+			$(AR) $@ $(OBJS) $(OBJS_PRINTF)
+			echo -e "\n✅ $(GREEN)Build finished$(RESET): $@"
 
 clean:
-			@$(RM) $(OBJ) $(OBJ_PRINTF)
-			@echo -e "🧹 $(RED)Cleaning LIB_FT$(RESET): $(OBJ) $(OBJ_PRINTF)"
+			$(RM) $(OBJ) $(OBJ_PRINTF)
+			echo -e "🧹 $(RED)Cleaning LIB_FT$(RESET): $(OBJ) $(OBJ_PRINTF)"
 
 fclean:		clean
-			@echo -e "🧹 $(RED)Cleaning LIB_FT$(RESET): $(NAME) vgcore.* a.out"
-			@$(RM) vgcore.* a.out
-			@$(RM) $(NAME)
+			echo -e "🧹 $(RED)Cleaning LIB_FT$(RESET): $(NAME) vgcore.* a.out"
+			$(RM) vgcore.* a.out
+			$(RM) $(NAME)
 
 re:			fclean all
 

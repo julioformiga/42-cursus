@@ -1,6 +1,6 @@
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -Iinclude -g
-MAKEFLAGS	+= --no-print-directory
+MAKEFLAGS	+= --no-print-directory -s
 
 RM			= rm -rf
 AR			= ar src
@@ -22,34 +22,34 @@ RED    		= \033[0;31m
 RESET  		= \033[0m
 
 all:		$(BIN)
-			@echo -e "✅ $(GREEN)Build finished$(RESET): $(BIN)"
+			echo -e "✅ $(GREEN)Compiled in$(RESET): $(BIN)"
 
 $(OBJ)/%.o:	$(SRC)/%.c
-			@if [ ! -d $(OBJ) ]; then mkdir $(OBJ); fi
-			@if [ ! -d $(BIN_DIR) ]; then mkdir $(BIN_DIR); fi
-			@$(CC) $(CFLAGS) -c -o $@ $<
+			if [ ! -d $(OBJ) ]; then mkdir $(OBJ); fi
+			if [ ! -d $(BIN_DIR) ]; then mkdir $(BIN_DIR); fi
+			$(CC) $(CFLAGS) -c -o $@ $<
 
 $(BIN):		$(OBJS)
-			@echo -e "🧰 $(BLUE)Building LIB_FT$(RESET)"
-			@make all -C $(LIBFT_DIR)
-			@echo -e "🧰 $(BLUE)Building MINISHELL$(RESET)"
-			@$(CC) $(CFLAGS) -o $@ $^ $(LIBFT)
+			echo -e "⚙️  $(BLUE)Building LIB_FT$(RESET)"
+			make all -C $(LIBFT_DIR)
+			echo -e "⚙️  $(BLUE)Building MINISHELL$(RESET)"
+			$(CC) $(CFLAGS) -o $@ $^ $(LIBFT)
 
 clean:
-			@$(RM) $(OBJ)
-			@echo -e "🧹 $(RED)Cleaning$(RESET): $(OBJ)"
+			$(RM) $(OBJ)
+			echo -e "🧹 $(RED)Cleaning$(RESET): $(OBJ)"
 
 fclean:		clean
-			@echo -e "🧹 $(RED)Cleaning$(RESET): $(BIN_DIR) vgcore.* a.out"
-			@$(RM) $(BIN_DIR)
-			@$(RM) vgcore.* a.out
-			@make fclean -C $(LIBFT_DIR)
+			echo -e "🧹 $(RED)Cleaning$(RESET): $(BIN_DIR) vgcore.* a.out"
+			$(RM) $(BIN_DIR)
+			$(RM) vgcore.* a.out
+			make fclean -C $(LIBFT_DIR)
 
 re:			fclean all
 
 run:		all
-			@echo -e "🚀 $(YELLOW)Running$(RESET): $(BIN)"
-			@./$(BIN)
+			echo -e "🚀 $(YELLOW)Running$(RESET): $(BIN)"
+			./$(BIN)
 
 .SILENT:	all clean fclean re run
 .PHONY:		all clean fclean re run
