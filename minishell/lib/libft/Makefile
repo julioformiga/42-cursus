@@ -1,5 +1,6 @@
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -std=c99 -I../../include -c -O2
+MAKEFLAGS	+= --no-print-directory
 
 RM			= rm -rf
 AR			= ar src

@@ -12,11 +12,21 @@
 
 #ifndef LIBFT_H
 # define LIBFT_H
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
+# define MAX_FD 10240
+# define PRINTF_TYPES "cspdiuxX%"
+# define PRINTF_FORMAT "-0.# +"
+# define PRINTF_NUMBERS "0123456789"
+# define HEX_STR "0123456789abcdef"
 
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <limits.h>
+# include <fcntl.h>
+# include <stdarg.h>
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
@@ -68,5 +78,49 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+
+char	*get_next_line(int fd);
+
+// ======= PRINT_F =========
+
+typedef struct s_data
+{
+	char			type;
+	char			format_type;
+	char			*format;
+	char			*print;
+	int				number_neg;
+	int				len;
+}	t_data;
+
+int		print_char(char c);
+int		print_string(char *str);
+void	print_args(const char *str, t_data *data, va_list args);
+void	print_data(t_data *data);
+void	print_pre_format(t_data *data);
+void	print_pos_format(t_data *data);
+int		print_pos_format_conditions(t_data *data);
+void	print_pre_format_specifics(t_data *data);
+void	print_pre_format_number(t_data *data);
+void	print_pre_format_string(t_data *data);
+void	print_pre_pointers(t_data *data);
+void	print_pre_pointers_specifics(t_data *data);
+void	print_pos_pointers(t_data *data);
+int		print_format_null(t_data *data);
+
+char	*get_string(char *str);
+char	*get_nbr(int nbr);
+char	*get_ptr_addrs(void *ptr);
+char	*get_unsigned_hex(unsigned int nbr, t_data *data);
+void	get_data_strings(t_data *data, va_list args);
+void	get_arg_format(char c, t_data *data);
+
+void	show_data(t_data *data);
+void	reset_data(t_data *data);
+char	*ft_uitoa_base(unsigned long nbr, char *b_to, unsigned long b_size);
+char	*ft_uitoa(unsigned int nbr);
+int		ft_printf(const char *s, ...);
+int		is_print_null(t_data *data);
+int		ftype_has(t_data *data, char *has);
 
 #endif
