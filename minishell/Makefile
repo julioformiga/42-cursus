@@ -15,11 +15,11 @@ BIN			= $(BIN_DIR)/minishell
 LIBFT_DIR	= lib/libft
 LIBFT		= $(LIBFT_DIR)/libft.a
 
-GREEN  = \033[0;32m
-YELLOW = \033[1;33m
-BLUE   = \033[1;34m
-RED    = \033[0;31m
-RESET  = \033[0m
+GREEN  		= \033[0;32m
+YELLOW 		= \033[1;33m
+BLUE   		= \033[1;34m
+RED    		= \033[0;31m
+RESET  		= \033[0m
 
 all:		$(BIN)
 			@echo -e "✅ $(GREEN)Build finished$(RESET): $(BIN)"
