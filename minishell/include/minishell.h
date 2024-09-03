@@ -13,4 +13,17 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include "libft.h"
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <string.h>
+# include <termios.h>
+
+extern int	g_signal;
+
+typedef struct s_env
+{
+	char	*key;
+	char	*value;
+}	t_env;
+
 #endif

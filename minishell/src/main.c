@@ -12,36 +12,59 @@
 
 #include "minishell.h"
 
+int	g_signal = 0;
+
+void	prompt(int signal, char *dir)
+{
+	char	*prompt;
+
+	prompt = "[minishell@42]";
+	if (dir == NULL)
+		dir = "~";
+	if (signal == 0)
+		ft_printf("\033[1;32m%s %s $>\033[0m ", prompt, dir);
+	else if (signal == 1)
+		ft_printf("\033[1;31m%s %s $>\033[0m ", prompt, dir);
+	else
+		ft_printf("\033[1;33m%s %s $>\033[0m ", prompt, dir);
+}
+
+int	ft_check_exit(char *str)
+{
+	if (str == NULL)
+		return (1);
+	if (ft_strncmp(str, "exit", 4) == 0)
+		return (0);
+	if (ft_strncmp(str, "e", 1) == 0)
+		return (0);
+	return (1);
+}
+
+void	ft_getenv(char **env)
+{
+	while (*env)
+	{
+		ft_printf("%s\n", *env);
+		env++;
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
-	char	*line;
-	size_t	len;
-	ssize_t	read;
+	char	*rl;
 
-	line = NULL;
-	len = 0;
 	(void)argc;
 	(void)argv;
-	(void)envp;
+	ft_getenv(envp);
+	rl = NULL;
 	while (1)
 	{
-		ft_printf("\033[1;32m[🟢 42-minishell] $>\033[0m ");
-		read = getline(&line, &len, stdin);
-		if (read == -1)
-		{
-			if (feof(stdin))
-				break ;
-			perror("getline");
+		prompt(g_signal, NULL);
+		rl = readline("");
+		if (!ft_check_exit(rl))
 			break ;
-		}
-		if (line[read - 1] == '\n')
-			line[read - 1] = '\0';
-		if (ft_strncmp(line, "exit", 4) == 0
-			&& (line[4] == '\0' || line[4] == ' '))
-			break ;
-		if (system(line) == -1)
-			perror("system");
+		ft_printf("%s\n", rl);
 	}
-	free(line);
+	free(rl);
 	return (0);
 }

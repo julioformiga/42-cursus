@@ -1,5 +1,5 @@
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -Iinclude -g
+CFLAGS		= -Wall -Wextra -Werror -Iinclude -lreadline -g
 MAKEFLAGS	+= --no-print-directory -s
 
 RM			= rm -rf
@@ -50,6 +50,8 @@ re:			fclean all
 run:		all
 			echo -e "🚀 $(YELLOW)Running$(RESET): $(BIN)"
 			./$(BIN)
+#			valgrind --leak-check=full --suppressions=readline.supp ./$(BIN)
+#			valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp -s ./$(BIN)
 
 .SILENT:	all clean fclean re run
 .PHONY:		all clean fclean re run
