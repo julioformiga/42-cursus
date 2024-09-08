@@ -10,23 +10,26 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minishell.h"
 
 int	g_signal = 0;
 
-void	prompt(int signal, char *dir)
+char	*prompt(int signal, char *dir)
 {
 	char	*prompt;
 
-	prompt = "[minishell@42]";
+	prompt = "";
 	if (dir == NULL)
 		dir = "~";
 	if (signal == 0)
-		ft_printf("\033[1;32m%s %s $>\033[0m ", prompt, dir);
+		prompt = ft_strjoin("\033[1;32m[minishell@42] ", dir);
 	else if (signal == 1)
-		ft_printf("\033[1;31m%s %s $>\033[0m ", prompt, dir);
+		prompt = ft_strjoin("\033[1;31m[minishell@42] ", dir);
 	else
-		ft_printf("\033[1;33m%s %s $>\033[0m ", prompt, dir);
+		prompt = ft_strjoin("\033[1;33m[minishell@42] ", dir);
+	prompt = ft_strjoin(prompt, " $>\033[0m ");
+	return (prompt);
 }
 
 int	ft_check_exit(char *str)
@@ -59,8 +62,7 @@ int	main(int argc, char **argv, char **envp)
 	rl = NULL;
 	while (1)
 	{
-		prompt(g_signal, NULL);
-		rl = readline("");
+		rl = readline(prompt(g_signal, NULL));
 		if (!ft_check_exit(rl))
 			break ;
 		ft_printf("%s\n", rl);
