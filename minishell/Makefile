@@ -49,8 +49,10 @@ fclean:		clean
 
 re:			fclean all
 
-run:		all
+tests:
 			cd build/ && cmake .. && make && ctest && cd ..
+
+run:		all tests
 			echo -e "🚀 $(YELLOW)Running$(RESET): $(BIN)"
 			./$(BIN)
 #			valgrind --leak-check=full --suppressions=readline.supp ./$(BIN)
