@@ -4,9 +4,9 @@ project(MiniShell)
 
 set(CMAKE_C_STANDARD 99)
 
-include_directories(include)
+set(CMAKE_CXX_STANDARD 14)
 
-add_subdirectory(lib/libft)
+include_directories(include)
 
 file(GLOB SRC "src/*.c")
 file(GLOB LIBFT_SRC "lib/libft/src/*.c")
@@ -20,8 +20,10 @@ include(FetchContent)
 
 FetchContent_Declare(
     googletest
-    URL https://github.com/google/googletest/releases/download/v1.15.2/googletest-1.15.2.tar.gz
+    GIT REPOSITORY https://github.com/google/googletest.git
+    GIT_TAG main
 )
+set(BUILD_GMOCK OFF)
 FetchContent_GetProperties(googletest)
 
 if(NOT googletest_POPULATED)
@@ -32,4 +34,4 @@ enable_testing()
 
 add_executable(test_minishell test/test_minishell.cpp)
 target_link_libraries(test_minishell gtest gtest_main)
-add_test(NAME test_minishell COMMAND test_minishell)
+add_test(NAME TestMinishell COMMAND test_minishell)
