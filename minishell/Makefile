@@ -22,7 +22,7 @@ RED    		= \033[0;31m
 RESET  		= \033[0m
 
 all:		$(BIN)
-			echo -e "✅ $(GREEN)Compiled in$(RESET): $(BIN)"
+			echo -e "☑️ $(GREEN)Compiled in$(RESET): $(BIN)"
 
 $(OBJ)/%.o:	$(SRC)/%.c
 			if [ ! -d $(OBJ) ]; then mkdir $(OBJ); fi
@@ -44,10 +44,13 @@ fclean:		clean
 			$(RM) $(BIN_DIR)
 			$(RM) vgcore.* a.out
 			make fclean -C $(LIBFT_DIR)
+			echo -e "🧹 $(RED)Cleaning$(RESET): build/"
+			cd build/ && make clean && cd ..
 
 re:			fclean all
 
 run:		all
+			cd build/ && cmake .. && make && ctest && cd ..
 			echo -e "🚀 $(YELLOW)Running$(RESET): $(BIN)"
 			./$(BIN)
 #			valgrind --leak-check=full --suppressions=readline.supp ./$(BIN)

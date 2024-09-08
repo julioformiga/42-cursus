@@ -38,7 +38,7 @@ $(OBJ_PRINTF)/%.o:	$(SRC_PRINTF)/%.c
 
 $(NAME):	$(OBJS) $(OBJS_PRINTF)
 			$(AR) $@ $(OBJS) $(OBJS_PRINTF)
-			echo -e "\n✅ $(GREEN)Build finished$(RESET): $@"
+			echo -e "\n☑️ $(GREEN)Build finished$(RESET): $@"
 
 clean:
 			$(RM) $(OBJ) $(OBJ_PRINTF)
