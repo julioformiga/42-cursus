@@ -18,17 +18,18 @@ int	g_signal = 0;
 char	*prompt(int signal, char *dir)
 {
 	char	*prompt;
+	char	*prompt_ini;
 
-	prompt = "";
 	if (dir == NULL)
 		dir = "~";
 	if (signal == 0)
-		prompt = ft_strjoin("\033[1;32m[minishell@42] ", dir);
+		prompt_ini = ft_strjoin("\033[1;32m[minishell@42] ", dir);
 	else if (signal == 1)
-		prompt = ft_strjoin("\033[1;31m[minishell@42] ", dir);
+		prompt_ini = ft_strjoin("\033[1;31m[minishell@42] ", dir);
 	else
-		prompt = ft_strjoin("\033[1;33m[minishell@42] ", dir);
-	prompt = ft_strjoin(prompt, " $>\033[0m ");
+		prompt_ini = ft_strjoin("\033[1;33m[minishell@42] ", dir);
+	prompt = ft_strjoin(prompt_ini, " $>\033[0m ");
+	free(prompt_ini);
 	return (prompt);
 }
 
@@ -47,7 +48,7 @@ void	ft_getenv(char **env)
 {
 	while (*env)
 	{
-		ft_printf("%s\n", *env);
+		// ft_printf("%s\n", *env);
 		env++;
 	}
 }
@@ -55,6 +56,7 @@ void	ft_getenv(char **env)
 int	main(int argc, char **argv, char **envp)
 {
 	char	*rl;
+	char	*prompt_out;
 
 	(void)argc;
 	(void)argv;
@@ -62,11 +64,13 @@ int	main(int argc, char **argv, char **envp)
 	rl = NULL;
 	while (1)
 	{
-		rl = readline(prompt(g_signal, NULL));
+		prompt_out = prompt(g_signal, NULL);
+		rl = readline(prompt_out);
+		free(prompt_out);
 		if (!ft_check_exit(rl))
 			break ;
 		ft_printf("%s\n", rl);
+		free(rl);
 	}
-	free(rl);
 	return (0);
 }
