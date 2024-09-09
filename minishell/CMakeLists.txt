@@ -31,7 +31,9 @@ if(NOT googletest_POPULATED)
 endif()
 
 enable_testing()
+set(TEST_DIR "test/")
+file(GLOB TEST_SRC "${TEST_DIR}*.cpp")
 
-add_executable(test_minishell test/test_minishell.cpp)
+add_executable(test_minishell ${TEST_SRC})
 target_link_libraries(test_minishell gtest gtest_main)
 add_test(NAME TestMinishell COMMAND test_minishell)
