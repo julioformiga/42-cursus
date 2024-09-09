@@ -37,9 +37,9 @@ int	ft_check_exit(char *str)
 {
 	if (str == NULL)
 		return (1);
-	if (ft_strncmp(str, "exit", 4) == 0)
+	if (ft_strncmp(str, "exit", 4) == 0 && ft_strlen(str) == 4)
 		return (0);
-	if (ft_strncmp(str, "e", 1) == 0)
+	if (ft_strncmp(str, "e", 1) == 0 && ft_strlen(str) == 1)
 		return (0);
 	return (1);
 }
@@ -64,7 +64,7 @@ int	main(int argc, char **argv, char **envp)
 	rl = NULL;
 	while (1)
 	{
-		prompt_out = prompt(g_signal, NULL);
+		prompt_out = prompt(g_signal, "src/");
 		rl = readline(prompt_out);
 		free(prompt_out);
 		if (!ft_check_exit(rl))
