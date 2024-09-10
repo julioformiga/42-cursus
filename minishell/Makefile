@@ -22,7 +22,7 @@ RED    		= \033[0;31m
 RESET  		= \033[0m
 
 all:		$(BIN)
-			echo "☑️ $(GREEN)Compiled in$(RESET): $(BIN)"
+			printf "☑️ $(GREEN)Compiled in$(RESET): $(BIN)\n"
 
 $(OBJ)/%.o:	$(SRC)/%.c
 			if [ ! -d $(OBJ) ]; then mkdir $(OBJ); fi
@@ -30,21 +30,21 @@ $(OBJ)/%.o:	$(SRC)/%.c
 			$(CC) $(CFLAGS) -c -o $@ $<
 
 $(BIN):		$(OBJS)
-			echo "⚙️  $(BLUE)Building LIB_FT$(RESET)"
+			printf "⚙️  $(BLUE)Building LIB_FT$(RESET)\n"
 			make all -C $(LIBFT_DIR)
-			echo "⚙️  $(BLUE)Building MINISHELL$(RESET)"
+			printf "⚙️  $(BLUE)Building MINISHELL$(RESET)\n"
 			$(CC) $(CFLAGS) -o $@ $^ $(LIBFT)
 
 clean:
 			$(RM) $(OBJ)
-			echo "🧹 $(RED)Cleaning$(RESET): $(OBJ)"
+			printf "🧹 $(RED)Cleaning$(RESET): $(OBJ)\n"
 
 fclean:		clean
-			echo "🧹 $(RED)Cleaning$(RESET): $(BIN_DIR) vgcore.* a.out"
+			printf "🧹 $(RED)Cleaning$(RESET): $(BIN_DIR) vgcore.* a.out\n"
 			$(RM) $(BIN_DIR)
 			$(RM) vgcore.* a.out
 			make fclean -C $(LIBFT_DIR)
-			echo "🧹 $(RED)Cleaning$(RESET): build/"
+			printf "🧹 $(RED)Cleaning$(RESET): build/\n"
 			cd build/ && make clean && cd ..
 
 re:			fclean all
@@ -53,7 +53,7 @@ tests:		all
 			cd build/ && cmake .. && make && cd ..
 
 run:		all
-			echo "🚀 $(YELLOW)Running$(RESET): $(BIN)"
+			printf "🚀 $(YELLOW)Running$(RESET): $(BIN)\n"
 			./$(BIN)
 #			valgrind --leak-check=full --suppressions=readline.supp ./$(BIN)
 #			valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp -s ./$(BIN)
