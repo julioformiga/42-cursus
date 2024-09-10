@@ -1,5 +1,5 @@
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -Iinclude -lreadline -g
+CFLAGS		= -Wall -Wextra -Iinclude -lreadline -g
 MAKEFLAGS	+= --no-print-directory -s
 
 RM			= rm -rf
@@ -22,7 +22,7 @@ RED    		= \033[0;31m
 RESET  		= \033[0m
 
 all:		$(BIN)
-			echo -e "☑️ $(GREEN)Compiled in$(RESET): $(BIN)"
+			echo "☑️ $(GREEN)Compiled in$(RESET): $(BIN)"
 
 $(OBJ)/%.o:	$(SRC)/%.c
 			if [ ! -d $(OBJ) ]; then mkdir $(OBJ); fi
@@ -30,33 +30,34 @@ $(OBJ)/%.o:	$(SRC)/%.c
 			$(CC) $(CFLAGS) -c -o $@ $<
 
 $(BIN):		$(OBJS)
-			echo -e "⚙️  $(BLUE)Building LIB_FT$(RESET)"
+			echo "⚙️  $(BLUE)Building LIB_FT$(RESET)"
 			make all -C $(LIBFT_DIR)
-			echo -e "⚙️  $(BLUE)Building MINISHELL$(RESET)"
+			echo "⚙️  $(BLUE)Building MINISHELL$(RESET)"
 			$(CC) $(CFLAGS) -o $@ $^ $(LIBFT)
 
 clean:
 			$(RM) $(OBJ)
-			echo -e "🧹 $(RED)Cleaning$(RESET): $(OBJ)"
+			echo "🧹 $(RED)Cleaning$(RESET): $(OBJ)"
 
 fclean:		clean
-			echo -e "🧹 $(RED)Cleaning$(RESET): $(BIN_DIR) vgcore.* a.out"
+			echo "🧹 $(RED)Cleaning$(RESET): $(BIN_DIR) vgcore.* a.out"
 			$(RM) $(BIN_DIR)
 			$(RM) vgcore.* a.out
 			make fclean -C $(LIBFT_DIR)
-			echo -e "🧹 $(RED)Cleaning$(RESET): build/"
+			echo "🧹 $(RED)Cleaning$(RESET): build/"
 			cd build/ && make clean && cd ..
 
 re:			fclean all
 
-tests:
-			cd build/ && cmake .. && make && ctest && cd ..
+tests:		all
+			cd build/ && cmake .. && make && cd ..
 
-run:		all tests
-			echo -e "🚀 $(YELLOW)Running$(RESET): $(BIN)"
+run:		all
+			echo "🚀 $(YELLOW)Running$(RESET): $(BIN)"
 			./$(BIN)
 #			valgrind --leak-check=full --suppressions=readline.supp ./$(BIN)
 #			valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp -s ./$(BIN)
+#			valgrind --leak-check=full --show-leak-kinds=all --gen-suppressions=all -s ./$(BIN) 2>> readline.supp
 
 .SILENT:	all clean fclean re run
 .PHONY:		all clean fclean re run

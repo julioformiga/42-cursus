@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.30)
+cmake_minimum_required(VERSION 3.16.3)
 
 project(MiniShell)
 
@@ -20,7 +20,7 @@ include(FetchContent)
 
 FetchContent_Declare(
     googletest
-    GIT REPOSITORY https://github.com/google/googletest.git
+    GIT_REPOSITORY https://github.com/google/googletest.git
     GIT_TAG main
 )
 set(BUILD_GMOCK OFF)
@@ -31,26 +31,22 @@ if(NOT googletest_POPULATED)
 endif()
 
 # =============================== MAKE DOC =====================================
-find_package(Doxygen REQUIRED)
-
-# Definir o arquivo de configuração do Doxygen
-set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile)
-set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/docs)
-
-# Verifica se o Doxyfile existe
-if(NOT EXISTS ${DOXYGEN_IN})
-    message(FATAL_ERROR "Doxyfile não encontrado. Por favor, crie um Doxyfile com 'doxygen -g'.")
-endif()
-
-# Cria uma regra personalizada para gerar a documentação
-add_custom_target(doc ALL
-    COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_IN}
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-    COMMENT "Gerando documentação com Doxygen"
-    VERBATIM)
-
-# Adiciona a documentação ao processo de construção
-install(DIRECTORY ${DOXYGEN_OUT} DESTINATION doc)
+# find_package(Doxygen REQUIRED)
+#
+# set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile)
+# set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/docs)
+#
+# if(NOT EXISTS ${DOXYGEN_IN})
+#     message(FATAL_ERROR "Doxyfile não encontrado. Por favor, crie um Doxyfile com 'doxygen -g'.")
+# endif()
+#
+# add_custom_target(doc ALL
+#     COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_IN}
+#     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+#     COMMENT "Gerando documentação com Doxygen"
+#     VERBATIM)
+#
+# install(DIRECTORY ${DOXYGEN_OUT} DESTINATION doc)
 
 # ============================== TESTS =========================================
 enable_testing()

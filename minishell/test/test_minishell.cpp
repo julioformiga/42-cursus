@@ -10,7 +10,7 @@ TEST(minishell, dumb_test) {
     ASSERT_TRUE(true);
 }
 
-TEST(minishell, init_mleaks) {
+TEST(minishell, exit_without_mleaks) {
     const char* command = "echo 'exit' | valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp --error-exitcode=1 bin/minishell";
     int result = system(command);
     ASSERT_EQ(result, 0) << "Memory leak detected or error occurred";
