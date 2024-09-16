@@ -55,6 +55,8 @@ tests:		all
 run:		all
 			printf "🚀 $(YELLOW)Running$(RESET): $(BIN)\n"
 			./$(BIN)
+checkleaks:	all
+			valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./$(BIN)
 #			valgrind --leak-check=full --suppressions=readline.supp ./$(BIN)
 #			valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp -s ./$(BIN)
 #			valgrind --leak-check=full --show-leak-kinds=all --gen-suppressions=all -s ./$(BIN) 2>> readline.supp
