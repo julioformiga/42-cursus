@@ -43,27 +43,28 @@ int	ft_check_exit(char *str)
 	return (1);
 }
 
-void	ft_getenv(char **env)
-{
-	while (*env)
-	{
-		// ft_printf("%s\n", *env);
-		env++;
-	}
-}
-
 int	main(int argc, char **argv, char **envp)
 {
+	t_env	env;
 	char	*rl;
 	char	*prompt_out;
+	char	*dir;
+	char	*dir_home;
 
 	(void)argc;
 	(void)argv;
-	ft_getenv(envp);
+	env = ft_initenv(envp);
+	ft_printenv(env);
 	rl = NULL;
 	while (1)
 	{
-		prompt_out = prompt(g_signal, "src/");
+		dir = ft_getenv(env, "PWD");
+		dir_home = ft_getenv(env, "HOME");
+		if (ft_strncmp(dir, dir_home, ft_strlen(dir_home)) == 0)
+			prompt_out = prompt(g_signal,
+					ft_strjoin("~", dir + ft_strlen(dir_home)));
+		else
+			prompt_out = prompt(g_signal, dir);
 		rl = readline(prompt_out);
 		free(prompt_out);
 		if (!ft_check_exit(rl))
@@ -71,5 +72,6 @@ int	main(int argc, char **argv, char **envp)
 		ft_printf("%s\n", rl);
 		free(rl);
 	}
+	ft_freeenv(env);
 	return (0);
 }
