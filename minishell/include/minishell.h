@@ -31,9 +31,10 @@ typedef struct s_env
 }	t_env;
 
 char	*ft_strndup(const char *s1, size_t n);
-t_env	ft_initenv(char **envp);
-char	*ft_getenv(t_env env, char *key);
-void	ft_printenv(t_env env);
-void	ft_freeenv(t_env env);
+
+t_env	*ft_initenv(char **envp);
+char	*ft_getenv(t_env *env, char *key);
+void	ft_printenv(t_env *env);
+void	ft_freeenv(t_env *env);
 
 #endif
