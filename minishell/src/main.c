@@ -14,13 +14,18 @@
 
 int	g_signal = 0;
 
-char	*prompt(int signal, char *dir)
+char	*prompt(int signal, t_env *env)
 {
 	char	*prompt;
 	char	*prompt_ini;
+	char	*dir;
+	char	*dir_home;
+	char	*rl;
 
-	if (dir == NULL)
-		dir = "~";
+	dir = ft_getenv(env, "PWD");
+	dir_home = ft_getenv(env, "HOME");
+	if (ft_strncmp(dir, dir_home, ft_strlen(dir_home)) == 0)
+		dir = ft_strjoin("~", dir + ft_strlen(dir_home));
 	if (signal == 0)
 		prompt_ini = ft_strjoin("\033[1;32m[minishell@42] ", dir);
 	else if (signal == 1)
@@ -29,7 +34,10 @@ char	*prompt(int signal, char *dir)
 		prompt_ini = ft_strjoin("\033[1;33m[minishell@42] ", dir);
 	prompt = ft_strjoin(prompt_ini, " $>\033[0m ");
 	free(prompt_ini);
-	return (prompt);
+	free(dir);
+	rl = readline(prompt);
+	free(prompt);
+	return (rl);
 }
 
 int	ft_check_exit(char *str)
@@ -45,11 +53,8 @@ int	ft_check_exit(char *str)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_env	env;
+	t_env	*env;
 	char	*rl;
-	char	*prompt_out;
-	char	*dir;
-	char	*dir_home;
 
 	(void)argc;
 	(void)argv;
@@ -58,15 +63,7 @@ int	main(int argc, char **argv, char **envp)
 	rl = NULL;
 	while (1)
 	{
-		dir = ft_getenv(env, "PWD");
-		dir_home = ft_getenv(env, "HOME");
-		if (ft_strncmp(dir, dir_home, ft_strlen(dir_home)) == 0)
-			prompt_out = prompt(g_signal,
-					ft_strjoin("~", dir + ft_strlen(dir_home)));
-		else
-			prompt_out = prompt(g_signal, dir);
-		rl = readline(prompt_out);
-		free(prompt_out);
+		rl = prompt(g_signal, env);
 		if (!ft_check_exit(rl))
 			break ;
 		ft_printf("%s\n", rl);
