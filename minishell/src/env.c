@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-t_env	*ft_initenv(char **envp)
+t_env	*ft_envinit(char **envp)
 {
 	t_env	*env;
 	t_env	*tmp;
@@ -39,7 +39,7 @@ t_env	*ft_initenv(char **envp)
 	return (env);
 }
 
-int	ft_setenv(t_env *env, char *key, char *value)
+int	ft_envset(t_env *env, char *key, char *value)
 {
 	while (env != NULL)
 	{
@@ -54,7 +54,7 @@ int	ft_setenv(t_env *env, char *key, char *value)
 	return (1);
 }
 
-char	*ft_getenv(t_env *env, char *key)
+char	*ft_envget(t_env *env, char *key)
 {
 	while (env != NULL)
 	{
@@ -65,7 +65,7 @@ char	*ft_getenv(t_env *env, char *key)
 	return (NULL);
 }
 
-void	ft_printenv(t_env *env)
+void	ft_envprint(t_env *env)
 {
 	while (env != NULL)
 	{

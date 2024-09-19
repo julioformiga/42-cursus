@@ -16,6 +16,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/types.h>
+# include <stdbool.h>
 # include <string.h>
 # include <termios.h>
 # include <curses.h>
@@ -32,9 +33,12 @@ typedef struct s_env
 
 char	*ft_strndup(const char *s1, size_t n);
 
-t_env	*ft_initenv(char **envp);
-char	*ft_getenv(t_env *env, char *key);
-void	ft_printenv(t_env *env);
-void	ft_freeenv(t_env *env);
+t_env	*ft_envinit(char **envp);
+char	*ft_envget(t_env *env, char *key);
+void	ft_envprint(t_env *env);
+void	ft_envfree(t_env *env);
+
+char	*ft_cmd_check(char *path, char *cmd);
+int		ft_cmd_exec(char *command, t_env *env);
 
 #endif
