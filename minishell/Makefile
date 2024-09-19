@@ -1,5 +1,5 @@
 CC			= cc
-CFLAGS		= -Wall -Wextra -Iinclude -lreadline -g
+CFLAGS		= -Wall -Wextra -Werror -Iinclude -g
 MAKEFLAGS	+= --no-print-directory -s
 
 RM			= rm -rf
@@ -33,7 +33,7 @@ $(BIN):		$(OBJS)
 			printf "⚙️  $(BLUE)Building LIB_FT$(RESET)\n"
 			make all -C $(LIBFT_DIR)
 			printf "⚙️  $(BLUE)Building MINISHELL$(RESET)\n"
-			$(CC) $(CFLAGS) -o $@ $^ $(LIBFT)
+			$(CC) $(CFLAGS) -lreadline -o $@ $^ $(LIBFT)
 
 clean:
 			$(RM) $(OBJ)
@@ -57,12 +57,10 @@ run:		all
 			./$(BIN)
 checkleaks:	all
 			valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./$(BIN)
+			ls
 
 gensupp:	all
-			valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./$(BIN) 2>> newsupp.supp
-#			valgrind --leak-check=full --suppressions=readline.supp ./$(BIN)
-#			valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp -s ./$(BIN)
-#			valgrind --leak-check=full --show-leak-kinds=all --gen-suppressions=all -s ./$(BIN) 2>> readline.supp
+			valgrind --leak-check=full --show-leak-kinds=all --gen-suppressions=all -s ./$(BIN) 2>> new.supp
 
 .SILENT:	all clean fclean re run
 .PHONY:		all clean fclean re run
