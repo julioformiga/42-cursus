@@ -55,7 +55,7 @@ int	ft_cmd_exec(char *command, t_env *env)
 	char	*path;
 	char	*full_path;
 
-	path = ft_envget(env, "PATH");
+	path = ft_env_get(env, "PATH");
 	if (path)
 	{
 		full_path = ft_cmd_check(path, command);

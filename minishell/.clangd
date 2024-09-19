@@ -1,3 +1,2 @@
 CompileFlags:
-  Add: ["-Wall", "-Wextra", "-Werror", "-I../include"]
-  CompilationDatabase: /home/julio/dev/42/cursus/minishell/
+  Add: ["-Wall", "-Wextra", "-Werror", "-I../include", "-lreadline"]

@@ -57,7 +57,6 @@ run:		all
 			./$(BIN)
 checkleaks:	all
 			valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./$(BIN)
-			ls
 
 gensupp:	all
 			valgrind --leak-check=full --show-leak-kinds=all --gen-suppressions=all -s ./$(BIN) 2>> new.supp

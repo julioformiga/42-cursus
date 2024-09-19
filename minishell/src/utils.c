@@ -12,16 +12,19 @@
 
 #include "minishell.h"
 
-void	ft_envfree(t_env *env)
+char	*ft_strndup(const char *s1, size_t n)
 {
-	t_env	*tmp;
+	char	*str;
+	size_t	i;
 
-	while (env)
-	{
-		tmp = env;
-		env = env->next;
-		free(tmp->key);
-		free(tmp->value);
-		free(tmp);
-	}
+	if (!s1 || n == 0)
+		return (NULL);
+	str = malloc(sizeof(char) * (n + 1));
+	if (str == NULL)
+		return (NULL);
+	i = -1;
+	while (++i < n)
+		str[i] = s1[i];
+	str[i] = '\0';
+	return (str);
 }

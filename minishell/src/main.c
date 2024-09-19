@@ -22,8 +22,8 @@ char	*prompt(int signal, t_env *env)
 	char	*dir_home;
 	char	*rl;
 
-	dir = ft_envget(env, "PWD");
-	dir_home = ft_envget(env, "HOME");
+	dir = ft_env_get(env, "PWD");
+	dir_home = ft_env_get(env, "HOME");
 	if (ft_strncmp(dir, dir_home, ft_strlen(dir_home)) == 0)
 		dir = ft_strjoin("~", dir + ft_strlen(dir_home));
 	if (signal == 0)
@@ -59,7 +59,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	env = ft_envinit(envp);
+	env = ft_env_init(envp);
 	rl = NULL;
 	while (1)
 	{
@@ -77,6 +77,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 		free(rl);
 	}
-	ft_envfree(env);
+	ft_env_free(env);
 	return (0);
 }
