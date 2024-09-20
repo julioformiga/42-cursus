@@ -7,7 +7,7 @@ AR			= ar src
 
 SRC			= src
 OBJ			= obj
-SRCS		= $(wildcard $(SRC)/*.c)
+SRCS		= $(shell find $(SRC) -name '*.c')
 OBJS		= $(patsubst $(SRC)/%.c, $(OBJ)/%.o, $(SRCS))
 BIN_DIR		= bin
 BIN			= $(BIN_DIR)/minishell
@@ -25,8 +25,9 @@ all:		$(BIN)
 			printf "☑️ $(GREEN)Compiled in$(RESET): $(BIN)\n"
 
 $(OBJ)/%.o:	$(SRC)/%.c
-			if [ ! -d $(OBJ) ]; then mkdir $(OBJ); fi
-			if [ ! -d $(BIN_DIR) ]; then mkdir $(BIN_DIR); fi
+			@mkdir -p $(OBJ)
+			@mkdir -p $(dir $@)
+			@mkdir -p $(BIN_DIR)
 			$(CC) $(CFLAGS) -c -o $@ $<
 
 $(BIN):		$(OBJS)
@@ -56,7 +57,7 @@ run:		all
 			printf "🚀 $(YELLOW)Running$(RESET): $(BIN)\n"
 			./$(BIN)
 checkleaks:	all
-			valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./$(BIN)
+			valgrind --leak-check=full --show-leak-kinds=all --suppressions=external.supp ./$(BIN)
 
 gensupp:	all
 			valgrind --leak-check=full --show-leak-kinds=all --gen-suppressions=all -s ./$(BIN) 2>> new.supp
