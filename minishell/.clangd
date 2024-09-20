@@ -1,2 +1,10 @@
 CompileFlags:
-  Add: ["-Wall", "-Wextra", "-Werror", "-I../include", "-lreadline"]
+  Add:
+    [
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I../include",
+      "-I../../include",
+      "-lreadline",
+    ]
