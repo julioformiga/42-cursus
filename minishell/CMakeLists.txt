@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD 14)
 
 include_directories(include)
 
-file(GLOB SRC "src/*.c")
+file(GLOB SRC "src/*.c" "src/*/*.c")
 file(GLOB LIBFT_SRC "lib/libft/src/*.c")
 file(GLOB LIBFT_PRINTF_SRC "lib/libft/src/ft_printf/*.c")
 
