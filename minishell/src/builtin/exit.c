@@ -1,43 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: julio.formiga <julio.formiga@gmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/16 16:17:32 by julio.formiga     #+#    #+#             */
-/*   Updated: 2024/09/16 16:17:32 by julio.formiga    ###   ########.fr       */
+/*   Created: 2024/09/21 00:14:41 by julio.formiga     #+#    #+#             */
+/*   Updated: 2024/09/21 00:14:41 by julio.formiga    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_array(char **array)
+int	builtin_exit(char *str)
 {
-	int	i;
-
-	i = -1;
-	if (array)
-	{
-		while (array[++i])
-			free(array[i]);
-		free(array);
-	}
-}
-
-char	*ft_strndup(const char *s1, size_t n)
-{
-	char	*str;
-	size_t	i;
-
-	if (!s1 || n == 0)
-		return (NULL);
-	str = malloc(sizeof(char) * (n + 1));
-	if (str == NULL)
-		return (NULL);
-	i = -1;
-	while (++i < n)
-		str[i] = s1[i];
-	str[i] = '\0';
-	return (str);
+	if (!str)
+		return (1);
+	if (ft_strncmp(str, "exit", 4) == 0 && ft_strlen(str) == 4)
+		return (0);
+	if (ft_strncmp(str, "e", 1) == 0 && ft_strlen(str) == 1)
+		return (0);
+	return (1);
 }

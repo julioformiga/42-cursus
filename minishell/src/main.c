@@ -14,7 +14,7 @@
 
 int	g_signal = 0;
 
-char	*prompt(int signal, t_env *env)
+char	*prompt(t_env *env)
 {
 	char	*prompt;
 	char	*prompt_ini;
@@ -22,13 +22,13 @@ char	*prompt(int signal, t_env *env)
 	char	*dir_home;
 	char	*rl;
 
-	dir = ft_env_get(env, "PWD");
-	dir_home = ft_env_get(env, "HOME");
+	dir = env_get(env, "PWD");
+	dir_home = env_get(env, "HOME");
 	if (ft_strncmp(dir, dir_home, ft_strlen(dir_home)) == 0)
 		dir = ft_strjoin("~", dir + ft_strlen(dir_home));
-	if (signal == 0)
+	if (g_signal == 0)
 		prompt_ini = ft_strjoin("\033[1;32m[minishell@42] ", dir);
-	else if (signal == 1)
+	else if (g_signal == 1)
 		prompt_ini = ft_strjoin("\033[1;31m[minishell@42] ", dir);
 	else
 		prompt_ini = ft_strjoin("\033[1;33m[minishell@42] ", dir);
@@ -40,43 +40,39 @@ char	*prompt(int signal, t_env *env)
 	return (rl);
 }
 
-int	ft_check_exit(char *str)
+void	input_process(char *rl, t_env *env)
 {
-	if (str == NULL)
-		return (1);
-	if (ft_strncmp(str, "exit", 4) == 0 && ft_strlen(str) == 4)
-		return (0);
-	if (ft_strncmp(str, "e", 1) == 0 && ft_strlen(str) == 1)
-		return (0);
-	return (1);
+	char	*input;
+
+	if (rl)
+	{
+		input = ft_strtrim(rl, " \t\n\r");
+		if (input)
+		{
+			add_history(input);
+			cmd_exec(input, env);
+			free(input);
+		}
+	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_env	*env;
 	char	*rl;
-	char	*command;
 
 	(void)argc;
 	(void)argv;
-	env = ft_env_init(envp);
+	env = env_init(envp);
 	rl = NULL;
-	while (1)
+	while (g_signal != 2)
 	{
-		rl = prompt(g_signal, env);
-		if (!ft_check_exit(rl))
+		rl = prompt(env);
+		if (!builtin_exit(rl) || !rl)
 			break ;
-		if (rl && *rl)
-		{
-			command = ft_strtrim(rl, " \t\n\r");
-			if (command)
-			{
-				ft_cmd_exec(command, env);
-				free(command);
-			}
-		}
+		input_process(rl, env);
 		free(rl);
 	}
-	ft_env_free(env);
+	env_free(env);
 	return (0);
 }

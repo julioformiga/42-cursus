@@ -12,20 +12,7 @@
 
 #include "minishell.h"
 
-static void	ft_free_array(char **array)
-{
-	int	i;
-
-	i = -1;
-	if (array)
-	{
-		while (array[++i])
-			free(array[i]);
-		free(array);
-	}
-}
-
-char	*ft_cmd_check(char *path, char *cmd)
+char	*cmd_check(char *path, char *cmd)
 {
 	char	*full_path;
 	char	*full_path_cmd;
@@ -41,32 +28,24 @@ char	*ft_cmd_check(char *path, char *cmd)
 		free(full_path);
 		if (access(full_path_cmd, X_OK) == 0)
 		{
-			ft_free_array(paths);
+			free_array(paths);
 			return (full_path_cmd);
 		}
 		free(full_path_cmd);
 	}
-	ft_free_array(paths);
+	printf("%s: command not found\n", cmd);
+	free_array(paths);
 	return (NULL);
 }
 
-int	ft_cmd_exec(char *command, t_env *env)
+int	cmd_setup(char *command, t_env *env, char ***args, char **full_path)
 {
 	char	*path;
-	char	*full_path;
 
-	path = ft_env_get(env, "PATH");
-	if (path)
-	{
-		full_path = ft_cmd_check(path, command);
-		if (full_path)
-		{
-			printf("%s is in PATH\n", full_path);
-			free(full_path);
-			return (0);
-		}
-		else
-			printf("%s is not in PATH\n", command);
-	}
+	path = env_get(env, "PATH");
+	*full_path = cmd_check(path, command);
+	if (!*full_path)
+		return (1);
+	*args = ft_split(command, ' ');
 	return (0);
 }
