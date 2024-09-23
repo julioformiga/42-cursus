@@ -1,2 +1,10 @@
 CompileFlags:
-  Add: -I/home/julio/dev/42/cursus/push_swap/lib
+  Add:
+    [
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I../includes/ft_printf/libft",
+      "-I../includes/ft_printf",
+      "-I../includes",
+    ]

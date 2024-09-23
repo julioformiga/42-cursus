@@ -39,6 +39,8 @@ void	ft_stack_sort(t_stack **stack_a, t_stack **stack_b)
 		ft_stack_5_sort(stack_a, stack_b);
 	else if (data.len == 6)
 		ft_stack_6_sort(stack_a, stack_b);
+	else if (data.len <= 100)
+		ft_stack_radix_sort(stack_a, stack_b);
 	else
 		ft_stack_radix_sort(stack_a, stack_b);
 }

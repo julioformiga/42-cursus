@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "src/push_swap.h"
+#include "includes/push_swap.h"
 
 static int	checker(int check)
 {
