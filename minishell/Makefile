@@ -52,6 +52,7 @@ re:			fclean all
 
 tests:		all
 			cd build/ && cmake .. && make && cd ..
+			./build/test_minishell
 
 run:		all
 			printf "🚀 $(YELLOW)Running$(RESET): $(BIN)\n"
