@@ -62,5 +62,10 @@ checkleaks:	all
 gensupp:	all
 			valgrind --leak-check=full --show-leak-kinds=all --gen-suppressions=all -s ./$(BIN) 2>> new.supp
 
+norm:
+			printf "$(RED)"
+			norminette $(SRCS) lib include | grep "Error"
+			printf "$(RESET)"
+
 .SILENT:	all clean fclean re run
 .PHONY:		all clean fclean re run
