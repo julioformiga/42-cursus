@@ -32,6 +32,20 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef struct s_cmdblock
+{
+	char				*cmd;
+	char				**args;
+	char				*sep;
+	struct s_cmdblock	*next;
+}	t_cmdblock;
+
+typedef struct s_cmd
+{
+	char		*cmd_line;
+	t_cmdblock	*cmd;
+}	t_cmd;
+
 char	*ft_strndup(const char *s1, size_t n);
 
 void	free_array(char **array);
