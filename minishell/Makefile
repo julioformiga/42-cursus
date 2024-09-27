@@ -50,6 +50,9 @@ fclean:		clean
 
 re:			fclean all
 
+debug:		all
+			cp $(BIN) a.out
+
 tests:		all
 			cd build/ && cmake .. && make && cd ..
 			./build/test_minishell
