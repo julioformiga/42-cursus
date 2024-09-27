@@ -59,17 +59,21 @@ void	input_process(char *rl, t_env *env)
 int	main(int argc, char **argv, char **envp)
 {
 	t_env	*env;
+	t_cmd	*cmd;
 	char	*rl;
 
 	(void)argc;
 	(void)argv;
 	env = env_init(envp);
 	rl = NULL;
+	cmd = malloc(sizeof(t_cmd));
 	while (g_signal != 2)
 	{
 		rl = prompt(env);
 		if (!builtin_exit(rl) || !rl)
 			break ;
+		cmd_init(cmd, rl);
+		cmd_print(cmd);
 		input_process(rl, env);
 		free(rl);
 	}

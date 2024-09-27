@@ -60,6 +60,8 @@ char	*cmd_check(char *path, char *cmd);
 int		cmd_exec(char *command, t_env *env);
 int		cmd_setup(char *command, t_env *env, char ***args,
 			char **full_path);
+void	cmd_init(t_cmd *command, char *readline);
+void	cmd_print(t_cmd *command);
 
 int		builtin_cd(t_env *env, char *str);
 int		builtin_exit(char *str);
