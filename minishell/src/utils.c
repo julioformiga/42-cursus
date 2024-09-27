@@ -25,6 +25,13 @@ void	free_array(char **array)
 	}
 }
 
+void	cmd_free(t_cmd *cmd)
+{
+	if (cmd->cmd)
+		free(cmd->cmd);
+	free(cmd);
+}
+
 char	*ft_strndup(const char *s1, size_t n)
 {
 	char	*str;

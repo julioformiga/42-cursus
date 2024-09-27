@@ -62,21 +62,22 @@ int	main(int argc, char **argv, char **envp)
 	t_cmd	*cmd;
 	char	*rl;
 
-	(void)argc;
-	(void)argv;
 	env = env_init(envp);
 	rl = NULL;
 	cmd = malloc(sizeof(t_cmd));
+	cmd_exec_inline(argc, argv, &env, cmd);
 	while (g_signal != 2)
 	{
+		cmd = malloc(sizeof(t_cmd));
 		rl = prompt(env);
 		if (!builtin_exit(rl) || !rl)
 			break ;
 		cmd_init(cmd, rl);
 		cmd_print(cmd);
 		input_process(rl, env);
+		free(cmd);
 		free(rl);
 	}
 	env_free(env);
-	return (0);
+	return (g_signal);
 }

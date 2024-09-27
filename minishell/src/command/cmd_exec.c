@@ -60,6 +60,27 @@ static void	cmd_parent_process(int pipefd[2])
 	close(pipefd[0]);
 }
 
+void	cmd_exec_inline(int argc, char **argv, t_env **env, t_cmd *cmd)
+{
+	extern int	g_signal;
+
+	if (argc == 3 && argv[1] && ft_strncmp(argv[1], "-c", 3) == 0)
+	{
+		cmd_init(cmd, argv[2]);
+		g_signal = cmd_exec(argv[2], *env);
+		free(cmd);
+		env_free(*env);
+		free(*env);
+		exit(g_signal);
+	}
+	else if (argc > 1)
+	{
+		printf("Usage:\n./minishell\nOR\n./minishell -c \"command\"\n");
+		free(cmd);
+		g_signal = 2;
+	}
+}
+
 int	cmd_exec(char *command, t_env *env)
 {
 	char	*full_path;

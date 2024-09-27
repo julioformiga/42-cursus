@@ -86,7 +86,7 @@ t_cmdblock	*create_cmdblock(char *cmd_part)
 
 void	cmd_init(t_cmd *command, char *readline)
 {
-	char *separators[] = {"|", ">", ">>", "<", "<<", "&&", "||", "&", NULL};
+	char *separators[] = {"|", "||", ">", ">>", "<", "<<", "&&", "&", NULL};
 	t_cmdblock	*head = NULL;
 	t_cmdblock	*current = NULL;
 	char		*start = readline;
