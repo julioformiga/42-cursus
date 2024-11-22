@@ -40,17 +40,17 @@ char	*prompt(t_env *env)
 	return (rl);
 }
 
-void	input_process(char *rl, t_env *env)
+static void	input_process(t_cmd *cmd, t_env *env)
 {
 	char	*input;
 
-	if (rl)
+	if (cmd->cmd->exec)
 	{
-		input = ft_strtrim(rl, " \t\n\r");
+		input = ft_strtrim(cmd->cmd->exec, " \t\n\r");
 		if (input)
 		{
 			add_history(input);
-			cmd_exec(input, env);
+			cmd_exec(cmd, env);
 			free(input);
 		}
 	}
@@ -72,9 +72,11 @@ int	main(int argc, char **argv, char **envp)
 		rl = prompt(env);
 		if (!builtin_exit(rl) || !rl)
 			break ;
-		cmd_init(cmd, rl);
-		cmd_print(cmd);
-		input_process(rl, env);
+		cmd_parser(rl, cmd);
+		cmd_init(rl, cmd);
+		// cmd_print(cmd);
+		// cmd_exec(cmd, env);
+		input_process(cmd, env);
 		free(cmd);
 		free(rl);
 	}

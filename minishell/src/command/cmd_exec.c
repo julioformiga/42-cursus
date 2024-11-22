@@ -66,8 +66,8 @@ void	cmd_exec_inline(int argc, char **argv, t_env **env, t_cmd *cmd)
 
 	if (argc == 3 && argv[1] && ft_strncmp(argv[1], "-c", 3) == 0)
 	{
-		cmd_init(cmd, argv[2]);
-		g_signal = cmd_exec(argv[2], *env);
+		cmd_init(argv[2], cmd);
+		g_signal = cmd_exec(cmd, *env);
 		free(cmd);
 		env_free(*env);
 		free(*env);
@@ -81,7 +81,7 @@ void	cmd_exec_inline(int argc, char **argv, t_env **env, t_cmd *cmd)
 	}
 }
 
-int	cmd_exec(char *command, t_env *env)
+int	cmd_exec(t_cmd *cmd, t_env *env)
 {
 	char	*full_path;
 	char	**args;
@@ -89,7 +89,7 @@ int	cmd_exec(char *command, t_env *env)
 	int		pipefd[2];
 	pid_t	pid;
 
-	if (cmd_setup(command, env, &args, &full_path) != 0)
+	if (cmd_setup(cmd, env, &args, &full_path) != 0)
 		return (1);
 	if (cmd_create_pipe(pipefd) != 0)
 	{
@@ -103,7 +103,7 @@ int	cmd_exec(char *command, t_env *env)
 		cmd_parent_process(pipefd);
 		waitpid(pid, &status, 0);
 	}
-	free_array(args);
+	// free_array(args);
 	free(full_path);
 	if (pid == -1)
 		return (1);
