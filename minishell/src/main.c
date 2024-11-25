@@ -49,7 +49,7 @@ static void	input_process(t_cmd *cmd, t_env *env)
 		input = ft_strtrim(cmd->cmd->exec, " \t\n\r");
 		if (input)
 		{
-			add_history(input);
+			add_history(cmd->cmd_line);
 			cmd_exec(cmd, env);
 			free(input);
 		}
