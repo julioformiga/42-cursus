@@ -71,6 +71,7 @@ void	cmd_exec_inline(int argc, char **argv, t_env **env, t_cmd *cmd);
 void	cmd_print(t_cmd *cmd);
 void	cmd_free(t_cmd *cmd);
 
+int		builtin_echo(t_cmd *cmd);
 int		builtin_cd(t_env *env, char *str);
 int		builtin_exit(char *str);
 

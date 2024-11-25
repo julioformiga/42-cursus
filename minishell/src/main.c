@@ -56,7 +56,7 @@ static void	input_process(t_cmd *cmd, t_env *env)
 	}
 }
 
-static int ft_check_only_spaces(char *str)
+static int	ft_check_only_spaces(char *str)
 {
 	while (*str)
 	{

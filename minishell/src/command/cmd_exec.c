@@ -91,6 +91,8 @@ int	cmd_exec(t_cmd *cmd, t_env *env)
 
 	if (cmd_setup(cmd, env, &args, &full_path) != 0)
 		return (1);
+	if (ft_strncmp(cmd->cmd->exec, "echo", 5) == 0)
+		return (builtin_echo(cmd));
 	if (cmd_create_pipe(pipefd) != 0)
 	{
 		free_array(args);
@@ -103,7 +105,6 @@ int	cmd_exec(t_cmd *cmd, t_env *env)
 		cmd_parent_process(pipefd);
 		waitpid(pid, &status, 0);
 	}
-	// free_array(args);
 	free(full_path);
 	if (pid == -1)
 		return (1);
