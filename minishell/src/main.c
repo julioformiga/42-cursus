@@ -56,6 +56,17 @@ static void	input_process(t_cmd *cmd, t_env *env)
 	}
 }
 
+static int ft_check_only_spaces(char *str)
+{
+	while (*str)
+	{
+		if (!isspace(*str))
+			return (1);
+		str++;
+	}
+	return (0);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_env	*env;
@@ -70,6 +81,8 @@ int	main(int argc, char **argv, char **envp)
 	{
 		cmd = malloc(sizeof(t_cmd));
 		rl = prompt(env);
+		if (!ft_check_only_spaces(rl))
+			continue ;
 		if (!builtin_exit(rl) || !rl)
 			break ;
 		cmd_parser(rl, cmd);
