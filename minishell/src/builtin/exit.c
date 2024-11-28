@@ -12,13 +12,22 @@
 
 #include "minishell.h"
 
-int	builtin_exit(char *str)
+int	builtin_exit(t_cmd *cmd, t_env *t_env)
 {
-	if (!str)
-		return (1);
-	if (ft_strncmp(str, "exit", 4) == 0 && ft_strlen(str) == 4)
-		return (0);
-	if (ft_strncmp(str, "e", 1) == 0 && ft_strlen(str) == 1)
-		return (0);
-	return (1);
+	int		exit_code;
+
+	exit_code = 0;
+	if (cmd->cmd->args[0])
+	{
+		if (ft_isdigit(cmd->cmd->args[0][0]) || cmd->cmd->args[0][0] == '-')
+			exit_code = ft_atoi(cmd->cmd->args[0]);
+		else
+		{
+			printf("exit: %s: numeric argument required\n", cmd->cmd->args[0]);
+			return (1);
+		}
+	}
+	free(cmd);
+	env_free(t_env);
+	exit(exit_code);
 }

@@ -12,11 +12,12 @@
 
 #include "minishell.h"
 
-int	builtin_echo(t_cmd *cmd)
+int	builtin_echo(t_cmd *cmd, t_env *env)
 {
 	int	i;
 	int	no_newline;
 
+	(void)env;
 	i = 0;
 	no_newline = 0;
 	if (cmd->cmd->args[i] && ft_strncmp(cmd->cmd->args[i], "-n", 2) == 0)

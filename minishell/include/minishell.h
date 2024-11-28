@@ -48,6 +48,13 @@ typedef struct s_cmd
 	char		*cmd_line;
 }	t_cmd;
 
+typedef int	(*t_builtin_fn)(t_cmd *cmd, t_env *env);
+
+typedef struct sbuiltin
+{
+	char			*name;
+	t_builtin_fn	fn;
+}	t_builtin;
 /* =============================== FUNCTIONS =================================*/
 char	*ft_strndup(const char *s1, size_t n);
 
@@ -71,8 +78,8 @@ void	cmd_exec_inline(int argc, char **argv, t_env **env, t_cmd *cmd);
 void	cmd_print(t_cmd *cmd);
 void	cmd_free(t_cmd *cmd);
 
-int		builtin_echo(t_cmd *cmd);
-int		builtin_cd(t_env *env, char *str);
-int		builtin_exit(char *str);
+int		builtin_echo(t_cmd *cmd, t_env *env);
+int		builtin_cd(t_cmd *cmd, t_env *env);
+int		builtin_exit(t_cmd *cmd, t_env *env);
 
 #endif

@@ -40,7 +40,7 @@ char	*prompt(t_env *env)
 	return (rl);
 }
 
-static void	input_process(t_cmd *cmd, t_env *env)
+static void	exec_process(t_cmd *cmd, t_env *env)
 {
 	char	*input;
 
@@ -83,15 +83,14 @@ int	main(int argc, char **argv, char **envp)
 		rl = prompt(env);
 		if (!ft_check_only_spaces(rl))
 			continue ;
-		if (!builtin_exit(rl) || !rl)
+		if (!rl)
 			break ;
 		cmd_parser(rl, cmd);
 		cmd_init(rl, cmd);
-		// cmd_print(cmd);
-		// cmd_exec(cmd, env);
-		input_process(cmd, env);
-		free(cmd);
 		free(rl);
+		// cmd_print(cmd);
+		exec_process(cmd, env);
+		free(cmd);
 	}
 	env_free(env);
 	return (g_signal);

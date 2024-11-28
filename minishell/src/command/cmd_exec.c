@@ -12,6 +12,29 @@
 
 #include "minishell.h"
 
+static t_builtin	g_builtins[] = {
+{"echo", builtin_echo},
+{"cd", builtin_cd},
+{"exit", builtin_exit},
+{"e", builtin_exit},
+{NULL, NULL}
+};
+
+t_builtin_fn	get_builtin(char *cmd_name)
+{
+	int	i;
+
+	i = 0;
+	while (g_builtins[i].name)
+	{
+		if (ft_strncmp(cmd_name, g_builtins[i].name,
+				ft_strlen(g_builtins[i].name) + 1) == 0)
+			return (g_builtins[i].fn);
+		i++;
+	}
+	return (NULL);
+}
+
 static int	cmd_create_pipe(int pipefd[2])
 {
 	if (pipe(pipefd) == -1)
@@ -83,16 +106,18 @@ void	cmd_exec_inline(int argc, char **argv, t_env **env, t_cmd *cmd)
 
 int	cmd_exec(t_cmd *cmd, t_env *env)
 {
-	char	*full_path;
-	char	**args;
-	int		status;
-	int		pipefd[2];
-	pid_t	pid;
+	char			*full_path;
+	char			**args;
+	int				status;
+	int				pipefd[2];
+	pid_t			pid;
+	t_builtin_fn	builtin;
 
+	builtin = get_builtin(cmd->cmd->exec);
+	if (builtin)
+		return (builtin(cmd, env));
 	if (cmd_setup(cmd, env, &args, &full_path) != 0)
 		return (1);
-	if (ft_strncmp(cmd->cmd->exec, "echo", 5) == 0)
-		return (builtin_echo(cmd));
 	if (cmd_create_pipe(pipefd) != 0)
 	{
 		free_array(args);
