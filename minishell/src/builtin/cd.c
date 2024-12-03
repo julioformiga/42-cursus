@@ -42,6 +42,8 @@ static int	cd_previous(t_env *env)
 
 static int	cd_directory(char *path)
 {
+	if (path[ft_strlen(path) - 1] == '/' && ft_strlen(path) > 1)
+		path[ft_strlen(path) - 1] = '\0';
 	if (chdir(path) == -1)
 	{
 		ft_putstr_fd("cd: no such file or directory\n", 2);

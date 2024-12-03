@@ -44,8 +44,11 @@ typedef struct s_cmdblock
 
 typedef struct s_cmd
 {
-	t_cmdblock	*cmd;
-	char		*cmd_line;
+	t_cmdblock		*cmd;
+	char			*cmd_line;
+	int				pipe[2];
+	struct s_cmd	*next;
+	struct s_cmd	*prev;
 }	t_cmd;
 
 typedef int	(*t_builtin_fn)(t_cmd *cmd, t_env *env);
@@ -81,5 +84,6 @@ void	cmd_free(t_cmd *cmd);
 int		builtin_echo(t_cmd *cmd, t_env *env);
 int		builtin_cd(t_cmd *cmd, t_env *env);
 int		builtin_exit(t_cmd *cmd, t_env *env);
+int		builtin_env(t_cmd *cmd, t_env *env);
 
 #endif
