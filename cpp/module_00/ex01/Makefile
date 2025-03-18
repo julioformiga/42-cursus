@@ -1,26 +1,39 @@
-NAME = phonebook
+NAME	= phonebook
 
-CC = c++
+CC		= c++
 
-CFLAGS = -Wall -Wextra -Werror -std=c++98
+CFLAGS	= -Wall -Wextra -Werror -std=c++98
 
-SRC = main.cpp PhoneBook.cpp Contact.cpp
-OBJ = $(SRC:.cpp=.o)
+BIN_DIR	= bin/
+SRC_DIR	= src/
+OBJ_DIR	= obj/
+INC_DIR	= include/
+
+SRCS	= main.cpp PhoneBook.cpp Contact.cpp
+OBJS	= $(SRCS:.cpp=.o)
+
+SRC		= $(addprefix $(SRC_DIR), $(SRCS))
+OBJ		= $(addprefix $(OBJ_DIR), $(OBJS))
 
 all: $(NAME)
 
-%.o: %.cpp
-	$(CC) $(CFLAGS) -c $< -o $@
-
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+	@mkdir -p $(BIN_DIR)
+	$(CC) $(CFLAGS) -I $(INC_DIR) $(OBJ) -o $(BIN_DIR)$(NAME)
+
+$(OBJ_DIR)%.o: $(SRC_DIR)%.cpp
+	@mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -I $(INC_DIR) -c $< -o $@
 
 clean:
-	@rm -f $(NAME) *.o
+	@rm -f $(OBJ_DIR)*.o
+
+fclean: clean
+	@rm -rf $(BIN_DIR)$(NAME) $(BIN_DIR) $(OBJ_DIR)
 
 re: clean all
 
 run: all
-	@./$(NAME)
+	@./$(BIN_DIR)$(NAME)
 
 .PHONY: all clean re run test

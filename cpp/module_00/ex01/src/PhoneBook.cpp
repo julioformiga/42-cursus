@@ -13,20 +13,17 @@
 #include "PhoneBook.hpp"
 #include <iostream>
 
-PhoneBook::PhoneBook(void)
-{
+PhoneBook::PhoneBook(void) {
 	this->_index = 0;
 	this->_full = false;
 	return;
 }
 
-PhoneBook::~PhoneBook(void)
-{
+PhoneBook::~PhoneBook(void) {
 	return;
 }
 
-void	PhoneBook::set_information(void)
-{
+void	PhoneBook::set_information(void) {
 	std::string input;
 	if (this->_full == false)
 	{
@@ -67,8 +64,7 @@ void	PhoneBook::set_information(void)
 	}
 }
 
-void	PhoneBook::get_information() const
-{
+void	PhoneBook::get_information() const {
 	int	index;
 
 	if (this->_index == 0)
@@ -124,7 +120,6 @@ void	PhoneBook::get_information() const
 	}
 }
 
-void	PhoneBook::show_instruction(void)
-{
+void	PhoneBook::show_instruction(void) {
 	std::cout << "\033[KEnter your command [ADD, SEARCH, EXIT]:" << std::endl;
 }
