@@ -44,7 +44,7 @@ class Contact
 
 		~Contact(void) {}
 
-		std::string truncateString(const std::string& str) const
+		std::string truncateString(const std::string &str) const
 		{
 			if (str.length() > 10)
 				return str.substr(0, 9) + ".";
@@ -62,7 +62,7 @@ class Contact
 
 		void displayFullContact(void) const {
 			if (this->_active) {
-				std::cout << "\n───────────────────────────────────────────" << std::endl;
+				std::cout << "───────────────────────────────────────────" << std::endl;
 				std::cout << "            CONTACT DETAILS" << std::endl;
 				std::cout << "───────────────────────────────────────────" << std::endl;
 				std::cout << "First Name: " << _firstName << std::endl;
@@ -92,9 +92,12 @@ class PhoneBook
 
 	public:
 		PhoneBook(void) {
+			std::cout << "Welcome to PhoneBook!" << std::endl;
 			_currentIndex = 0;
 		}
-		~PhoneBook(void) {}
+		~PhoneBook(void) {
+			std::cout << "Goodbye!" << std::endl;
+		}
 
 		void addContact(void) {
 			std::string firstName, lastName, nickName;
@@ -178,8 +181,6 @@ int main(void)
 	PhoneBook phoneBook;
 	std::string command;
 
-	std::cout << "Welcome to PhoneBook!" << std::endl;
-
 	while (true) {
 		std::cout << "\nEnter command (ADD, SEARCH or EXIT): ";
 		std::getline(std::cin, command);
@@ -194,6 +195,5 @@ int main(void)
 			std::cout << "Invalid command. Try again." << std::endl;
 	}
 
-	std::cout << "Goodbye!" << std::endl;
 	return (0);
 }

@@ -34,7 +34,9 @@ fclean: clean
 re: clean all
 
 run: all
-	@./$(BIN_DIR)$(NAME)
-#	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(BIN_DIR)$(NAME)
+	./$(BIN_DIR)$(NAME)
+
+mleak: all
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(BIN_DIR)$(NAME)
 
 .PHONY: all clean re run test
