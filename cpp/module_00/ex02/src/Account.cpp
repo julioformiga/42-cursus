@@ -22,7 +22,7 @@ int Account::_totalNbWithdrawals = 0;
 
 void Account::_displayTimestamp(void)
 {
-    std::time_t now = std::time(nullptr);
+    std::time_t now = std::time(NULL);
     std::tm* ltm = std::localtime(&now);
 
     std::cout << "[" << 1900 + ltm->tm_year
