@@ -124,6 +124,17 @@ class PhoneBook
 			std::cout << "Contact added successfully!" << std::endl;
 		}
 
+		void displayList(void) const {
+
+			for (int i = 0; i < MAX_CONTACTS; i++) {
+				if (_contacts[i].isActive())
+				{
+					std::cout << "│" << std::setw(10) << i;
+					_contacts[i].displayContact();
+				}
+			}
+		}
+
 		void listContacts(void) const {
 			if (_currentIndex == 0) {
 				std::cout << "No contacts found." << std::endl;
@@ -135,14 +146,7 @@ class PhoneBook
 			std::cout << "├──────────┬──────────┬──────────┬──────────┤" << std::endl;
 			std::cout << "│   Index  │First Name│ Last Name│ Nickname │" << std::endl;
 			std::cout << "├──────────┼──────────┼──────────┼──────────┤" << std::endl;
-
-			for (int i = 0; i < MAX_CONTACTS; i++) {
-				if (_contacts[i].isActive())
-				{
-					std::cout << "│" << std::setw(10) << i;
-					_contacts[i].displayContact();
-				}
-			}
+			this->displayList();
 			std::cout << "╰──────────┴──────────┴──────────┴──────────╯" << std::endl;
 
 			std::string input;
