@@ -19,6 +19,8 @@ int main(int argc, char **argv) {
 		return 0;
 	}
 	for (int i = 1; i < argc; i++) {
+		if (i > 1)
+			std::cout << " ";
 		for (int j = 0; argv[i][j]; j++) {
 			std::cout << (char)toupper(argv[i][j]);
 		}
