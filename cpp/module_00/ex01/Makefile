@@ -19,11 +19,11 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@mkdir -p $(BIN_DIR)
-	@$(CC) $(CFLAGS) -I $(INC_DIR) $(OBJ) -o $(BIN_DIR)$(NAME)
+	$(CC) $(CFLAGS) -I $(INC_DIR) $(OBJ) -o $(BIN_DIR)$(NAME)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.cpp
 	@mkdir -p $(OBJ_DIR)
-	@$(CC) $(CFLAGS) -I $(INC_DIR) -c $< -o $@
+	$(CC) $(CFLAGS) -I $(INC_DIR) -c $< -o $@
 
 clean:
 	@rm -f $(OBJ_DIR)*.o

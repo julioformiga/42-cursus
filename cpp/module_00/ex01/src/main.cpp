@@ -125,7 +125,6 @@ class PhoneBook
 		}
 
 		void displayList(void) const {
-
 			for (int i = 0; i < MAX_CONTACTS; i++) {
 				if (_contacts[i].isActive())
 				{
