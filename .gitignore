@@ -25,6 +25,7 @@ bin/
 *.d
 
 # Object files
+obj/
 *.o
 *.ko
 *.obj
