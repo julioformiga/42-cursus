@@ -14,10 +14,20 @@
 
 int main(void)
 {
-	Zombie *zombie = newZombie("Z1");
-	zombie->announce();
-	delete zombie;
+	Zombie zombie1 = Zombie("Zombie #1");
+	zombie1.announce();
 
-	randomChump("Z2");
+	Zombie* zombie2 = new Zombie("Zombie #2");
+	zombie2->announce();
+	delete zombie2;
+
+	Zombie *zombies[2] = {};
+	zombies[0]->randomChump("Zombie #3");
+
+	zombies[1] = zombies[0]->newZombie("Zombie #4");
+
+	zombies[1]->announce();
+	delete zombies[1];
+
 	return (0);
 }

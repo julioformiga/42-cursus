@@ -12,13 +12,27 @@
 
 #include "Zombie.hpp"
 
-Zombie* newZombie(std::string name)
+#include <iostream>
+
+Zombie::Zombie(void) {}
+
+Zombie::Zombie(std::string name) : _name(name) {}
+
+Zombie* Zombie::newZombie(std::string name)
 {
 	return (new Zombie(name));
 }
 
-void randomChump(std::string name)
+void Zombie::announce(void) const {
+	std::cout << _name << ": BraiiiiiiinnnzzzZ..." << std::endl;
+}
+
+void Zombie::randomChump(std::string name)
 {
 	Zombie zombie(name);
 	zombie.announce();
+}
+
+Zombie::~Zombie() {
+	std::cout << _name << " is destroyed." << std::endl;
 }
