@@ -15,13 +15,15 @@ OBJ		= $(addprefix $(OBJ_DIR), $(OBJS))
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(BIN_DIR)$(NAME): $(OBJ)
 	@mkdir -p $(BIN_DIR)
-	@$(CC) $(CFLAGS) $(OBJ) -o $(BIN_DIR)$(NAME)
+	$(CC) $(CFLAGS) $(OBJ) -o $@
+
+$(NAME): $(OBJ)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.cpp
 	@mkdir -p $(OBJ_DIR)
-	@$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	@rm -f $(OBJ_DIR)*.o

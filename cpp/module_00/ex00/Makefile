@@ -11,6 +11,9 @@ $(NAME): $(NAME).cpp
 clean:
 	@rm -f $(NAME)
 
+fclean:
+	@rm -f $(NAME)
+
 re: fclean all
 
 run: all
