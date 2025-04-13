@@ -1,27 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Zombie.cpp                                         :+:      :+:    :+:   */
+/*   newZombie.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: julio.formiga <julio.formiga@gmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/30 14:23:26 by julio.formiga     #+#    #+#             */
-/*   Updated: 2025/03/30 14:23:26 by julio.formiga    ###   ########.fr       */
+/*   Created: 2025/04/13 18:46:51 by julio.formiga     #+#    #+#             */
+/*   Updated: 2025/04/13 18:46:51 by julio.formiga    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Zombie.hpp"
 
-#include <iostream>
-
-Zombie::Zombie(void) {}
-
-Zombie::Zombie(std::string name) : _name(name) {}
-
-Zombie::~Zombie() {
-	std::cout << _name << " is destroyed." << std::endl;
-}
-
-void Zombie::announce(void) const {
-	std::cout << _name << ": BraiiiiiiinnnzzzZ..." << std::endl;
+Zombie* Zombie::newZombie(std::string name)
+{
+	return (new Zombie(name));
 }

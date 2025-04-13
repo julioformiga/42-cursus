@@ -1,12 +1,12 @@
 CC		= c++
 CFLAGS	= -Wall -Wextra -Werror -std=c++98 -Iinclude
 
-NAME	= brainz
+NAME	= zombies
 BIN_DIR	= bin/
 SRC_DIR	= src/
 OBJ_DIR	= obj/
 
-SRCS	= main.cpp Zombie.cpp
+SRCS	= $(shell ls $(SRC_DIR) | grep -E '\.cpp$$')
 OBJS	= $(SRCS:.cpp=.o)
 
 SRC		= $(addprefix $(SRC_DIR), $(SRCS))
