@@ -14,16 +14,15 @@ OBJ		= $(addprefix $(OBJ_DIR), $(OBJS))
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(BIN_DIR)$(NAME): $(OBJ)
 	@mkdir -p $(BIN_DIR)
-	$(CC) $(CFLAGS) $(OBJ) -o $(BIN_DIR)$(NAME)
-
-debug:
-	$(CC) $(CFLAGS) $(OBJ) -g -o a.out
+	$(CC) $(CFLAGS) $(OBJ) -o $@
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.cpp
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -MMD -MP -c $< -o $@
+
+$(NAME): $(BIN_DIR)$(NAME)
 
 clean:
 	rm -f $(OBJ_DIR)*.o a.out
@@ -35,6 +34,9 @@ re: clean all
 
 run: all debug
 	./$(BIN_DIR)$(NAME)
+
+debug:
+	@$(CC) $(CFLAGS) $(OBJ) -g -o a.out
 
 mleak: all
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(BIN_DIR)$(NAME)

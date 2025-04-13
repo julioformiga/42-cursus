@@ -22,10 +22,11 @@ class Zombie
 	public:
 		Zombie(void);
 		Zombie(std::string name);
+		~Zombie(void);
+
 		Zombie* newZombie(std::string name);
 		void announce(void) const;
 		void randomChump(std::string name);
-		~Zombie(void);
 };
 
 #endif

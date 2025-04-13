@@ -18,6 +18,10 @@ Zombie::Zombie(void) {}
 
 Zombie::Zombie(std::string name) : _name(name) {}
 
+Zombie::~Zombie() {
+	std::cout << _name << " is destroyed." << std::endl;
+}
+
 Zombie* Zombie::newZombie(std::string name)
 {
 	return (new Zombie(name));
@@ -31,8 +35,4 @@ void Zombie::randomChump(std::string name)
 {
 	Zombie zombie(name);
 	zombie.announce();
-}
-
-Zombie::~Zombie() {
-	std::cout << _name << " is destroyed." << std::endl;
 }
