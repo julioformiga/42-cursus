@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   HumanA.hpp                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: julio.formiga <julio.formiga@gmail.com>    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/20 09:33:41 by julio.formiga     #+#    #+#             */
-/*   Updated: 2025/05/20 09:33:41 by julio.formiga    ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef HUMANA_H
 #define HUMANA_H
 
@@ -21,9 +9,9 @@ private:
   Weapon &_weapon;
 
 public:
-  HumanA(std::string name, Weapon &weapon);
+  HumanA(std::string _name, Weapon &_weapon);
   ~HumanA(void);
-  void setWeapon(Weapon &weapon);
+  void setWeapon(Weapon &_weapon);
   void attack(void) const;
 };
 

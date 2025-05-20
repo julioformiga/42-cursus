@@ -1,5 +1,5 @@
 CC		= c++
-CFLAGS	= -Wall -Wextra -Werror -std=c++98 -Iinclude
+CFLAGS	= -Wall -Wextra -Werror -std=c++98 -Iinclude -g
 
 NAME	= weapon
 BIN_DIR	= bin/
