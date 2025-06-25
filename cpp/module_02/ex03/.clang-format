@@ -1,0 +1,17 @@
+Language: Cpp
+BasedOnStyle: LLVM # Alternatives: Google, Mozilla, WebKit, Microsoft
+
+AllowShortFunctionsOnASingleLine: Empty
+AlwaysBreakAfterReturnType: None
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterFunction: false
+  AfterControlStatement: false
+  AfterEnum: false
+  AfterStruct: false
+  AfterClass: false
+  BeforeElse: false
+  IndentBraces: false
+KeepEmptyLinesAtTheStartOfBlocks: false
+MaxEmptyLinesToKeep: 2
+SeparateDefinitionBlocks: Always
