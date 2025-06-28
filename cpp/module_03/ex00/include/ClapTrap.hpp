@@ -17,9 +17,9 @@ public:
 
 private:
   std::string _name;
-  int _points;
-  int _energy;
-  int _damage;
+  unsigned int _hitpoints;
+  unsigned int _energy;
+  unsigned int _attackdamage;
   bool _debug;
 };
 
