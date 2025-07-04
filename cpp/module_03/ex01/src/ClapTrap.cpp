@@ -3,22 +3,24 @@
 
 #include <iostream>
 
-ClapTrap::ClapTrap() {
-  _name = "Clone";
-  _hitpoints = 100;
-  _energy = 50;
-  _attackdamage = 20;
-  _debug = false;
-  std::cout << BLUE << "======== Constructor [" << _name
-            << "] ========" << RESET << std::endl;
+ClapTrap::ClapTrap()
+    : _name("Clone"), _hitpoints(10), _energy(10), _attackdamage(0),
+      _debug(false) {
+  banner("Clap Constructor [" + _name + "]");
+  this->showData();
+}
+
+ClapTrap::ClapTrap(const ClapTrap &copy) {
+  if (this != &copy)
+    *this = copy;
+  this->showData();
 }
 
 ClapTrap::ClapTrap(std::string name)
-    : _hitpoints(100), _energy(50), _attackdamage(20) {
+    : _hitpoints(10), _energy(10), _attackdamage(0), _debug(false) {
   _name = name;
-  _debug = false;
-  std::cout << BLUE << "======== Constructor [" << _name
-            << "] ========" << RESET << std::endl;
+  banner("Clap Constructor [" + name + "]");
+  this->showData();
 }
 
 ClapTrap &ClapTrap::operator=(const ClapTrap &copy) {
@@ -66,8 +68,8 @@ void ClapTrap::takeDamage(unsigned int amount) {
       _hitpoints = 0;
     else
       _hitpoints -= amount;
-    std::cout << YELLOW << "   󱢾 " << _name << " take " << RED << amount
-              << YELLOW << " of attack damage" << RESET << std::endl;
+    std::cout << RED << "   󱢾 " << _name << " take " << YELLOW << amount
+              << RED << " of damage" << RESET << std::endl;
   } else
     std::cout << RED << "You cannot take negative damage." << RESET
               << std::endl;
@@ -89,6 +91,5 @@ void ClapTrap::beRepaired(unsigned int amount) {
 }
 
 ClapTrap::~ClapTrap() {
-  std::cout << RED << "========= Destructor [" << _name << "] ========" << RESET
-            << std::endl;
+  banner("Clap Destructor [" + _name + "]", RED);
 }
