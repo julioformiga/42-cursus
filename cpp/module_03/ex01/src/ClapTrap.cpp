@@ -38,7 +38,7 @@ void ClapTrap::debug(bool debug) {
 }
 
 void ClapTrap::showData(void) {
-  std::cout << DARKGREEN << " ClapTrap: " << _name << " | " << std::ends;
+  std::cout << DARKGREEN << " [" << _name << "] " << std::ends;
   std::cout << ": " << _hitpoints << " | " << std::ends;
   std::cout << ": " << _energy << " | " << std::ends;
   std::cout << "󱢾: " << _attackdamage << RESET << std::endl;

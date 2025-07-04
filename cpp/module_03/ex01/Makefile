@@ -2,7 +2,7 @@ CC		= c++
 CFLAGS	= -Wall -Wextra -Werror -std=c++98 -Iinclude
 # DFLAGS	= -g -pg
 
-NAME	= claptrap
+NAME	= scavtrap
 BIN_DIR	= bin/
 SRC_DIR	= src/
 OBJ_DIR	= obj/

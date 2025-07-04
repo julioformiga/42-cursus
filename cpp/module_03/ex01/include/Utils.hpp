@@ -15,5 +15,5 @@
 
 void msg(const std::string &text, std::string color = GREEN);
 void banner(const std::string &text, std::string color = BLUE,
-            int total_len = 54, char fillchar = '=');
+            int total_len = 60, char fillchar = '=');
 #endif
