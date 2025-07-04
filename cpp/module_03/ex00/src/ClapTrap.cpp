@@ -13,6 +13,10 @@ ClapTrap::ClapTrap() {
             << "] ========" << RESET << std::endl;
 }
 
+ClapTrap::ClapTrap(const ClapTrap &copy) {
+  *this = copy;
+}
+
 ClapTrap::ClapTrap(std::string name)
     : _hitpoints(10), _energy(10), _attackdamage(0) {
   _name = name;
