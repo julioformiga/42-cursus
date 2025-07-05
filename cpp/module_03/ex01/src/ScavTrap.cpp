@@ -17,6 +17,7 @@ ScavTrap::ScavTrap(const std::string &name) : ClapTrap(name) {
   _energy = 50;
   _attackdamage = 20;
   _guard_gate = false;
+  _test_mleak = new int[42];
   banner("Scav Constructor [" + _name + "]");
   this->showData();
 }
@@ -66,5 +67,6 @@ void ScavTrap::guardGate() {
 }
 
 ScavTrap::~ScavTrap() {
+  delete[] _test_mleak;
   banner("Scav Destructor [" + _name + "]", RED);
 }

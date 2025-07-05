@@ -15,6 +15,7 @@ public:
 
 private:
   bool _guard_gate;
+  int *_test_mleak;
 };
 
 #endif
